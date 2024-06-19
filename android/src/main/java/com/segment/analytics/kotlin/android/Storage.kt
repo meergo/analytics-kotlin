@@ -9,6 +9,7 @@ import com.segment.analytics.kotlin.core.Storage.Companion.MAX_PAYLOAD_SIZE
 import com.segment.analytics.kotlin.core.StorageProvider
 import com.segment.analytics.kotlin.core.System
 import com.segment.analytics.kotlin.core.UserInfo
+import com.segment.analytics.kotlin.core.SessionInfo
 import com.segment.analytics.kotlin.core.utilities.EventsFileManager
 import kotlinx.coroutines.CoroutineDispatcher
 import sovran.kotlin.Store
@@ -37,6 +38,13 @@ class AndroidStorage(
             UserInfo::class,
             initialState = true,
             handler = ::userInfoUpdate,
+            queue = ioDispatcher
+        )
+        store.subscribe(
+            this,
+            SessionInfo::class,
+            initialState = true,
+            handler = ::sessionInfoUpdate,
             queue = ioDispatcher
         )
         store.subscribe(

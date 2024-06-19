@@ -38,7 +38,9 @@ data class Configuration(
     var apiHost: String = DEFAULT_API_HOST,
     var cdnHost: String = DEFAULT_CDN_HOST,
     var requestFactory: RequestFactory = RequestFactory(),
-    var errorHandler: ErrorHandler? = null
+    var errorHandler: ErrorHandler? = null,
+    var sessionAutoTrack: Boolean = true,
+    var sessionTimeout: Long = 5 * 60000, // 5 minutes.
 ) {
     fun isValid(): Boolean {
         return writeKey.isNotBlank() && application != null

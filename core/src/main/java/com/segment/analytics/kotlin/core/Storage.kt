@@ -39,7 +39,10 @@ interface Storage {
         AppVersion("segment.app.version"),
         AppBuild("segment.app.build"),
         LegacyAppBuild("build"),
-        DeviceId("segment.device.id")
+        DeviceId("segment.device.id"),
+        SessionId("segment.sessionId"),
+        SessionExpiration("segment.sessionExpiration"),
+        SessionStart("segment.sessionStart"),
     }
 
     val storageDirectory: File
@@ -72,6 +75,19 @@ interface Storage {
         } ?: run {
             remove(Constants.Traits)
         }
+    }
+
+    suspend fun sessionInfoUpdate(sessionInfo: SessionInfo) {
+        sessionInfo.id?.let {
+            write(Constants.SessionId, it.toString())
+        } ?: run {
+            remove (Constants.SessionId)
+            remove (Constants.SessionExpiration)
+            remove (Constants.SessionStart)
+            return
+        }
+        write(Constants.SessionExpiration, sessionInfo.expiration.toString())
+        write(Constants.SessionStart, sessionInfo.start.toString())
     }
 
     suspend fun systemUpdate(system: System) {

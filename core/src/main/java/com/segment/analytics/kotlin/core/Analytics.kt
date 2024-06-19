@@ -11,11 +11,13 @@ import com.segment.analytics.kotlin.core.platform.plugins.StartupQueue
 import com.segment.analytics.kotlin.core.platform.plugins.UserInfoPlugin
 import com.segment.analytics.kotlin.core.platform.plugins.logger.*
 import com.segment.analytics.kotlin.core.utilities.JsonAnySerializer
+import com.segment.analytics.kotlin.core.utilities.toJsonElement
 import kotlinx.coroutines.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.Json.Default.decodeFromJsonElement
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
 import sovran.kotlin.Store
 import sovran.kotlin.Subscriber
@@ -54,6 +56,8 @@ open class Analytics protected constructor(
     }
 
     internal var userInfo: UserInfo = UserInfo.defaultState(storage)
+
+    internal var sessionInfo: SessionInfo = SessionInfo.defaultState(storage)
 
     var enabled = true
         set(value) {
@@ -130,6 +134,7 @@ open class Analytics protected constructor(
             store.also {
                 // load memory with initial value
                 it.provide(userInfo)
+                it.provide(sessionInfo)
                 it.provide(System.defaultState(configuration, storage))
 
                 // subscribe to store after state is provided
@@ -516,6 +521,18 @@ open class Analytics protected constructor(
 
         event.applyBaseData()
 
+        // Add the session info to the context.
+        val s = this.getFreshSession()
+        val context = buildJsonObject {
+            event.context.forEach { (key, value) -> put(key, value)}
+            if (s.id != null) {
+               put("SessionId", (s.id!!).toJsonElement())
+                if (s.start) {
+                   put("SessionStart", true.toJsonElement())
+                }
+            }
+        }
+        event.context = context
         log("applying base attributes on ${Thread.currentThread().name}")
         analyticsScope.launch(analyticsDispatcher) {
             event.applyBaseEventData(store)
@@ -586,9 +603,11 @@ open class Analytics protected constructor(
     fun reset() {
         val newAnonymousId = UUID.randomUUID().toString()
         userInfo = UserInfo(newAnonymousId, null, null)
-
+        val s = clearSession()
+        sessionInfo = s
         analyticsScope.launch(analyticsDispatcher) {
             store.dispatch(UserInfo.ResetAction(newAnonymousId), UserInfo::class)
+            store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)
             timeline.applyClosure {
                 (it as? EventPlugin)?.reset()
             }
@@ -745,6 +764,59 @@ open class Analytics protected constructor(
             catch (ignored: Exception) {}
         }
     }
+
+    fun getSessionId(): Long? {
+        var id: Long? = sessionInfo.id
+        if (id != null && configuration.sessionAutoTrack) {
+            val now = java.lang.System.currentTimeMillis()
+            if ((sessionInfo.expiration) < now) {
+                id = null
+            }
+        }
+        return id
+    }
+
+    fun getFreshSession(): SessionInfo {
+        var id = sessionInfo.id
+        var expiration = sessionInfo.expiration
+        var start = sessionInfo.start
+        val now = java.lang.System.currentTimeMillis()
+        if (configuration.sessionAutoTrack) {
+            if (id == null || expiration < now) {
+                id = now
+                start = true
+            }
+        }
+        if (id != null) {
+            expiration = now + configuration.sessionTimeout
+            val s = SessionInfo(id, expiration, false)
+            sessionInfo = s
+            analyticsScope.launch(analyticsDispatcher) {
+                store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)
+            }
+        }
+        return SessionInfo(id, expiration, start)
+    }
+
+    fun endSession() {
+        val s = clearSession()
+        sessionInfo = s
+        analyticsScope.launch(analyticsDispatcher) {
+            store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)
+        }
+    }
+
+    fun startSession(id: Any?) {
+        if ((id !is Long || id <= 0 || id.toDouble() % 1.0 != 0.0) && id != null) {
+            throw Error("sessionId must be a positive integer")
+        }
+        val s = newSession(id as Long?, configuration.sessionTimeout)
+        sessionInfo = s
+        analyticsScope.launch(analyticsDispatcher) {
+            store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)
+        }
+    }
+
 }
 
 

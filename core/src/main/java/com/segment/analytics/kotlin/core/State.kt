@@ -170,3 +170,33 @@ data class UserInfo(
         }
     }
 }
+
+/**
+ * Stores state related to the session
+ * - id (Long?)
+ * - expiration (Long)
+ * - start (Boolean)
+ */
+data class SessionInfo(
+    var id: Long?,
+    var expiration: Long,
+    var start: Boolean,
+) : State {
+
+    companion object {
+        fun defaultState(storage: Storage): SessionInfo {
+            val sessionId: Long? = (storage.read(Storage.Constants.SessionId) ?: "").toLongOrNull()
+            val expiration: Long = (storage.read(Storage.Constants.SessionExpiration) ?: "").toLongOrNull() ?: 0L
+            val start: Boolean = storage.read(Storage.Constants.SessionStart).toBoolean()
+            return SessionInfo(sessionId, expiration, start)
+        }
+    }
+
+    class SetSessionAction(var id: Long?, var expiration: Long, var start: Boolean): Action<SessionInfo> {
+        override fun reduce(state: SessionInfo): SessionInfo {
+            return SessionInfo(id, expiration, start)
+        }
+    }
+
+}
+
