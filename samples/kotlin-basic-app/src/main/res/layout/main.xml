@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:padding="30dp">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello world!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Session"
+        android:id="@+id/sessionText"
+        android:textStyle="bold"
+        android:textSize="23dp"/>
+
+    <Button
+        android:id="@+id/startSessionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start session"
+        app:layout_constraintTop_toBottomOf="@id/sessionText"/>
+
+    <Button
+        android:id="@+id/endSessionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="End session"
+        app:layout_constraintTop_toBottomOf="@id/startSessionButton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/endSessionButton"
+        android:text="Events"
+        android:id="@+id/eventText"
+        android:textStyle="bold"
+        android:textSize="23dp"
+        android:layout_marginTop="50dp"/>
+
+    <Button
+        android:id="@+id/clickButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Track &quot;button clicked&quot;"
+        app:layout_constraintTop_toBottomOf="@id/eventText"/>
+
+    <Button
+        android:id="@+id/identifyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Identify &quot;user1234&quot;"
+        app:layout_constraintTop_toBottomOf="@id/clickButton"/>
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        app:layout_constraintTop_toBottomOf="@id/identifyButton"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/red_600"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,7 @@
         android:name=".MainApplication"
         android:allowBackup="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        android:theme="@style/Theme.MyApp">
         <activity android:name=".MainActivity"
             android:launchMode="singleInstance"
             android:exported="true">

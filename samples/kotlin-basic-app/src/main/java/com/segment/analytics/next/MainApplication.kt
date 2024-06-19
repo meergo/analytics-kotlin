@@ -5,9 +5,8 @@ import com.segment.analytics.kotlin.android.Analytics
 import com.segment.analytics.kotlin.core.*
 
 class MainApplication : Application() {
-    companion object {
-        lateinit var analytics: Analytics
-    }
+
+    lateinit var analytics: Analytics
 
     override fun onCreate() {
         super.onCreate()
