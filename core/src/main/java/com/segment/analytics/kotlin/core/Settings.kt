@@ -18,6 +18,7 @@ import java.io.BufferedReader
 
 @Serializable
 data class Settings(
+    var strategy: String = "",
     var integrations: JsonObject = emptyJsonObject,
     var plan: JsonObject = emptyJsonObject,
     var edgeFunction: JsonObject = emptyJsonObject,
@@ -27,10 +28,10 @@ data class Settings(
 ) {
     inline fun <reified T : Any> destinationSettings(
         name: String,
-        strategy: DeserializationStrategy<T> = Json.serializersModule.serializer(),
+        deserializationStrategy: DeserializationStrategy<T> = Json.serializersModule.serializer(),
     ): T? {
         val integrationData = integrations[name]?.safeJsonObject ?: return null
-        val typedSettings = LenientJson.decodeFromJsonElement(strategy, integrationData)
+        val typedSettings = LenientJson.decodeFromJsonElement(deserializationStrategy, integrationData)
         return typedSettings
     }
 
