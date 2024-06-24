@@ -603,7 +603,7 @@ open class Analytics protected constructor(
     fun reset() {
         val newAnonymousId = UUID.randomUUID().toString()
         userInfo = UserInfo(newAnonymousId, null, null)
-        val s = clearSession()
+        val s = SessionInfo(null, 0, false)
         sessionInfo = s
         analyticsScope.launch(analyticsDispatcher) {
             store.dispatch(UserInfo.ResetAction(newAnonymousId), UserInfo::class)
@@ -799,7 +799,7 @@ open class Analytics protected constructor(
     }
 
     fun endSession() {
-        val s = clearSession()
+        val s = SessionInfo(null, 0, false)
         sessionInfo = s
         analyticsScope.launch(analyticsDispatcher) {
             store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)

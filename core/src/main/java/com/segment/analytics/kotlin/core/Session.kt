@@ -10,6 +10,3 @@ fun newSession(id: Long?, timeout: Long): SessionInfo {
         return SessionInfo(sessionId, expiration, true)
 }
 
-fun clearSession(): SessionInfo {
-        return SessionInfo(null, 0, false)
-}
