@@ -1,6 +1,8 @@
 package com.segment.analytics.kotlin.core
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import sovran.kotlin.Store
@@ -43,6 +45,7 @@ interface Storage {
         SessionId("segment.sessionId"),
         SessionExpiration("segment.sessionExpiration"),
         SessionStart("segment.sessionStart"),
+        Suspended("segment.suspended"),
     }
 
     val storageDirectory: File
@@ -97,6 +100,38 @@ interface Storage {
             remove(Constants.Settings)
         }
     }
+
+    suspend fun suspend(sessionId: Long?, sessionExpiration: Long, sessionStart: Boolean, userAnonymousId: String, userTraits: JsonObject?) {
+        var suspendedSession: SuspendedSession? = null
+        if (sessionId != null) {
+            suspendedSession = SuspendedSession(sessionId, sessionExpiration, sessionStart)
+        }
+        val suspended = Suspended(suspendedSession, userAnonymousId, userTraits)
+        write(Constants.Suspended, Json.encodeToString(suspended))
+    }
+
+    suspend fun removeSuspended() {
+        remove(Constants.Suspended)
+    }
+
+    suspend fun restore(): List<Any?> {
+        var session: SuspendedSession? = null
+        var userAnonymousId: String? = null
+        var userTraits: JsonObject? = null
+        val suspended = read(Constants.Suspended)
+        if (suspended != null) {
+            val s = Json.decodeFromString<Suspended>(suspended)
+            session = s.session
+            userAnonymousId = s.userAnonymousId
+            userTraits = s.userTraits
+        }
+        if (session == null) {
+            session = SuspendedSession(null, 0, false)
+        }
+        remove(Constants.Suspended)
+        return listOf(session.id, session.expiration, session.start, userAnonymousId, userTraits)
+    }
+
 }
 
 fun parseFilePaths(filePathStr: String?): List<String> {
@@ -122,3 +157,9 @@ interface StorageProvider {
         application: Any
     ): Storage
 }
+
+@Serializable
+data class SuspendedSession(val id: Long?, val expiration: Long, val start: Boolean)
+
+@Serializable
+data class Suspended(val session: SuspendedSession?, val userAnonymousId: String, val userTraits: JsonObject?)
