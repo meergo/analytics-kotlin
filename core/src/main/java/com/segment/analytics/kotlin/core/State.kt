@@ -169,6 +169,12 @@ data class UserInfo(
             return UserInfo(state.anonymousId, userId, traits)
         }
     }
+
+    class SetUserAction(var anonymousId: String, var userId: String?, var traits: JsonObject?) : Action<UserInfo> {
+        override fun reduce(state: UserInfo): UserInfo {
+            return UserInfo(anonymousId, userId, traits)
+        }
+    }
 }
 
 /**

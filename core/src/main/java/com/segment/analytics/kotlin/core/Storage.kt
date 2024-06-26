@@ -110,13 +110,13 @@ interface Storage {
         write(Constants.Suspended, Json.encodeToString(suspended))
     }
 
-    suspend fun removeSuspended() {
+    fun removeSuspended() {
         remove(Constants.Suspended)
     }
 
-    suspend fun restore(): List<Any?> {
+    fun restore(): List<Any?> {
         var session: SuspendedSession? = null
-        var userAnonymousId: String? = null
+        var userAnonymousId = ""
         var userTraits: JsonObject? = null
         val suspended = read(Constants.Suspended)
         if (suspended != null) {

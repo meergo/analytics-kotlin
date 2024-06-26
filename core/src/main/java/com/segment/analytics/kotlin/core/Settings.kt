@@ -18,7 +18,7 @@ import java.io.BufferedReader
 
 @Serializable
 data class Settings(
-    var strategy: String = "",
+    var strategy: String = "A-B-C",
     var integrations: JsonObject = emptyJsonObject,
     var plan: JsonObject = emptyJsonObject,
     var edgeFunction: JsonObject = emptyJsonObject,
@@ -82,28 +82,29 @@ fun Analytics.manuallyEnableDestination(plugin: DestinationPlugin) {
 /**
  * Make analytics client call into Segment's settings API, to refresh certain configurations.
  */
-suspend fun Analytics.checkSettings() {
+suspend fun Analytics.checkSettings(): Settings? {
     val writeKey = configuration.writeKey
     val cdnHost = configuration.cdnHost
 
-    store.currentState(System::class) ?: return
+    store.currentState(System::class) ?: return null
     store.dispatch(System.ToggleRunningAction(running = false), System::class)
 
-    withContext(networkIODispatcher) {
+    val settingsObj: Settings? = withContext(networkIODispatcher) {
         log("Fetching settings on ${Thread.currentThread().name}")
-        val settingsObj: Settings? = fetchSettings(writeKey, cdnHost)
-
-        withContext(analyticsDispatcher) {
-            settingsObj?.let {
-                log("Dispatching update settings on ${Thread.currentThread().name}")
-                store.dispatch(System.UpdateSettingsAction(settingsObj), System::class)
-                update(settingsObj)
-            }
-
-            // we're good to go back to a running state.
-            store.dispatch(System.ToggleRunningAction(running = true), System::class)
-        }
+        fetchSettings(writeKey, cdnHost)
     }
+
+    withContext(analyticsDispatcher) {
+        settingsObj?.let {
+            log("Dispatching update settings on ${Thread.currentThread().name}")
+            store.dispatch(System.UpdateSettingsAction(settingsObj), System::class)
+            update(settingsObj)
+        }
+        // we're good to go back to a running state.
+        store.dispatch(System.ToggleRunningAction(running = true), System::class)
+    }
+
+    return settingsObj
 }
 
 internal fun Analytics.fetchSettings(

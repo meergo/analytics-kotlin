@@ -55,6 +55,8 @@ open class Analytics protected constructor(
         )
     }
 
+    internal var options: Settings = System.defaultState(configuration, storage).settings!!
+
     internal var userInfo: UserInfo = UserInfo.defaultState(storage)
 
     internal var sessionInfo: SessionInfo = SessionInfo.defaultState(storage)
@@ -146,7 +148,13 @@ open class Analytics protected constructor(
                 add(SegmentDestination())
             }
 
-            checkSettings()
+            val settings = async {
+                checkSettings()
+            }
+            val s = settings.await()
+            if (s != null) {
+                options = s
+            }
         }
     }
 
@@ -226,10 +234,28 @@ open class Analytics protected constructor(
     @JvmOverloads
     fun identify(userId: String, traits: JsonObject = emptyJsonObject, enrichment: EnrichmentClosure? = null) {
         analyticsScope.launch(analyticsDispatcher) {
-            store.dispatch(UserInfo.SetUserIdAndTraitsAction(userId, traits), UserInfo::class)
+            var s = SessionInfo(sessionInfo.id, sessionInfo.expiration, sessionInfo.start)
+            val u = UserInfo(userInfo.anonymousId, userId, traits)
+            if (userId != userInfo.userId) {
+                if ((options.strategy.indexOf("-B")) > 0) {
+                    if (options.strategy == "AC-B") {
+                        storage.suspend(s.id, s.expiration, s.start, userInfo.anonymousId, userInfo.traits)
+                    } else {
+                        storage.removeSuspended()
+                    }
+                    u.anonymousId = UUID.randomUUID().toString()
+                    s = SessionInfo(null, 0, false)
+                } else {
+                    u.traits = mergeTraits(traits)
+                }
+            }
+            sessionInfo = s
+            userInfo = u
+            store.dispatch(UserInfo.SetUserAction(u.anonymousId, u.userId, u.traits), UserInfo::class)
+            store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)
+            val event = IdentifyEvent(userId = u.userId!!, traits = u.traits!!)
+            process(event, enrichment)
         }
-        val event = IdentifyEvent(userId = userId, traits = traits)
-        process(event, enrichment)
     }
 
     /**
@@ -597,16 +623,35 @@ open class Analytics protected constructor(
     }
 
     /**
-     * Reset the user identity info and all the event plugins. Should be invoked when
-     * user logs out
+     * Reset the user identity and session info based on the strategy, and reset all the event plugins.
+     * Should be invoked when user logs out
      */
     fun reset() {
-        val newAnonymousId = UUID.randomUUID().toString()
-        userInfo = UserInfo(newAnonymousId, null, null)
-        val s = SessionInfo(null, 0, false)
+        var s = SessionInfo(sessionInfo.id, sessionInfo.expiration, sessionInfo.start)
+        var u = UserInfo(userInfo.anonymousId, null, null)
+        if (options.strategy == "AC-B") {
+            val restored = storage.restore()
+            val sessionId = restored[0] as Long?
+            val sessionExpiration = restored[1] as Long
+            val sessionStart = restored[2] as Boolean
+            var anonymousId = restored[3] as String
+            if (anonymousId == "") {
+                anonymousId = UUID.randomUUID().toString()
+            }
+            val userTraits = restored[4] as JsonObject?
+            s = SessionInfo(sessionId, sessionExpiration, sessionStart)
+            u = UserInfo(anonymousId, null, userTraits)
+        } else {
+            storage.removeSuspended()
+            if (options.strategy.indexOf("-C") > 0) {
+                s = SessionInfo(null, 0, false)
+                u.anonymousId = UUID.randomUUID().toString()
+            }
+        }
         sessionInfo = s
+        userInfo = u
         analyticsScope.launch(analyticsDispatcher) {
-            store.dispatch(UserInfo.ResetAction(newAnonymousId), UserInfo::class)
+            store.dispatch(UserInfo.SetUserAction(u.anonymousId, u.userId, u.traits), UserInfo::class)
             store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)
             timeline.applyClosure {
                 (it as? EventPlugin)?.reset()
@@ -817,6 +862,20 @@ open class Analytics protected constructor(
         }
     }
 
+    fun mergeTraits(traits: JsonObject): JsonObject {
+        if (userInfo.traits == null) {
+            return traits
+        }
+        val t = buildJsonObject {
+            for ((k, v) in userInfo.traits!!) {
+                    put(k, v)
+            }
+            for ((k, v) in traits) {
+                    put(k, v)
+            }
+        }
+        return t
+    }
 }
 
 
