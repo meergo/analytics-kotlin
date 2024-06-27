@@ -630,10 +630,10 @@ open class Analytics protected constructor(
      *
      * @param all Indicates if the Anonymous ID and the session must be reset, regardless of the strategy.
      */
-    fun reset(all: Boolean?) {
+    fun reset(all: Boolean = false) {
         var s = SessionInfo(sessionInfo.id, sessionInfo.expiration, sessionInfo.start)
         var u = UserInfo(userInfo.anonymousId, null, null)
-        if (all != true && options.strategy == "AC-B") {
+        if (!all && options.strategy == "AC-B") {
             val restored = storage.restore()
             val sessionId = restored[0] as Long?
             val sessionExpiration = restored[1] as Long
@@ -647,7 +647,7 @@ open class Analytics protected constructor(
             u = UserInfo(anonymousId, null, userTraits)
         } else {
             storage.removeSuspended()
-            if (all == true || options.strategy.indexOf("-C") > 0) {
+            if (all || options.strategy.indexOf("-C") > 0) {
                 s = SessionInfo(null, 0, false)
                 u.anonymousId = UUID.randomUUID().toString()
             }
