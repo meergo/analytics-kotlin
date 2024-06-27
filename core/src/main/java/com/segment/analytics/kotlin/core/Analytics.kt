@@ -624,12 +624,16 @@ open class Analytics protected constructor(
 
     /**
      * Reset the user identity and session info based on the strategy, and reset all the event plugins.
-     * Should be invoked when user logs out
+     * If "all" is true always reset the Anonymous ID by generating a new one, and end the session
+     * if one exists, regardless of the strategy.
+     * Should be invoked when user logs out.
+     *
+     * @param all Indicates if the Anonymous ID and the session must be reset, regardless of the strategy.
      */
-    fun reset() {
+    fun reset(all: Boolean?) {
         var s = SessionInfo(sessionInfo.id, sessionInfo.expiration, sessionInfo.start)
         var u = UserInfo(userInfo.anonymousId, null, null)
-        if (options.strategy == "AC-B") {
+        if (all != true && options.strategy == "AC-B") {
             val restored = storage.restore()
             val sessionId = restored[0] as Long?
             val sessionExpiration = restored[1] as Long
@@ -643,7 +647,7 @@ open class Analytics protected constructor(
             u = UserInfo(anonymousId, null, userTraits)
         } else {
             storage.removeSuspended()
-            if (options.strategy.indexOf("-C") > 0) {
+            if (all == true || options.strategy.indexOf("-C") > 0) {
                 s = SessionInfo(null, 0, false)
                 u.anonymousId = UUID.randomUUID().toString()
             }
