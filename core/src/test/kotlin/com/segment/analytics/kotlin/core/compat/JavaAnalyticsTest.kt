@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import withoutSessionInfo
 import java.util.*
 import java.util.function.Consumer
 
@@ -99,7 +100,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.track(capture(track)) }
             assertEquals(
                 TrackEvent(emptyJsonObject, event).populate(),
-                track.captured
+                withoutSessionInfo(track.captured)
             )
         }
 
@@ -111,7 +112,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.track(capture(track)) }
             assertEquals(
                 TrackEvent(json, event).populate(),
-                track.captured
+                withoutSessionInfo(track.captured)
             )
         }
 
@@ -123,7 +124,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.track(capture(track)) }
             assertEquals(
                 TrackEvent(json, event).populate(),
-                track.captured
+                withoutSessionInfo(track.captured)
             )
         }
 
@@ -136,7 +137,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.track(capture(track)) }
             assertEquals(
                 TrackEvent(json, event).populate(),
-                track.captured
+                withoutSessionInfo(track.captured)
             )
         }
     }
@@ -173,7 +174,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.screen(capture(screen)) }
             assertEquals(
                 ScreenEvent(title, category, emptyJsonObject).populate(),
-                screen.captured
+                withoutSessionInfo(screen.captured)
             )
         }
 
@@ -185,7 +186,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.screen(capture(screen)) }
             assertEquals(
                 ScreenEvent(title, category, json).populate(),
-                screen.captured
+                withoutSessionInfo(screen.captured)
             )
         }
 
@@ -197,7 +198,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.screen(capture(screen)) }
             assertEquals(
                 ScreenEvent(title, category, json).populate(),
-                screen.captured
+                withoutSessionInfo(screen.captured)
             )
         }
 
@@ -209,7 +210,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.screen(capture(screen)) }
             assertEquals(
                 ScreenEvent(title, category, json).populate(),
-                screen.captured
+                withoutSessionInfo(screen.captured)
             )
         }
     }
@@ -244,7 +245,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.group(capture(group)) }
             assertEquals(
                 GroupEvent(groupId, emptyJsonObject).populate(),
-                group.captured
+                withoutSessionInfo(group.captured)
             )
         }
 
@@ -256,7 +257,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.group(capture(group)) }
             assertEquals(
                 GroupEvent(groupId, json).populate(),
-                group.captured
+                withoutSessionInfo(group.captured)
             )
         }
 
@@ -268,7 +269,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.group(capture(group)) }
             assertEquals(
                 GroupEvent(groupId, json).populate(),
-                group.captured
+                withoutSessionInfo(group.captured)
             )
         }
 
@@ -280,7 +281,7 @@ internal class JavaAnalyticsTest {
             verify { mockPlugin.group(capture(group)) }
             assertEquals(
                 GroupEvent(groupId, json).populate(),
-                group.captured
+                withoutSessionInfo(group.captured)
             )
         }
     }
@@ -310,7 +311,7 @@ internal class JavaAnalyticsTest {
                 AliasEvent(newId, previousId).populate().apply {
                     userId = "newId"
                 },
-                alias.captured
+                withoutSessionInfo(alias.captured)
             )
         }
     }
@@ -347,7 +348,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent(userId, emptyJsonObject).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
 
@@ -362,7 +363,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent(userId, json).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
 
@@ -377,7 +378,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent(userId, json).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
 
@@ -391,7 +392,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent(userId, json).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
 
@@ -407,7 +408,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent("", json).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
 
@@ -424,7 +425,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent("", json).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
 
@@ -441,7 +442,7 @@ internal class JavaAnalyticsTest {
                 IdentifyEvent("", json).populate().apply {
                     userId = this@Identify.userId
                 },
-                identify.captured
+                withoutSessionInfo(identify.captured)
             )
         }
     }

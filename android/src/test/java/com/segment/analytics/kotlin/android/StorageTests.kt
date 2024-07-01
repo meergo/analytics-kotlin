@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import sovran.kotlin.Action
 import sovran.kotlin.Store
+import withoutSessionInfo
 import java.io.File
 import java.util.Date
 import java.util.HashMap
@@ -264,7 +265,7 @@ class StorageTests {
                         TrackEvent.serializer(),
                         Json.encodeToString(eventInFile)
                     )
-                    assertEquals(event, eventInFile2)
+                    assertEquals(event, withoutSessionInfo(eventInFile2))
                 }
             }
 

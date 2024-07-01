@@ -7,7 +7,6 @@ import com.segment.analytics.kotlin.core.platform.plugins.SegmentDestination
 import com.segment.analytics.kotlin.core.utilities.SegmentInstant
 import com.segment.analytics.kotlin.core.utilities.getString
 import com.segment.analytics.kotlin.core.utilities.putInContext
-import com.segment.analytics.kotlin.core.utilities.updateJsonObject
 import com.segment.analytics.kotlin.core.utils.StubPlugin
 import com.segment.analytics.kotlin.core.utils.TestRunPlugin
 import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
@@ -17,10 +16,12 @@ import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
@@ -30,6 +31,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
+import withoutSessionInfo
 import java.io.ByteArrayInputStream
 import java.net.HttpURLConnection
 import java.util.Date
@@ -229,7 +231,9 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertEquals(baseContext, it.context)
+                assertTrue((it.context["SessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["SessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
+                assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
             }
         }
@@ -245,7 +249,9 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertEquals(baseContext, it.context)
+                assertTrue((it.context["SessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["SessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
+                assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
             }
         }
@@ -261,7 +267,9 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertEquals(baseContext, it.context)
+                assertTrue((it.context["SessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["SessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
+                assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
             }
         }
@@ -277,7 +285,9 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertEquals(baseContext, it.context)
+                assertTrue((it.context["SessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["SessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
+                assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
             }
         }
@@ -294,7 +304,9 @@ class AnalyticsTests {
                 assertTrue(it.messageId.isNotBlank())
                 assertTrue(it.timestamp == epochTimestamp)
                 assertEquals(emptyJsonObject, it.integrations)
-                assertEquals(baseContext, it.context)
+                assertTrue((it.context["SessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["SessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
+                assertEquals(baseContext, withoutSessionInfo(it).context)
             }
         }
 
@@ -312,7 +324,7 @@ class AnalyticsTests {
                         properties = buildJsonObject { put("foo", "bar") },
                         event = "track"
                     ).populate(),
-                    track.captured
+                    withoutSessionInfo(track.captured)
                 )
             }
 
@@ -328,7 +340,7 @@ class AnalyticsTests {
                         properties = buildJsonObject { put("foo", "bar") },
                         event = "track"
                     ).populate(),
-                    track.captured
+                    withoutSessionInfo(track.captured)
                 )
             }
 
@@ -344,7 +356,7 @@ class AnalyticsTests {
                         properties = buildJsonObject { put("foo", "bar") },
                         event = "track"
                     ).populate(),
-                    track.captured
+                    withoutSessionInfo(track.captured)
                 )
             }
 
@@ -360,7 +372,7 @@ class AnalyticsTests {
                         properties = buildJsonObject { put("foo", "bar") },
                         event = "track"
                     ).populate(),
-                    track.captured
+                    withoutSessionInfo(track.captured)
                 )
             }
 
@@ -402,7 +414,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("name", "bar") },
                         userId = "foobar"
                     ).populate(),
-                    identify.captured
+                    withoutSessionInfo(identify.captured)
                 )
             }
 
@@ -419,7 +431,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("name", "bar") },
                         userId = "foobar"
                     ).populate(),
-                    identify.captured
+                    withoutSessionInfo(identify.captured)
                 )
             }
 
@@ -436,7 +448,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("name", "bar") },
                         userId = "foobar"
                     ).populate(),
-                    identify.captured
+                    withoutSessionInfo(identify.captured)
                 )
             }
 
@@ -453,7 +465,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("name", "bar") },
                         userId = "foobar"
                     ).populate(),
-                    identify.captured
+                    withoutSessionInfo(identify.captured)
                 )
             }
 
@@ -556,7 +568,7 @@ class AnalyticsTests {
                         name = "main",
                         category = "mobile"
                     ).populate(),
-                    screen.captured
+                    withoutSessionInfo(screen.captured)
                 )
             }
 
@@ -576,7 +588,7 @@ class AnalyticsTests {
                         name = "main",
                         category = "mobile"
                     ).populate(),
-                    screen.captured
+                    withoutSessionInfo(screen.captured)
                 )
             }
 
@@ -596,7 +608,7 @@ class AnalyticsTests {
                         name = "main",
                         category = "mobile"
                     ).populate(),
-                    screen.captured
+                    withoutSessionInfo(screen.captured)
                 )
             }
 
@@ -616,7 +628,7 @@ class AnalyticsTests {
                         name = "main",
                         category = "mobile"
                     ).populate(),
-                    screen.captured
+                    withoutSessionInfo(screen.captured)
                 )
             }
 
@@ -658,7 +670,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("foo", "bar") },
                         groupId = "high school"
                     ).populate(),
-                    group.captured
+                    withoutSessionInfo(group.captured)
                 )
             }
 
@@ -674,7 +686,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("foo", "bar") },
                         groupId = "high school"
                     ).populate(),
-                    group.captured
+                    withoutSessionInfo(group.captured)
                 )
             }
 
@@ -690,7 +702,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("foo", "bar") },
                         groupId = "high school"
                     ).populate(),
-                    group.captured
+                    withoutSessionInfo(group.captured)
                 )
             }
 
@@ -706,7 +718,7 @@ class AnalyticsTests {
                         traits = buildJsonObject { put("foo", "bar") },
                         groupId = "high school"
                     ).populate(),
-                    group.captured
+                    withoutSessionInfo(group.captured)
                 )
             }
 
@@ -748,7 +760,7 @@ class AnalyticsTests {
                         userId = "newId",
                         previousId = "qwerty-qwerty-123"
                     ).populate(),
-                    alias.captured
+                    withoutSessionInfo(alias.captured)
                 )
             }
 
@@ -765,7 +777,7 @@ class AnalyticsTests {
                         userId = "newId",
                         previousId = "oldId"
                     ).populate(),
-                    alias.captured
+                    withoutSessionInfo(alias.captured)
                 )
             }
 
