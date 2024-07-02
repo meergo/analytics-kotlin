@@ -58,7 +58,7 @@ internal class JavaAnalyticsTest {
             .build()
 
         analytics = JavaAnalytics(
-            analytics = testAnalytics(config, testScope, testDispatcher)
+            analytics = testAnalytics(config, null, testScope, testDispatcher)
         )
         mockPlugin = spyk(StubPlugin())
     }

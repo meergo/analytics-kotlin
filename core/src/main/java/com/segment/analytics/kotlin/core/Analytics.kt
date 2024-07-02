@@ -36,6 +36,7 @@ import kotlin.reflect.KClass
  */
 open class Analytics protected constructor(
     val configuration: Configuration,
+    val providedStrategy: String?,
     coroutineConfig: CoroutineConfiguration,
 ) : Subscriber, CoroutineConfiguration by coroutineConfig {
 
@@ -96,7 +97,7 @@ open class Analytics protected constructor(
      * @property configuration configuration that analytics can use
      */
     @OptIn(ExperimentalCoroutinesApi::class)
-    constructor(configuration: Configuration) : this(configuration,
+    constructor(configuration: Configuration) : this(configuration, null,
         object : CoroutineConfiguration {
             override val store = Store()
             val exceptionHandler = CoroutineExceptionHandler { _, t ->
@@ -155,7 +156,13 @@ open class Analytics protected constructor(
             val settings = async {
                 checkSettings()
             }
-            val s = settings.await()
+            var s = settings.await()
+            if (providedStrategy != null) {
+                if (s == null) {
+                    s = options
+                }
+                s.strategy = providedStrategy
+            }
             if (s != null) {
                 options = s
             }

@@ -71,7 +71,7 @@ class AnalyticsTests {
             application = "Test"
         )
 
-        analytics = testAnalytics(config, testScope, testDispatcher)
+        analytics = testAnalytics(config, null, testScope, testDispatcher)
         analytics.configuration.autoAddSegmentDestination = false
     }
 
@@ -121,7 +121,7 @@ class AnalyticsTests {
                 application = "Test",
                 apiHost = "local"
             )
-            analytics = testAnalytics(config, testScope, testDispatcher)
+            analytics = testAnalytics(config, null, testScope, testDispatcher)
             analytics.track("test")
             analytics.flush()
 
@@ -138,7 +138,7 @@ class AnalyticsTests {
                 application = "Test",
                 apiHost = "local"
             )
-            analytics = testAnalytics(config, testScope, testDispatcher)
+            analytics = testAnalytics(config, null, testScope, testDispatcher)
             analytics.track("test")
             analytics.flush()
 

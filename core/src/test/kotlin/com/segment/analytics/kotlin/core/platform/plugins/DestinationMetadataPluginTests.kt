@@ -62,7 +62,7 @@ class DestinationMetadataPluginTests {
             flushAt = 2,
             flushInterval = 0
         )
-        analytics = testAnalytics(config, testScope, testDispatcher)
+        analytics = testAnalytics(config, null, testScope, testDispatcher)
         plugin.setup(analytics)
     }
 

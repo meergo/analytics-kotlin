@@ -41,7 +41,7 @@ class DeviceTokenPluginTests {
                 application = "Test",
                 autoAddSegmentDestination = false
             )
-        analytics = testAnalytics(config, testScope, testDispatcher)
+        analytics = testAnalytics(config, null, testScope, testDispatcher)
     }
 
     @Test
