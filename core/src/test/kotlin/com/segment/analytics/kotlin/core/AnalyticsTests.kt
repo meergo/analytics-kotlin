@@ -19,10 +19,10 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
+import kotlinx.serialization.json.longOrNull
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -231,7 +231,7 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertTrue((it.context["sessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["sessionId"]?.jsonPrimitive?.longOrNull) != null)
                 assertTrue((it.context["sessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
                 assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
@@ -249,7 +249,7 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertTrue((it.context["sessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["sessionId"]?.jsonPrimitive?.longOrNull) != null)
                 assertTrue((it.context["sessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
                 assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
@@ -267,7 +267,7 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertTrue((it.context["sessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["sessionId"]?.jsonPrimitive?.longOrNull) != null)
                 assertTrue((it.context["sessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
                 assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
@@ -285,7 +285,7 @@ class AnalyticsTests {
                 assertTrue(it.anonymousId.isNotBlank())
                 assertTrue(it.messageId.isNotBlank())
                 assertEquals(epochTimestamp, it.timestamp)
-                assertTrue((it.context["sessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["sessionId"]?.jsonPrimitive?.longOrNull) != null)
                 assertTrue((it.context["sessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
                 assertEquals(baseContext, withoutSessionInfo(it).context)
                 assertEquals(emptyJsonObject, it.integrations)
@@ -304,7 +304,7 @@ class AnalyticsTests {
                 assertTrue(it.messageId.isNotBlank())
                 assertTrue(it.timestamp == epochTimestamp)
                 assertEquals(emptyJsonObject, it.integrations)
-                assertTrue((it.context["sessionId"]?.jsonPrimitive?.contentOrNull) != null)
+                assertTrue((it.context["sessionId"]?.jsonPrimitive?.longOrNull) != null)
                 assertTrue((it.context["sessionStart"]?.jsonPrimitive?.booleanOrNull) == true)
                 assertEquals(baseContext, withoutSessionInfo(it).context)
             }
