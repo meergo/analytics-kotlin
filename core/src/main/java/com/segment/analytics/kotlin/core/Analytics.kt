@@ -552,9 +552,9 @@ open class Analytics protected constructor(
         val context = buildJsonObject {
             event.context.forEach { (key, value) -> put(key, value)}
             if (s.id != null) {
-               put("SessionId", (s.id!!).toJsonElement())
+               put("sessionId", (s.id!!).toJsonElement())
                 if (s.start) {
-                   put("SessionStart", true.toJsonElement())
+                   put("sessionStart", true.toJsonElement())
                 }
             }
         }
