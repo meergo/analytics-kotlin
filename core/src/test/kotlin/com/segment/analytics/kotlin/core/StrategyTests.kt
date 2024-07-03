@@ -4,7 +4,9 @@ import com.segment.analytics.kotlin.core.utils.StubPlugin
 import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
 import com.segment.analytics.kotlin.core.utils.mockHTTPClient
 import com.segment.analytics.kotlin.core.utils.testAnalytics
-import io.mockk.*
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.serialization.json.buildJsonObject
@@ -15,11 +17,17 @@ import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.UUID
 import java.util.stream.Stream
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.DurationUnit
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StrategyTests {
@@ -39,9 +47,105 @@ class StrategyTests {
         mockHTTPClient()
     }
 
-    @ParameterizedTest(name = "Test strategy {0} with autoTrack set to {1}")
+    @Test
+    fun `startSession argument validation`() {
+        val config = Configuration(
+            writeKey = "123",
+            application = "Test",
+            sessionAutoTrack = false,
+            autoAddSegmentDestination = false
+        )
+        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val mockPlugin = spyk(StubPlugin())
+        analytics.add(mockPlugin)
+        analytics.userInfo = UserInfo(UUID.randomUUID().toString(), "274084295", buildJsonObject { put("first_name", "Susan") })
+        var ids = listOf<Any?>(null, 1L, 100L, Long.MAX_VALUE)
+        for (id in ids) {
+            analytics.startSession(id)
+        }
+        ids = listOf("a", emptyJsonObject, -100L, -10.56, -1, 0, -0, 0.1, 23.904, Long.MAX_VALUE + 1)
+        for (id in ids) {
+            val error = assertThrows<Error> {
+                analytics.startSession(id)
+            }
+            assertEquals("sessionId must be a positive integer", error.message)
+        }
+    }
+
+    @Test
+    fun `sessions with auto tracking`() {
+        try {
+            globalTime = FakeTime()
+            val config = Configuration(
+                writeKey = "123",
+                application = "Test",
+                sessionAutoTrack = true,
+                autoAddSegmentDestination = false
+            )
+            val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+            val mockPlugin = spyk(StubPlugin())
+            analytics.add(mockPlugin)
+            var sessionId = now()
+            assertEquals(analytics.getSessionId(), sessionId)
+            globalTime!!.tick(2.minutes.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), sessionId)
+            globalTime!!.tick(5.minutes.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), null)
+            analytics.track("click")
+            sessionId = now()
+            assertEquals(analytics.getSessionId(), sessionId)
+            analytics.reset()
+            assertEquals(analytics.getSessionId(), null)
+        } finally {
+            globalTime = null
+        }
+    }
+
+    @Test
+    fun `sessions without auto tracking`() {
+        try {
+            globalTime = FakeTime()
+            val config = Configuration(
+                writeKey = "123",
+                application = "Test",
+                sessionAutoTrack = false,
+                autoAddSegmentDestination = false
+            )
+            val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+            val mockPlugin = spyk(StubPlugin())
+            analytics.add(mockPlugin)
+            globalTime!!.tick(10.milliseconds.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), null)
+            globalTime!!.tick(2.minutes.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), null)
+            globalTime!!.tick(5.minutes.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), null)
+            analytics.track("click")
+            globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), null)
+            globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
+            analytics.startSession(728472643L)
+            assertEquals(analytics.getSessionId(), 728472643L)
+            globalTime!!.tick(10.minutes.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), 728472643L)
+            analytics.endSession()
+            assertEquals(analytics.getSessionId(), null)
+            analytics.track("click")
+            globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
+            assertEquals(analytics.getSessionId(), null)
+            globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
+            analytics.startSession(728819037L)
+            assertEquals(analytics.getSessionId(), 728819037L)
+            analytics.reset()
+            assertEquals(analytics.getSessionId(), null)
+        } finally {
+            globalTime = null
+        }
+    }
+
+    @ParameterizedTest(name = "strategy {0} with autoTrack set to {1}")
     @MethodSource("provideStrategyAndAutoTrack")
-    fun `Test identify and reset with each strategy, both with and without session`(strategy: String, autoTrack: Boolean) {
+    fun `identify and reset with each strategy, both with and without session`(strategy: String, autoTrack: Boolean) {
 
         val config = Configuration(
             writeKey = "123",
@@ -145,6 +249,27 @@ class StrategyTests {
             Arguments.of(strategies[3], autoTrack[0]),
             Arguments.of(strategies[3], autoTrack[1]),
         )
+    }
 
+    @Test
+    fun `changing User ID resets traits and Anonymous ID`() {
+        val config = Configuration(
+            writeKey = "123",
+            application = "Test",
+            sessionAutoTrack = false,
+            autoAddSegmentDestination = false
+        )
+        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val mockPlugin = spyk(StubPlugin())
+        analytics.add(mockPlugin)
+        analytics.userInfo = UserInfo(UUID.randomUUID().toString(), "274084295", buildJsonObject { put("first_name", "Susan") })
+        analytics.identify("920577314")
+        val identify = slot<IdentifyEvent>()
+        verify { mockPlugin.identify(capture(identify)) }
+        val event = identify.captured
+        assertEquals(analytics.userInfo.traits, emptyJsonObject)
+        val newAnonymousId = analytics.userInfo.anonymousId
+        assertEquals(event.traits, emptyJsonObject)
+        assertEquals(event.anonymousId, newAnonymousId)
     }
 }

@@ -25,6 +25,23 @@ import java.util.*
 import java.util.concurrent.Executors
 import kotlin.reflect.KClass
 
+class FakeTime() {
+
+    var timeMillis = java.lang.System.currentTimeMillis()
+
+    fun currentTimeMillis(): Long = timeMillis
+
+    fun tick(milliseconds: Long) {
+        timeMillis += milliseconds
+    }
+}
+
+var globalTime: FakeTime? = null
+
+fun now(): Long {
+    return globalTime?.currentTimeMillis() ?: java.lang.System.currentTimeMillis()
+}
+
 /**
  * Internal constructor of Analytics. Used for internal unit tests injection
  * @property configuration configuration that analytics can use
@@ -828,7 +845,7 @@ open class Analytics protected constructor(
     fun getSessionId(): Long? {
         var id: Long? = sessionInfo.id
         if (id != null && configuration.sessionAutoTrack) {
-            val now = java.lang.System.currentTimeMillis()
+            val now = now()
             if ((sessionInfo.expiration) < now) {
                 id = null
             }
@@ -840,7 +857,7 @@ open class Analytics protected constructor(
         var id = sessionInfo.id
         var expiration = sessionInfo.expiration
         var start = sessionInfo.start
-        val now = java.lang.System.currentTimeMillis()
+        val now = now()
         if (configuration.sessionAutoTrack) {
             if (id == null || expiration < now) {
                 id = now
