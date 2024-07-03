@@ -256,7 +256,7 @@ open class Analytics protected constructor(
                     }
                     u.anonymousId = UUID.randomUUID().toString()
                     s = SessionInfo(null, 0, false)
-                } else {
+                } else if (userInfo.userId == null) {
                     u.traits = mergeTraits(traits)
                 }
             }
