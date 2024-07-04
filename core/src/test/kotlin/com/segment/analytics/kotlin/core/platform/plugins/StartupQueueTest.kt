@@ -30,7 +30,7 @@ internal class StartupQueueTest {
             application = "Test",
             autoAddSegmentDestination = false
         )
-        analytics = testAnalytics(config, null, testScope, testDispatcher)
+        analytics = testAnalytics(config, testScope, testDispatcher)
     }
 
     @Test

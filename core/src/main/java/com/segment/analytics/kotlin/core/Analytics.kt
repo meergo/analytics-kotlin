@@ -42,6 +42,8 @@ fun now(): Long {
     return globalTime?.currentTimeMillis() ?: java.lang.System.currentTimeMillis()
 }
 
+var globalStrategy: String? = null
+
 /**
  * Internal constructor of Analytics. Used for internal unit tests injection
  * @property configuration configuration that analytics can use
@@ -53,7 +55,6 @@ fun now(): Long {
  */
 open class Analytics protected constructor(
     val configuration: Configuration,
-    val providedStrategy: String?,
     coroutineConfig: CoroutineConfiguration,
 ) : Subscriber, CoroutineConfiguration by coroutineConfig {
 
@@ -114,7 +115,7 @@ open class Analytics protected constructor(
      * @property configuration configuration that analytics can use
      */
     @OptIn(ExperimentalCoroutinesApi::class)
-    constructor(configuration: Configuration) : this(configuration, null,
+    constructor(configuration: Configuration) : this(configuration,
         object : CoroutineConfiguration {
             override val store = Store()
             val exceptionHandler = CoroutineExceptionHandler { _, t ->
@@ -174,11 +175,11 @@ open class Analytics protected constructor(
                 checkSettings()
             }
             var s = settings.await()
-            if (providedStrategy != null) {
+            if (globalStrategy != null) {
                 if (s == null) {
                     s = options
                 }
-                s.strategy = providedStrategy
+                s.strategy = globalStrategy!!
             }
             if (s != null) {
                 options = s

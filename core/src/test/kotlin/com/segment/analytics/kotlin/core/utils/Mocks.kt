@@ -27,8 +27,8 @@ fun mockAnalytics(testScope: TestScope, testDispatcher: TestDispatcher): Analyti
     return mock
 }
 
-fun testAnalytics(configuration: Configuration, strategy: String?, testScope: TestScope, testDispatcher: TestDispatcher): Analytics {
-    return object : Analytics(configuration, strategy, TestCoroutineConfiguration(testScope, testDispatcher)) {}
+fun testAnalytics(configuration: Configuration, testScope: TestScope, testDispatcher: TestDispatcher): Analytics {
+    return object : Analytics(configuration, TestCoroutineConfiguration(testScope, testDispatcher)) {}
 }
 
 fun clearPersistentStorage(writeKey: String = "123") {

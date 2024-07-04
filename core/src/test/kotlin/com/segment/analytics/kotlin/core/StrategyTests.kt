@@ -46,17 +46,19 @@ class StrategyTests {
         clearPersistentStorage()
         mockHTTPClient()
         globalTime = null
+        globalStrategy = null
     }
 
     @Test
     fun `startSession argument validation`() {
+        globalStrategy = "AB-C"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = false,
             autoAddSegmentDestination = false
         )
-        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
         analytics.add(mockPlugin)
         analytics.userInfo = UserInfo(UUID.randomUUID().toString(), "274084295", buildJsonObject { put("first_name", "Susan") })
@@ -76,13 +78,14 @@ class StrategyTests {
     @Test
     fun `sessions with auto tracking`() {
         globalTime = FakeTime()
+        globalStrategy = "AB-C"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = true,
             autoAddSegmentDestination = false
         )
-        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
         analytics.add(mockPlugin)
         var sessionId = now()
@@ -101,13 +104,14 @@ class StrategyTests {
     @Test
     fun `sessions without auto tracking`() {
         globalTime = FakeTime()
+        globalStrategy = "AB-C"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = false,
             autoAddSegmentDestination = false
         )
-        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
         analytics.add(mockPlugin)
         globalTime!!.tick(10.milliseconds.toLong(DurationUnit.MILLISECONDS))
@@ -139,14 +143,14 @@ class StrategyTests {
     @ParameterizedTest(name = "strategy {0} with autoTrack set to {1}")
     @MethodSource("provideStrategyAndAutoTrack")
     fun `identify and reset with each strategy, both with and without session`(strategy: String, autoTrack: Boolean) {
-
+        globalStrategy = strategy
         val config = Configuration(
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = autoTrack,
             autoAddSegmentDestination = false
         )
-        val analytics = testAnalytics(config, strategy, testScope, testDispatcher)
+        val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
         analytics.add(mockPlugin)
 
@@ -246,13 +250,14 @@ class StrategyTests {
 
     @Test
     fun `changing User ID resets traits and Anonymous ID`() {
+        globalStrategy = "AB-C"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = false,
             autoAddSegmentDestination = false
         )
-        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
         analytics.add(mockPlugin)
         analytics.userInfo = UserInfo(UUID.randomUUID().toString(), "274084295", buildJsonObject { put("first_name", "Susan") })

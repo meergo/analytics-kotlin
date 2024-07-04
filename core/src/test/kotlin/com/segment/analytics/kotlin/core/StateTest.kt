@@ -32,7 +32,7 @@ internal class StateTest {
             writeKey = "123",
             application = "Test"
         )
-        analytics = testAnalytics(config, null, testScope, testDispatcher)
+        analytics = testAnalytics(config, testScope, testDispatcher)
 
         analytics.configuration.autoAddSegmentDestination = false
     }

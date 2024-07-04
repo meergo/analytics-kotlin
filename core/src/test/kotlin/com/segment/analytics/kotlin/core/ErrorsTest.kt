@@ -34,7 +34,7 @@ class ErrorsTest {
             errorHandler = errorHandler,
         )
 
-        analytics = testAnalytics(config, null, testScope, testDispatcher)
+        analytics = testAnalytics(config, testScope, testDispatcher)
         analytics.configuration.autoAddSegmentDestination = false
     }
 

@@ -28,7 +28,7 @@ internal class LoggerTest {
             application = "Tetst",
             autoAddSegmentDestination = false
         )
-        analytics = testAnalytics(config, null, testScope, testDispatcher)
+        analytics = testAnalytics(config, testScope, testDispatcher)
     }
 
     @Test

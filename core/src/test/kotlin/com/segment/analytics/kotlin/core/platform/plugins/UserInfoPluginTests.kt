@@ -30,7 +30,7 @@ class UserInfoPluginTests {
         autoAddSegmentDestination = false
     )
 
-    private val testAnalytics = testAnalytics(config, null, testScope, testDispatcher)
+    private val testAnalytics = testAnalytics(config, testScope, testDispatcher)
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     private val timeline: Timeline
 

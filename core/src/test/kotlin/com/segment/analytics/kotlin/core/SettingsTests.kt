@@ -37,7 +37,7 @@ class SettingsTests {
         analytics = testAnalytics(Configuration(
             writeKey = "123",
             application = "Test"
-        ), null, testScope, testDispatcher)
+        ), testScope, testDispatcher)
         analytics.configuration.autoAddSegmentDestination = false
     }
 
@@ -83,7 +83,7 @@ class SettingsTests {
             writeKey = "123",
             application = "Test",
             autoAddSegmentDestination = false
-        ), null, testScope, testDispatcher)
+        ), testScope, testDispatcher)
         val mockPlugin = spyk<StubPlugin>()
 
         // no settings available, should not be called
@@ -117,7 +117,7 @@ class SettingsTests {
             writeKey = "123",
             application = "Test",
             autoAddSegmentDestination = false
-        ), null, testScope, testDispatcher)
+        ), testScope, testDispatcher)
         val mockPlugin = spyk<StubPlugin>()
 
         analytics.add(mockPlugin)
