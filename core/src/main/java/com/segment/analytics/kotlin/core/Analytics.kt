@@ -268,7 +268,11 @@ open class Analytics protected constructor(
             if (userId != userInfo.userId) {
                 if ((options.strategy.indexOf("-B")) > 0) {
                     if (options.strategy == "AC-B") {
-                        storage.suspend(s.id, s.expiration, s.start, userInfo.anonymousId, userInfo.traits)
+                        if (configuration.sessionAutoTrack) {
+                            storage.suspend(s.id, s.expiration, s.start, userInfo.anonymousId, userInfo.traits)
+                        } else {
+                            storage.suspend(null, 0, false, userInfo.anonymousId, userInfo.traits)
+                        }
                     } else {
                         storage.removeSuspended()
                     }
@@ -672,7 +676,9 @@ open class Analytics protected constructor(
                 anonymousId = UUID.randomUUID().toString()
             }
             val userTraits = restored[4] as JsonObject?
-            s = SessionInfo(sessionId, sessionExpiration, sessionStart)
+            if (configuration.sessionAutoTrack) {
+                s = SessionInfo(sessionId, sessionExpiration, sessionStart)
+            }
             u = UserInfo(anonymousId, null, userTraits)
         } else {
             storage.removeSuspended()
