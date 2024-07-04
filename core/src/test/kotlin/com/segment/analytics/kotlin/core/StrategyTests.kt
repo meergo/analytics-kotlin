@@ -45,6 +45,7 @@ class StrategyTests {
     fun setup() {
         clearPersistentStorage()
         mockHTTPClient()
+        globalTime = null
     }
 
     @Test
@@ -74,73 +75,65 @@ class StrategyTests {
 
     @Test
     fun `sessions with auto tracking`() {
-        try {
-            globalTime = FakeTime()
-            val config = Configuration(
-                writeKey = "123",
-                application = "Test",
-                sessionAutoTrack = true,
-                autoAddSegmentDestination = false
-            )
-            val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
-            val mockPlugin = spyk(StubPlugin())
-            analytics.add(mockPlugin)
-            var sessionId = now()
-            assertEquals(analytics.getSessionId(), sessionId)
-            globalTime!!.tick(2.minutes.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), sessionId)
-            globalTime!!.tick(5.minutes.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), null)
-            analytics.track("click")
-            sessionId = now()
-            assertEquals(analytics.getSessionId(), sessionId)
-            analytics.reset()
-            assertEquals(analytics.getSessionId(), null)
-        } finally {
-            globalTime = null
-        }
+        globalTime = FakeTime()
+        val config = Configuration(
+            writeKey = "123",
+            application = "Test",
+            sessionAutoTrack = true,
+            autoAddSegmentDestination = false
+        )
+        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val mockPlugin = spyk(StubPlugin())
+        analytics.add(mockPlugin)
+        var sessionId = now()
+        assertEquals(analytics.getSessionId(), sessionId)
+        globalTime!!.tick(2.minutes.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), sessionId)
+        globalTime!!.tick(5.minutes.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), null)
+        analytics.track("click")
+        sessionId = now()
+        assertEquals(analytics.getSessionId(), sessionId)
+        analytics.reset()
+        assertEquals(analytics.getSessionId(), null)
     }
 
     @Test
     fun `sessions without auto tracking`() {
-        try {
-            globalTime = FakeTime()
-            val config = Configuration(
-                writeKey = "123",
-                application = "Test",
-                sessionAutoTrack = false,
-                autoAddSegmentDestination = false
-            )
-            val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
-            val mockPlugin = spyk(StubPlugin())
-            analytics.add(mockPlugin)
-            globalTime!!.tick(10.milliseconds.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), null)
-            globalTime!!.tick(2.minutes.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), null)
-            globalTime!!.tick(5.minutes.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), null)
-            analytics.track("click")
-            globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), null)
-            globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
-            analytics.startSession(728472643L)
-            assertEquals(analytics.getSessionId(), 728472643L)
-            globalTime!!.tick(10.minutes.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), 728472643L)
-            analytics.endSession()
-            assertEquals(analytics.getSessionId(), null)
-            analytics.track("click")
-            globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
-            assertEquals(analytics.getSessionId(), null)
-            globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
-            analytics.startSession(728819037L)
-            assertEquals(analytics.getSessionId(), 728819037L)
-            analytics.reset()
-            assertEquals(analytics.getSessionId(), null)
-        } finally {
-            globalTime = null
-        }
+        globalTime = FakeTime()
+        val config = Configuration(
+            writeKey = "123",
+            application = "Test",
+            sessionAutoTrack = false,
+            autoAddSegmentDestination = false
+        )
+        val analytics = testAnalytics(config, "AB-C", testScope, testDispatcher)
+        val mockPlugin = spyk(StubPlugin())
+        analytics.add(mockPlugin)
+        globalTime!!.tick(10.milliseconds.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), null)
+        globalTime!!.tick(2.minutes.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), null)
+        globalTime!!.tick(5.minutes.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), null)
+        analytics.track("click")
+        globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), null)
+        globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
+        analytics.startSession(728472643L)
+        assertEquals(analytics.getSessionId(), 728472643L)
+        globalTime!!.tick(10.minutes.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), 728472643L)
+        analytics.endSession()
+        assertEquals(analytics.getSessionId(), null)
+        analytics.track("click")
+        globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
+        assertEquals(analytics.getSessionId(), null)
+        globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
+        analytics.startSession(728819037L)
+        assertEquals(analytics.getSessionId(), 728819037L)
+        analytics.reset()
+        assertEquals(analytics.getSessionId(), null)
     }
 
     @ParameterizedTest(name = "strategy {0} with autoTrack set to {1}")
