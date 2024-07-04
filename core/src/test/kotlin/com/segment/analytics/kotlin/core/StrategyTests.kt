@@ -71,7 +71,7 @@ class StrategyTests {
             val error = assertThrows<Error> {
                 analytics.startSession(id)
             }
-            assertEquals("sessionId must be a positive integer", error.message)
+            assertEquals("sessionId must be a positive Long", error.message)
         }
     }
 

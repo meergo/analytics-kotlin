@@ -886,7 +886,7 @@ open class Analytics protected constructor(
 
     fun startSession(id: Any?) {
         if ((id !is Long || id <= 0 || id.toDouble() % 1.0 != 0.0) && id != null) {
-            throw Error("sessionId must be a positive integer")
+            throw Error("sessionId must be a positive Long")
         }
         val s = newSession(id as Long?, configuration.sessionTimeout)
         sessionInfo = s
