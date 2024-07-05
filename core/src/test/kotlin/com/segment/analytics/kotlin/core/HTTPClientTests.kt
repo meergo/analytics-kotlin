@@ -33,9 +33,9 @@ class HTTPClientTests {
 
     @Test
     fun `upload connection has correct configuration`() {
-        httpClient.settings("cdn-settings.segment.com/v1").connection.let {
+        httpClient.settings("cdn-settings.example.com/v1").connection.let {
             assertEquals(
-                "https://cdn-settings.segment.com/v1/projects/1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ/settings",
+                "https://cdn-settings.example.com/v1/projects/1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ/settings",
                 it.url.toString()
             )
             assertEquals(
@@ -47,11 +47,11 @@ class HTTPClientTests {
 
     @Test
     fun `settings connection has correct configuration`() {
-        httpClient.upload("api.segment.io/v1").also {
+        httpClient.upload("api.example.io/v1").also {
             assertTrue(it.outputStream is GZIPOutputStream)
         }.connection.let {
             assertEquals(
-                "https://api.segment.io/v1/b",
+                "https://api.example.io/v1/b",
                 it.url.toString()
             )
             assertEquals(
@@ -67,7 +67,7 @@ class HTTPClientTests {
 
     @Test
     fun `safeGetInputStream properly catches exception`() {
-        val connection = spyk(URL("https://api.segment.io/v1/b").openConnection() as HttpURLConnection)
+        val connection = spyk(URL("https://api.example.io/v1/b").openConnection() as HttpURLConnection)
         every { connection.inputStream } throws IOException()
         val errorStream: InputStream? = safeGetInputStream(connection)
         assertEquals(connection.errorStream, errorStream)
@@ -75,7 +75,7 @@ class HTTPClientTests {
 
     @Test
     fun `createPostConnection close`() {
-        val connection = spyk(httpClient.upload("api.segment.io/v1"))
+        val connection = spyk(httpClient.upload("api.example.io/v1"))
         every { connection.connection.responseCode } returns 300
         every { connection.connection.inputStream } throws IOException()
         every { connection.connection.responseMessage } returns "test"
@@ -126,14 +126,14 @@ class HTTPClientTests {
             }
         })
 
-        httpClient.settings("cdn-settings.segment.com/v1").connection.let {
+        httpClient.settings("cdn-settings.example.com/v1").connection.let {
             assertEquals(
                 "https://cdn.test.com",
                 it.url.toString()
             )
         }
 
-        httpClient.upload("api.segment.io/v1").also {
+        httpClient.upload("api.example.io/v1").also {
             assertFalse(it.outputStream is GZIPOutputStream)
         }.connection.let {
             assertEquals(
@@ -155,6 +155,6 @@ class HTTPClientTests {
             }
         })
 
-        assertFalse(httpClient.upload("api.segment.io/v1").outputStream is GZIPOutputStream)
+        assertFalse(httpClient.upload("api.example.io/v1").outputStream is GZIPOutputStream)
     }
 }

@@ -20,7 +20,7 @@ import sovran.kotlin.Store
  * @property flushInterval interval in seconds at which we flush events, defaults to `30 seconds`
  * @property defaultSettings Settings object that will be used as fallback in case of network failure, defaults to empty
  * @property autoAddSegmentDestination automatically add SegmentDestination plugin, defaults to `true`
- * @property apiHost set a default apiHost to which Segment sends events, defaults to `api.segment.io/v1`
+ * @property apiHost set a default apiHost to which Segment sends events, defaults to `api.example.io/v1`
  */
 data class Configuration(
     val writeKey: String,

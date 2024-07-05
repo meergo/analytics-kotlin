@@ -88,7 +88,7 @@ class DestinationMetadataPluginTests {
             integrations = buildJsonObject {
                 put("Chichi", buildJsonObject {
                     put("apiKey", "123")
-                    put("apiHost", "api.segment.io/v1")
+                    put("apiHost", "api.example.io/v1")
                     put("unbundledIntegrations", buildJsonArray {
                         add("Customer.io")
                         add("Mixpanel")
@@ -132,7 +132,7 @@ class DestinationMetadataPluginTests {
             integrations = buildJsonObject {
                 put("Chichi", buildJsonObject {
                     put("apiKey", "123")
-                    put("apiHost", "api.segment.io/v1")
+                    put("apiHost", "api.example.io/v1")
                     put("unbundledIntegrations", buildJsonArray {
                         add("Customer.io")
                         add("Mixpanel")
