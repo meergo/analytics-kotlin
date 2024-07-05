@@ -4,14 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level to be used for testing'
+        type: choice
+        description: Log level to be used for testing
         required: true
-        default: 'none'
+        default: none
         options:
-          - 'none'
-          - 'stacktrace'
-          - 'debug'
-          - 'scan'
+          - none
+          - stacktrace
+          - debug
+          - scan
 
 jobs:
   cancel_previous:
