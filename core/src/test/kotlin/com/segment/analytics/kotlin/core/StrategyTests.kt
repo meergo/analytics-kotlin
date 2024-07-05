@@ -4,6 +4,7 @@ import com.segment.analytics.kotlin.core.utils.StubPlugin
 import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
 import com.segment.analytics.kotlin.core.utils.mockHTTPClient
 import com.segment.analytics.kotlin.core.utils.testAnalytics
+import io.mockk.clearAllMocks
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.verify
@@ -38,6 +39,7 @@ class StrategyTests {
     private val testScope = TestScope(testDispatcher)
 
     init {
+        clearAllMocks()
         Telemetry.enable = false
     }
 
