@@ -86,7 +86,7 @@ class SegmentDestinationTests {
             .apply {
                 messageId = "qwerty-1234"
                 anonymousId = "anonId"
-                integrations = buildJsonObject { put("Segment.io", false) }
+                integrations = buildJsonObject { put("Chichi", false) }
                 context = emptyJsonObject
                 timestamp = epochTimestamp
             }

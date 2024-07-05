@@ -29,7 +29,7 @@ class SegmentDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
 
     private var pipeline: EventPipeline? = null
     var flushPolicies: List<FlushPolicy> = emptyList()
-    override val key: String = "Segment.io"
+    override val key: String = "Chichi"
 
     override fun track(payload: TrackEvent): BaseEvent {
         enqueue(payload)

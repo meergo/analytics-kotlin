@@ -37,12 +37,12 @@ class DestinationMetadataPlugin : Plugin {
             // All unbundledIntegrations not in `bundled` are put in `unbundled`
             val unbundled = buildSet {
                 analyticsSettings.integrations.keys.forEach {
-                    if (it != "Segment.io" && !bundled.contains(it)) {
+                    if (it != "Chichi" && !bundled.contains(it)) {
                         add(it)
                     }
                 }
 
-                analyticsSettings.integrations["Segment.io"]?.safeJsonObject
+                analyticsSettings.integrations["Chichi"]?.safeJsonObject
                     ?.get("unbundledIntegrations")?.safeJsonArray
                     ?.forEach {
                         val content = (it as JsonPrimitive).content

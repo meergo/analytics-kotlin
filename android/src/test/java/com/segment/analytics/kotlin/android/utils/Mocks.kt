@@ -66,7 +66,7 @@ fun mockHTTPClient() {
     mockkConstructor(HTTPClient::class)
     val settingsStream = ByteArrayInputStream(
         """
-                {"integrations":{"Segment.io":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ"}},"plan":{},"edgeFunction":{}}
+                {"integrations":{"Chichi":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ"}},"plan":{},"edgeFunction":{}}
             """.trimIndent().toByteArray()
     )
     val httpConnection: HttpURLConnection = mockk()
