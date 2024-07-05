@@ -2,6 +2,16 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level to be used for testing'
+        required: true
+        default: 'none'
+        options:
+          - 'none'
+          - 'stacktrace'
+          - 'debug'
+          - 'scan'
 
 jobs:
   cancel_previous:
@@ -30,7 +40,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-core-
     - name: Run Tests
-      run: ./gradlew core:test
+      run: |
+        if [ "${{ inputs.logLevel }}" == "stacktrace" ]; then
+          ./gradlew core:test --stacktrace
+        elif [ "${{ inputs.logLevel }}" == "debug" ]; then
+          ./gradlew core:test --debug
+        elif [ "${{ inputs.logLevel }}" == "scan" ]; then
+          ./gradlew core:test --scan
+        else
+          ./gradlew core:test
+        fi
 
   android-test:
     needs: cancel_previous
@@ -50,4 +69,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-android-
       - name: Run Tests
-        run: ./gradlew android:test
+        run: |
+          if [ "${{ inputs.logLevel }}" == "stacktrace" ]; then
+            ./gradlew android:test --stacktrace
+          elif [ "${{ inputs.logLewvel }}" == "debug" ]; then
+            ./gradlew android:test --debug
+          elif [ "${{ inputs.logLevel }}" == "scan" ]; then
+            ./gradlew android:test --scan
+          else
+            ./gradlew android:test
+          fi
