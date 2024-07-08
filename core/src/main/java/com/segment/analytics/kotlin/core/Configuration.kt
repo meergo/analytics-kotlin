@@ -21,6 +21,8 @@ import sovran.kotlin.Store
  * @property defaultSettings Settings object that will be used as fallback in case of network failure, defaults to empty
  * @property autoAddSegmentDestination automatically add SegmentDestination plugin, defaults to `true`
  * @property apiHost set a default apiHost to which Segment sends events, defaults to `api.example.io/v1`
+ * @property sessionAutoTrack automatically track session, defaults to `true`
+ * @property sessionTimeout interval in milliseconds at which the session expires, defaults to `5 * 60000` (5 minutes)
  */
 data class Configuration(
     val writeKey: String,
