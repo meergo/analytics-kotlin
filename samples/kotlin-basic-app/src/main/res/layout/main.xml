@@ -52,15 +52,29 @@
         android:id="@+id/identifyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Identify &quot;user1234&quot;"
+        android:text="Identify user &quot;user1234&quot; with trait &quot;name=Jhon&quot;"
         app:layout_constraintTop_toBottomOf="@id/clickButton"/>
+
+    <Button
+        android:id="@+id/identifyWithEmailButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Identify anonymous user with trait &quot;email=jhon@example.com&quot;"
+        app:layout_constraintTop_toBottomOf="@id/identifyButton"/>
+
+    <Button
+        android:id="@+id/identifyWithAgeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Identify anonymous user with trait &quot;age=35&quot;"
+        app:layout_constraintTop_toBottomOf="@id/identifyWithEmailButton"/>
 
     <Button
         android:id="@+id/resetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Reset"
-        app:layout_constraintTop_toBottomOf="@id/identifyButton"
+        app:layout_constraintTop_toBottomOf="@id/identifyWithAgeButton"
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/red_600"/>
 
