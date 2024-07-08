@@ -150,6 +150,10 @@ open class Analytics protected constructor(
                 "at:${configuration.flushAt} int:${configuration.flushInterval} pol:${configuration.flushPolicies.count()}"
         }
 
+        if (configuration.sessionAutoTrack) {
+            sessionInfo = getFreshSession()
+        }
+
         // Setup store
         analyticsScope.launch(analyticsDispatcher) {
             store.also {
