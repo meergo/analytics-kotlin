@@ -7,7 +7,7 @@ on:
         type: choice
         description: Log level to be used for testing
         required: true
-        default: none
+        default: debug
         options:
           - none
           - stacktrace
