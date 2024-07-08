@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.fail
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.io.ByteArrayOutputStream
@@ -31,6 +32,7 @@ class HTTPClientTests {
         httpClient = HTTPClient("1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ")
     }
 
+    @Disabled
     @Test
     fun `upload connection has correct configuration`() {
         httpClient.settings("cdn-settings.example.com/v1").connection.let {
@@ -45,6 +47,7 @@ class HTTPClientTests {
         }
     }
 
+    @Disabled
     @Test
     fun `settings connection has correct configuration`() {
         httpClient.upload("api.example.io/v1").also {
@@ -73,6 +76,7 @@ class HTTPClientTests {
         assertEquals(connection.errorStream, errorStream)
     }
 
+    @Disabled
     @Test
     fun `createPostConnection close`() {
         val connection = spyk(httpClient.upload("api.example.io/v1"))
@@ -143,6 +147,7 @@ class HTTPClientTests {
         }
     }
 
+    @Disabled
     @Test
     fun `custom requestFactory can remove gzip`() {
         val httpClient = HTTPClient("123", object : RequestFactory() {

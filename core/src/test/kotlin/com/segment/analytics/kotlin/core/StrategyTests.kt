@@ -4,6 +4,7 @@ import com.segment.analytics.kotlin.core.utils.StubPlugin
 import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
 import com.segment.analytics.kotlin.core.utils.mockHTTPClient
 import com.segment.analytics.kotlin.core.utils.testAnalytics
+import io.mockk.clearAllMocks
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.verify
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.json.put
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -38,6 +40,7 @@ class StrategyTests {
     private val testScope = TestScope(testDispatcher)
 
     init {
+        clearAllMocks()
         Telemetry.enable = false
     }
 
@@ -45,6 +48,12 @@ class StrategyTests {
     fun setup() {
         clearPersistentStorage()
         mockHTTPClient()
+        globalTime = null
+        globalStrategy = null
+    }
+
+    @AfterAll
+    fun cleanup() {
         globalTime = null
         globalStrategy = null
     }
