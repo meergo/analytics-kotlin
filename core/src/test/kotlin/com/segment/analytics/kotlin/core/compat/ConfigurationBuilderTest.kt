@@ -73,6 +73,14 @@ internal class ConfigurationBuilderTest {
     }
 
     @Test
+    fun setAutoAddChichiDestination() {
+        val expected = false
+        val config = builder.setAutoAddChichiDestination(expected).build()
+
+        assertEquals(expected, config.autoAddChichiDestination)
+    }
+
+    @Test
     fun setAutoAddSegmentDestination() {
         val expected = false
         val config = builder.setAutoAddSegmentDestination(expected).build()
@@ -108,6 +116,7 @@ internal class ConfigurationBuilderTest {
             flushAt = 100,
             flushInterval = 200,
             flushPolicies = emptyList(),
+            autoAddChichiDestination = false,
             autoAddSegmentDestination = false,
             apiHost = "test",
             cdnHost = "testCdn"
@@ -120,6 +129,7 @@ internal class ConfigurationBuilderTest {
             .setTrackDeepLinks(expected.trackDeepLinks)
             .setFlushAt(expected.flushAt)
             .setFlushInterval(expected.flushInterval)
+            .setAutoAddChichiDestination(expected.autoAddChichiDestination)
             .setAutoAddSegmentDestination(expected.autoAddSegmentDestination)
             .setApiHost(expected.apiHost)
             .setCdnHost(expected.cdnHost)

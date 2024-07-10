@@ -65,7 +65,7 @@ class StrategyTests {
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = false,
-            autoAddSegmentDestination = false
+            autoAddChichiDestination = false
         )
         val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
@@ -92,7 +92,7 @@ class StrategyTests {
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = true,
-            autoAddSegmentDestination = false
+            autoAddChichiDestination = false
         )
         val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
@@ -118,7 +118,7 @@ class StrategyTests {
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = false,
-            autoAddSegmentDestination = false
+            autoAddChichiDestination = false
         )
         val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
@@ -157,7 +157,7 @@ class StrategyTests {
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = autoTrack,
-            autoAddSegmentDestination = false
+            autoAddChichiDestination = false
         )
         val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())
@@ -264,7 +264,7 @@ class StrategyTests {
             writeKey = "123",
             application = "Test",
             sessionAutoTrack = false,
-            autoAddSegmentDestination = false
+            autoAddChichiDestination = false
         )
         val analytics = testAnalytics(config, testScope, testDispatcher)
         val mockPlugin = spyk(StubPlugin())

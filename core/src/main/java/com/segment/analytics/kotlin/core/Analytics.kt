@@ -167,7 +167,7 @@ open class Analytics protected constructor(
                 Telemetry.subscribe(store)
             }
 
-            if (configuration.autoAddSegmentDestination) {
+            if (configuration.autoAddChichiDestination && configuration.autoAddSegmentDestination) {
                 add(SegmentDestination())
             }
 
