@@ -105,6 +105,22 @@ internal class ConfigurationBuilderTest {
     }
 
     @Test
+    fun setSessionAutoTrack() {
+        val expected = false
+        val config = builder.setSessionAutoTrack(expected).build()
+
+        assertEquals(expected, config.sessionAutoTrack)
+    }
+
+    @Test
+    fun setSessionTimeout() {
+        val expected: Long = 5 * 60000
+        val config = builder.setSessionTimeout(expected).build()
+
+        assertEquals(expected, config.sessionTimeout)
+    }
+
+    @Test
     fun build() {
         val expected = Configuration(
             writeKey = writeKey,
@@ -134,6 +150,8 @@ internal class ConfigurationBuilderTest {
             .setApiHost(expected.apiHost)
             .setCdnHost(expected.cdnHost)
             .setRequestFactory(expected.requestFactory)
+            .setSessionAutoTrack(expected.sessionAutoTrack)
+            .setSessionTimeout(expected.sessionTimeout)
             .build()
 
         assertEquals(expected, config)

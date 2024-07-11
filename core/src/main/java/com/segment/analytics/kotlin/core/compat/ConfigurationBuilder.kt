@@ -37,5 +37,9 @@ class ConfigurationBuilder (writeKey: String) {
 
     fun setRequestFactory(requestFactory: RequestFactory) = apply { configuration.requestFactory = requestFactory }
 
+    fun setSessionAutoTrack(sessionAutoTrack: Boolean) = apply { configuration.sessionAutoTrack = sessionAutoTrack }
+
+    fun setSessionTimeout(sessionTimeout: Long) = apply { configuration.sessionTimeout = sessionTimeout }
+
     fun build() = configuration
 }

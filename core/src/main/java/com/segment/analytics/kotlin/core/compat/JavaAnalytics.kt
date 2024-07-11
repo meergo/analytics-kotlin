@@ -338,10 +338,14 @@ class JavaAnalytics(val analytics: Analytics) {
     fun flush() = analytics.flush()
 
     /**
-     * Reset the user identity info and all the event plugins. Should be invoked when
-     * user logs out
+     * Reset the user identity and session info based on the strategy, and reset all the event plugins.
+     * If "all" is true always reset the Anonymous ID by generating a new one, and end the session
+     * if one exists, regardless of the strategy.
+     * Should be invoked when user logs out.
+     *
+     * @param all Indicates if the Anonymous ID and the session must be reset, regardless of the strategy.
      */
-    fun reset() = analytics.reset()
+    fun reset(all: Boolean = false) = analytics.reset(all)
 
     /**
      * Retrieve the userId registered by a previous `identify` call
@@ -388,6 +392,40 @@ class JavaAnalytics(val analytics: Analytics) {
      * Purge a single event upload file.
      */
     fun purgeStorage(filePath: String) = analytics.purgeStorage(filePath)
+
+    /** 
+     * getSessionId returns the current session ID, or null if there is no
+     * session.
+	 */
+    fun getSessionId() = analytics.getSessionId()
+
+    /**
+     * getFreshSession returns the current session and extends its expiration.
+	 * If no session exists:
+	 * - if autoTrack is true, it starts a new session and then returns it.
+	 * - if autoTrack is false, it returns an empty session.
+     */
+    fun getFreshSession() = analytics.getFreshSession()
+
+    /**
+     * endSession ends the current session.
+     */
+    fun endSession() = analytics.endSession()
+
+    /**
+     * startSession starts a new session with identifier id that must be a
+     * positive Long or null. If id is null, startSession uses the time in 
+     * milliseconds from the epoch in UTC as identifier.
+     * 
+     * @param id The identifier of the new session. Must be a positive Long or null.
+     */
+    fun startSession(id: Any?) = analytics.startSession(id)
+
+    /**
+     * mergeTraits merges traits into the current user's traits and returns 
+     * them.
+     */
+    fun mergeTraits(traits: JsonObject) = analytics.mergeTraits(traits)
 
     private fun setup(analytics: Analytics) {
         store = analytics.store
