@@ -849,6 +849,10 @@ open class Analytics protected constructor(
         }
     }
 
+    /** 
+     * getSessionId returns the current session ID, or null if there is no
+     * session.
+	 */
     fun getSessionId(): Long? {
         var id: Long? = sessionInfo.id
         if (id != null && configuration.sessionAutoTrack) {
@@ -860,6 +864,12 @@ open class Analytics protected constructor(
         return id
     }
 
+    /**
+     * getFreshSession returns the current session and extends its expiration.
+	 * If no session exists:
+	 * - if autoTrack is true, it starts a new session and then returns it.
+	 * - if autoTrack is false, it returns an empty session.
+     */
     fun getFreshSession(): SessionInfo {
         var id = sessionInfo.id
         var expiration = sessionInfo.expiration
@@ -882,6 +892,9 @@ open class Analytics protected constructor(
         return SessionInfo(id, expiration, start)
     }
 
+    /**
+     * endSession ends the current session.
+     */
     fun endSession() {
         val s = SessionInfo(null, 0, false)
         sessionInfo = s
@@ -890,6 +903,13 @@ open class Analytics protected constructor(
         }
     }
 
+    /**
+     * startSession starts a new session with identifier id that must be a
+     * positive Long or null. If id is null, startSession uses the time in 
+     * milliseconds from the epoch in UTC as identifier.
+     * 
+     * @param id The identifier of the new session. Must be a positive Long or null.
+     */
     fun startSession(id: Any?) {
         if ((id !is Long || id <= 0 || id.toDouble() % 1.0 != 0.0) && id != null) {
             throw Error("sessionId must be a positive Long")
@@ -901,6 +921,10 @@ open class Analytics protected constructor(
         }
     }
 
+    /**
+     * mergeTraits merges traits into the current user's traits and returns 
+     * them.
+     */
     fun mergeTraits(traits: JsonObject): JsonObject {
         if (userInfo.traits == null) {
             return traits
