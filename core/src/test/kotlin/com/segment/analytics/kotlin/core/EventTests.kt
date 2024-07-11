@@ -22,7 +22,7 @@ class EventTests {
         put("key2", true)
     }
     private val defaultIntegrations = buildJsonObject {
-        put("Chichi", false)
+        put("Meergo", false)
         put("Mixpanel", true)
     }
 

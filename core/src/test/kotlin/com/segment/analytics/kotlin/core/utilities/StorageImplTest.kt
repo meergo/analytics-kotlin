@@ -112,7 +112,7 @@ internal class StorageImplTest {
                     settings = Settings(
                         integrations = buildJsonObject {
                             put(
-                                "Chichi",
+                                "Meergo",
                                 buildJsonObject {
                                     put(
                                         "apiKey",
@@ -137,7 +137,7 @@ internal class StorageImplTest {
             Settings(
                 integrations = buildJsonObject {
                     put(
-                        "Chichi",
+                        "Meergo",
                         buildJsonObject { put("apiKey", "1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ") })
                 },
                 plan = emptyJsonObject,

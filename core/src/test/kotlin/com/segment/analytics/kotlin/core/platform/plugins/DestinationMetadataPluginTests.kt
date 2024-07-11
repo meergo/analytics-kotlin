@@ -86,7 +86,7 @@ class DestinationMetadataPluginTests {
         analytics.manuallyEnableDestination(mixpanelDest)
         plugin.update(Settings(
             integrations = buildJsonObject {
-                put("Chichi", buildJsonObject {
+                put("Meergo", buildJsonObject {
                     put("apiKey", "123")
                     put("apiHost", "api.example.io/v1")
                     put("unbundledIntegrations", buildJsonArray {
@@ -130,7 +130,7 @@ class DestinationMetadataPluginTests {
         analytics.manuallyEnableDestination(mixpanelDest)
         plugin.update(Settings(
             integrations = buildJsonObject {
-                put("Chichi", buildJsonObject {
+                put("Meergo", buildJsonObject {
                     put("apiKey", "123")
                     put("apiHost", "api.example.io/v1")
                     put("unbundledIntegrations", buildJsonArray {

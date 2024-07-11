@@ -122,7 +122,7 @@ class StorageTests {
                         settings = Settings(
                             integrations = buildJsonObject {
                                 put(
-                                    "Chichi",
+                                    "Meergo",
                                     buildJsonObject {
                                         put(
                                             "apiKey",
@@ -146,7 +146,7 @@ class StorageTests {
                 Settings(
                     integrations = buildJsonObject {
                         put(
-                            "Chichi",
+                            "Meergo",
                             buildJsonObject { put("apiKey", "1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ") })
                     },
                     plan = emptyJsonObject,

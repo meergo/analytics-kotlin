@@ -27,7 +27,7 @@ class ConfigurationBuilder (writeKey: String) {
 
     fun setFlushInterval(flushInterval: Int) = apply { configuration.flushInterval = flushInterval }
 
-    fun setAutoAddChichiDestination(autoAddChichiDestination: Boolean) = apply { configuration.autoAddChichiDestination = autoAddChichiDestination}
+    fun setAutoAddMeergoDestination(autoAddMeergoDestination: Boolean) = apply { configuration.autoAddMeergoDestination = autoAddMeergoDestination}
 
     fun setAutoAddSegmentDestination(autoAddSegmentDestination: Boolean) = apply { configuration.autoAddSegmentDestination = autoAddSegmentDestination}
 

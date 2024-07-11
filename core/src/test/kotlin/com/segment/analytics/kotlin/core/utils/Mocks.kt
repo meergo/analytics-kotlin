@@ -43,7 +43,7 @@ fun spyStore(scope: TestScope, dispatcher: TestDispatcher): Store {
     return store
 }
 val settingsDefault = """
-                {"integrations":{"Chichi":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ"}},"plan":{},"edgeFunction":{}}
+                {"integrations":{"Meergo":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ"}},"plan":{},"edgeFunction":{}}
             """.trimIndent()
 
 fun mockHTTPClient(settings: String = settingsDefault) {

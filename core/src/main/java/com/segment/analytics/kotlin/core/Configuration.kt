@@ -19,8 +19,8 @@ import sovran.kotlin.Store
  * @property flushAt count of events at which we flush events, defaults to `20`
  * @property flushInterval interval in seconds at which we flush events, defaults to `30 seconds`
  * @property defaultSettings Settings object that will be used as fallback in case of network failure, defaults to empty
- * @property autoAddChichiDestination automatically add SegmentDestination plugin, defaults to `true`
- * @property autoAddSegmentDestination same as autoAddChichiDestination. defaults to `true`. This remains for compatibility with Segment SDK.
+ * @property autoAddMeergoDestination automatically add SegmentDestination plugin, defaults to `true`
+ * @property autoAddSegmentDestination same as autoAddMeergoDestination. defaults to `true`. This remains for compatibility with Segment SDK.
  * @property apiHost set a default apiHost to which Segment sends events, defaults to `api.example.io/v1`
  * @property sessionAutoTrack automatically track session, defaults to `true`
  * @property sessionTimeout interval in milliseconds at which the session expires, defaults to `5 * 60000` (5 minutes)
@@ -37,7 +37,7 @@ data class Configuration(
     var flushInterval: Int = 30,
     var flushPolicies: List<FlushPolicy> = emptyList<FlushPolicy>(),
     var defaultSettings: Settings = Settings(),
-    var autoAddChichiDestination: Boolean = true,
+    var autoAddMeergoDestination: Boolean = true,
     var autoAddSegmentDestination: Boolean = true,
     var apiHost: String = DEFAULT_API_HOST,
     var cdnHost: String = DEFAULT_CDN_HOST,

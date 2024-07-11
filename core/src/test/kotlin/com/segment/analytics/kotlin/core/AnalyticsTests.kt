@@ -109,7 +109,7 @@ class AnalyticsTests {
             // need the following block in `init` to inject mock before analytics gets instantiate
             val settingsStream = ByteArrayInputStream(
                 """
-                {"integrations":{"Chichi":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ","apiHost":"remote"}},"plan":{},"edgeFunction":{}}
+                {"integrations":{"Meergo":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ","apiHost":"remote"}},"plan":{},"edgeFunction":{}}
             """.trimIndent().toByteArray()
             )
             val httpConnection: HttpURLConnection = mockk()
