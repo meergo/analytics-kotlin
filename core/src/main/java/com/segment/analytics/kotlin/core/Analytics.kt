@@ -910,11 +910,11 @@ open class Analytics protected constructor(
      * 
      * @param id The identifier of the new session. Must be a positive Long or null.
      */
-    fun startSession(id: Any?) {
-        if ((id !is Long || id <= 0 || id.toDouble() % 1.0 != 0.0) && id != null) {
+    fun startSession(id: Long?) {
+        if (id != null && id <= 0) {
             throw Error("sessionId must be a positive Long")
         }
-        val s = newSession(id as Long?, configuration.sessionTimeout)
+        val s = newSession(id, configuration.sessionTimeout)
         sessionInfo = s
         analyticsScope.launch(analyticsDispatcher) {
             store.dispatch(SessionInfo.SetSessionAction(s.id, s.expiration, s.start), SessionInfo::class)

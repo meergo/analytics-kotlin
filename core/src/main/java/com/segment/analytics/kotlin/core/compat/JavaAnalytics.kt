@@ -419,7 +419,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * 
      * @param id The identifier of the new session. Must be a positive Long or null.
      */
-    fun startSession(id: Any?) = analytics.startSession(id)
+    fun startSession(id: Long?) = analytics.startSession(id)
 
     /**
      * mergeTraits merges traits into the current user's traits and returns 

@@ -71,11 +71,11 @@ class StrategyTests {
         val mockPlugin = spyk(StubPlugin())
         analytics.add(mockPlugin)
         analytics.userInfo = UserInfo(UUID.randomUUID().toString(), "274084295", buildJsonObject { put("first_name", "Susan") })
-        var ids = listOf<Any?>(null, 1L, 100L, Long.MAX_VALUE)
+        var ids = listOf(null, 1L, 100L, Long.MAX_VALUE)
         for (id in ids) {
             analytics.startSession(id)
         }
-        ids = listOf("a", emptyJsonObject, -100L, -10.56, -1, 0, -0, 0.1, 23.904, Long.MAX_VALUE + 1)
+        ids = listOf(-100L, -1L, 0L, Long.MAX_VALUE + 1)
         for (id in ids) {
             val error = assertThrows<Error> {
                 analytics.startSession(id)
