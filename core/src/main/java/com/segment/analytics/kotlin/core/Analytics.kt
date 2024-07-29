@@ -273,7 +273,9 @@ open class Analytics protected constructor(
                         storage.removeSuspended()
                     }
                     u.anonymousId = UUID.randomUUID().toString()
-                    s = SessionInfo(null, 0, false)
+                    if (s.id != null) {
+                        s = newSession(null, configuration.sessionTimeout)
+                    }
                 } else if (userInfo.userId == null) {
                     u.traits = mergeTraits(traits)
                 }
@@ -677,7 +679,9 @@ open class Analytics protected constructor(
         } else {
             storage.removeSuspended()
             if (all || options.strategy.indexOf("-C") > 0) {
-                s = SessionInfo(null, 0, false)
+                if (s.id != null) {
+                    s = newSession(null, configuration.sessionTimeout)
+                }
                 u.anonymousId = UUID.randomUUID().toString()
             }
         }
