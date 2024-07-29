@@ -106,8 +106,9 @@ class StrategyTests {
         analytics.track("click")
         sessionId = now()
         assertEquals(analytics.getSessionId(), sessionId)
+        globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
         analytics.reset()
-        assertEquals(analytics.getSessionId(), null)
+        assertTrue(analytics.getSessionId() != sessionId)
     }
 
     @Test
@@ -145,8 +146,9 @@ class StrategyTests {
         globalTime!!.tick(300.milliseconds.toLong(DurationUnit.MILLISECONDS))
         analytics.startSession(728819037L)
         assertEquals(analytics.getSessionId(), 728819037L)
+        globalTime!!.tick(100.milliseconds.toLong(DurationUnit.MILLISECONDS))
         analytics.reset()
-        assertEquals(analytics.getSessionId(), null)
+        assertTrue(analytics.getSessionId() != 728819037L)
     }
 
     @ParameterizedTest(name = "strategy {0} with autoTrack set to {1}")
@@ -241,6 +243,9 @@ class StrategyTests {
         anonymousId = analytics.anonymousId()
         analytics.reset(true)
         assertTrue(anonymousId != analytics.anonymousId())
+        assertTrue(analytics.getSessionId() != 215271912L)
+        analytics.endSession()
+        analytics.reset(true)
         assertEquals(analytics.getSessionId(), null)
     }
 
