@@ -98,11 +98,11 @@ class HTTPClientTests {
     @Test
     fun `custom requestFactory takes effect`() {
         val httpClient = HTTPClient("123", object : RequestFactory() {
-            override fun settings(cdnHost: String, writeKey: String): HttpURLConnection {
+            override fun settings(endpoint: String, writeKey: String): HttpURLConnection {
                 return openConnection("https://cdn.test.com")
             }
 
-            override fun upload(apiHost: String): HttpURLConnection {
+            override fun upload(endpoint: String): HttpURLConnection {
                 return openConnection("https://api.test.com").apply { doOutput = true }
             }
 
@@ -151,8 +151,8 @@ class HTTPClientTests {
     @Test
     fun `custom requestFactory can remove gzip`() {
         val httpClient = HTTPClient("123", object : RequestFactory() {
-            override fun upload(apiHost: String): HttpURLConnection {
-                val connection: HttpURLConnection = openConnection("https://$apiHost/b")
+            override fun upload(endpoint: String): HttpURLConnection {
+                val connection: HttpURLConnection = openConnection("https://$endpoint/b")
                 connection.setRequestProperty("Content-Type", "text/plain")
                 connection.doOutput = true
                 connection.setChunkedStreamingMode(0)

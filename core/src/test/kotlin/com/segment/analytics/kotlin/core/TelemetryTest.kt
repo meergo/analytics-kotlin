@@ -38,7 +38,7 @@ class TelemetryTest {
         errors.add(error.toString() + error.stackTraceToString())
     }
 
-    fun mockTelemetryHTTPClient(telemetryHost: String = Telemetry.host, shouldThrow: Boolean = false) {
+    fun mockTelemetryHTTPClient(telemetryHost: String = Telemetry.endpoint, shouldThrow: Boolean = false) {
         val httpClient: HTTPClient = mockk()
         val httpConnection: HttpURLConnection = mockk(relaxed = true)
         val connection = object : Connection(httpConnection, null, null) {}

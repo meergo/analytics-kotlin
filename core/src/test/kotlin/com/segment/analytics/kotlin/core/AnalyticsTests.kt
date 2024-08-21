@@ -105,11 +105,11 @@ class AnalyticsTests {
 
         @Disabled
         @Test
-        fun `analytics should respect remote apiHost`() {
+        fun `analytics should respect remote endpoint`() {
             // need the following block in `init` to inject mock before analytics gets instantiate
             val settingsStream = ByteArrayInputStream(
                 """
-                {"integrations":{"Meergo":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ","apiHost":"remote"}},"plan":{},"edgeFunction":{}}
+                {"integrations":{"Meergo":{"apiKey":"1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ","endpoint":"remote"}},"plan":{},"edgeFunction":{}}
             """.trimIndent().toByteArray()
             )
             val httpConnection: HttpURLConnection = mockk()
@@ -119,32 +119,32 @@ class AnalyticsTests {
             val config = Configuration(
                 writeKey = "123",
                 application = "Test",
-                apiHost = "local"
+                endpoint = "local"
             )
             analytics = testAnalytics(config, testScope, testDispatcher)
             analytics.track("test")
             analytics.flush()
 
-            val apiHost = slot<String>()
-            verify { anyConstructed<HTTPClient>().upload(capture(apiHost)) }
-            assertEquals("remote", apiHost.captured)
+            val endpoint = slot<String>()
+            verify { anyConstructed<HTTPClient>().upload(capture(endpoint)) }
+            assertEquals("remote", endpoint.captured)
         }
 
         @Disabled
         @Test
-        fun `analytics should respect local modified apiHost if remote not presented`() {
+        fun `analytics should respect local modified endpoint if remote not presented`() {
             val config = Configuration(
                 writeKey = "123",
                 application = "Test",
-                apiHost = "local"
+                endpoint = "local"
             )
             analytics = testAnalytics(config, testScope, testDispatcher)
             analytics.track("test")
             analytics.flush()
 
-            val apiHost = slot<String>()
-            verify { anyConstructed<HTTPClient>().upload(capture(apiHost)) }
-            assertEquals("local", apiHost.captured)
+            val endpoint = slot<String>()
+            verify { anyConstructed<HTTPClient>().upload(capture(endpoint)) }
+            assertEquals("local", endpoint.captured)
         }
     }
 

@@ -1,7 +1,6 @@
 package com.segment.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.Constants.DEFAULT_API_HOST
-import com.segment.analytics.kotlin.core.Constants.DEFAULT_CDN_HOST
+import com.segment.analytics.kotlin.core.Constants.DEFAULT_ENDPOINT
 import com.segment.analytics.kotlin.core.platform.policies.FlushPolicy
 import com.segment.analytics.kotlin.core.utilities.ConcreteStorageProvider
 import kotlinx.coroutines.*
@@ -21,7 +20,7 @@ import sovran.kotlin.Store
  * @property defaultSettings Settings object that will be used as fallback in case of network failure, defaults to empty
  * @property autoAddMeergoDestination automatically add SegmentDestination plugin, defaults to `true`
  * @property autoAddSegmentDestination same as autoAddMeergoDestination. defaults to `true`. This remains for compatibility with Segment SDK.
- * @property apiHost set a default apiHost to which Segment sends events, defaults to `api.example.io/v1`
+ * @property endpoint set the base endpoint used to construct the event submission and settings retrieval endpoints. Defaults to `example.com/api/v1`.
  * @property sessionAutoTrack automatically track session, defaults to `true`
  * @property sessionTimeout interval in milliseconds at which the session expires, defaults to `5 * 60000` (5 minutes)
  */
@@ -39,8 +38,7 @@ data class Configuration(
     var defaultSettings: Settings = Settings(),
     var autoAddMeergoDestination: Boolean = true,
     var autoAddSegmentDestination: Boolean = true,
-    var apiHost: String = DEFAULT_API_HOST,
-    var cdnHost: String = DEFAULT_CDN_HOST,
+    var endpoint: String = DEFAULT_ENDPOINT,
     var requestFactory: RequestFactory = RequestFactory(),
     var errorHandler: ErrorHandler? = null,
     var sessionAutoTrack: Boolean = true,

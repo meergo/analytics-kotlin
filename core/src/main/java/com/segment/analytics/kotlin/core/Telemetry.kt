@@ -16,8 +16,8 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class MetricsRequestFactory : RequestFactory() {
-    override fun upload(apiHost: String): HttpURLConnection {
-        val connection: HttpURLConnection = openConnection("https://${apiHost}/m")
+    override fun upload(endpoint: String): HttpURLConnection {
+        val connection: HttpURLConnection = openConnection("https://${endpoint}/m")
         connection.setRequestProperty("Content-Type", "text/plain")
         connection.doOutput = true
         connection.setChunkedStreamingMode(0)
@@ -62,7 +62,7 @@ object Telemetry: Subscriber {
                 start()
             }
         }
-    var host: String = Constants.DEFAULT_API_HOST
+    var endpoint: String = Constants.DEFAULT_ENDPOINT
     // 1.0 is 100%, will get set by Segment setting before start()
     var sampleRate: Double = 0.0
     var flushTimer: Int = 30 * 1000 // 30s
@@ -224,7 +224,7 @@ object Telemetry: Subscriber {
             //  We're using this to leave off the 'log' parameter if unset.
             val payload = Json.encodeToString(mapOf("series" to sendQueue))
 
-            val connection = httpClient.upload(host)
+            val connection = httpClient.upload(endpoint)
             connection.outputStream?.use { outputStream ->
                 // Write the JSON string to the outputStream.
                 outputStream.write(payload.toByteArray(Charsets.UTF_8))

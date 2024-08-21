@@ -89,19 +89,11 @@ internal class ConfigurationBuilderTest {
     }
 
     @Test
-    fun setApiHost() {
+    fun setEndpoint() {
         val expected = "test"
-        val config = builder.setApiHost(expected).build()
+        val config = builder.setEndpoint(expected).build()
 
-        assertEquals(expected, config.apiHost)
-    }
-
-    @Test
-    fun setCdnHost() {
-        val expected = "test"
-        val config = builder.setCdnHost(expected).build()
-
-        assertEquals(expected, config.cdnHost)
+        assertEquals(expected, config.endpoint)
     }
 
     @Test
@@ -134,8 +126,7 @@ internal class ConfigurationBuilderTest {
             flushPolicies = emptyList(),
             autoAddMeergoDestination = false,
             autoAddSegmentDestination = false,
-            apiHost = "test",
-            cdnHost = "testCdn"
+            endpoint = "test"
         )
 
         val config = builder.setApplication(expected.application)
@@ -147,8 +138,7 @@ internal class ConfigurationBuilderTest {
             .setFlushInterval(expected.flushInterval)
             .setAutoAddMeergoDestination(expected.autoAddMeergoDestination)
             .setAutoAddSegmentDestination(expected.autoAddSegmentDestination)
-            .setApiHost(expected.apiHost)
-            .setCdnHost(expected.cdnHost)
+            .setEndpoint(expected.endpoint)
             .setRequestFactory(expected.requestFactory)
             .setSessionAutoTrack(expected.sessionAutoTrack)
             .setSessionTimeout(expected.sessionTimeout)

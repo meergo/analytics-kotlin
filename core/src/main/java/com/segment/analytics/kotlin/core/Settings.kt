@@ -2,9 +2,7 @@ package com.segment.analytics.kotlin.core
 
 import com.segment.analytics.kotlin.core.platform.DestinationPlugin
 import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.plugins.logger.LogKind
 import com.segment.analytics.kotlin.core.platform.plugins.logger.log
-import com.segment.analytics.kotlin.core.platform.plugins.logger.segmentLog
 import com.segment.analytics.kotlin.core.utilities.LenientJson
 import com.segment.analytics.kotlin.core.utilities.safeJsonObject
 import kotlinx.coroutines.launch
@@ -84,14 +82,14 @@ fun Analytics.manuallyEnableDestination(plugin: DestinationPlugin) {
  */
 suspend fun Analytics.checkSettings(): Settings? {
     val writeKey = configuration.writeKey
-    val cdnHost = configuration.cdnHost
+    val endpoint = configuration.endpoint
 
     store.currentState(System::class) ?: return null
     store.dispatch(System.ToggleRunningAction(running = false), System::class)
 
     val settingsObj: Settings? = withContext(networkIODispatcher) {
         log("Fetching settings on ${Thread.currentThread().name}")
-        fetchSettings(writeKey, cdnHost)
+        fetchSettings(writeKey, endpoint)
     }
 
     withContext(analyticsDispatcher) {
@@ -109,9 +107,9 @@ suspend fun Analytics.checkSettings(): Settings? {
 
 internal fun Analytics.fetchSettings(
     writeKey: String,
-    cdnHost: String
+    endpoint: String
 ): Settings? = try {
-    val connection = HTTPClient(writeKey, this.configuration.requestFactory).settings(cdnHost)
+    val connection = HTTPClient(writeKey, this.configuration.requestFactory).settings(endpoint)
     val settingsString =
         connection.inputStream?.bufferedReader()?.use(BufferedReader::readText) ?: ""
     log("Fetched Settings: $settingsString")

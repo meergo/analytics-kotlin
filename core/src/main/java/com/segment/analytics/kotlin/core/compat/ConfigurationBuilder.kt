@@ -31,9 +31,7 @@ class ConfigurationBuilder (writeKey: String) {
 
     fun setAutoAddSegmentDestination(autoAddSegmentDestination: Boolean) = apply { configuration.autoAddSegmentDestination = autoAddSegmentDestination}
 
-    fun setApiHost(apiHost: String) = apply { configuration.apiHost = apiHost}
-
-    fun setCdnHost(cdnHost: String) = apply { configuration.cdnHost = cdnHost}
+    fun setEndpoint(endpoint: String) = apply { configuration.endpoint = endpoint}
 
     fun setRequestFactory(requestFactory: RequestFactory) = apply { configuration.requestFactory = requestFactory }
 
