@@ -20,7 +20,7 @@ import sovran.kotlin.Store
  * @property defaultSettings Settings object that will be used as fallback in case of network failure, defaults to empty
  * @property autoAddMeergoDestination automatically add SegmentDestination plugin, defaults to `true`
  * @property autoAddSegmentDestination same as autoAddMeergoDestination. defaults to `true`. This remains for compatibility with Segment SDK.
- * @property endpoint set the base endpoint used to construct the event dispatch and settings retrieval endpoints. Defaults to `example.com/api/v1`.
+ * @property endpoint set the base endpoint used to construct the event dispatch and settings retrieval endpoints. Defaults to `test.example.com/api/v1`.
  * @property sessionAutoTrack automatically track session, defaults to `true`
  * @property sessionTimeout interval in milliseconds at which the session expires, defaults to `5 * 60000` (5 minutes)
  */
