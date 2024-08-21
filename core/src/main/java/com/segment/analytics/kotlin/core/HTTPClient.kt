@@ -15,13 +15,13 @@ class HTTPClient(
     private val requestFactory: RequestFactory = RequestFactory()
 ) {
 
-    fun settings(cdnHost: String): Connection {
-        val connection: HttpURLConnection = requestFactory.settings(cdnHost, writeKey)
+    fun settings(endpoint: String): Connection {
+        val connection: HttpURLConnection = requestFactory.settings(endpoint, writeKey)
         return connection.createGetConnection()
     }
 
-    fun upload(apiHost: String): Connection {
-        val connection: HttpURLConnection = requestFactory.upload(apiHost)
+    fun upload(endpoint: String): Connection {
+        val connection: HttpURLConnection = requestFactory.upload(endpoint)
         return connection.createPostConnection()
     }
 
@@ -139,8 +139,8 @@ internal class HTTPException(
 }
 
 open class RequestFactory {
-    open fun settings(cdnHost: String, writeKey: String): HttpURLConnection {
-        val connection: HttpURLConnection = openConnection("https://$cdnHost/projects/$writeKey/settings")
+    open fun settings(endpoint: String, writeKey: String): HttpURLConnection {
+        val connection: HttpURLConnection = openConnection("https://$endpoint/projects/$writeKey/settings")
         connection.setRequestProperty("Content-Type", "application/json; charset=utf-8")
         val responseCode = connection.responseCode
         if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -150,8 +150,8 @@ open class RequestFactory {
         return connection
     }
 
-    open fun upload(apiHost: String): HttpURLConnection {
-        val connection: HttpURLConnection = openConnection("https://$apiHost/b")
+    open fun upload(endpoint: String): HttpURLConnection {
+        val connection: HttpURLConnection = openConnection("https://$endpoint/b")
         connection.setRequestProperty("Content-Type", "text/plain")
         connection.setRequestProperty("Content-Encoding", "gzip")
         connection.doOutput = true

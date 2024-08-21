@@ -24,7 +24,7 @@ open class EventPipeline(
     private val logTag: String,
     apiKey: String,
     private val flushPolicies: List<FlushPolicy>,
-    var apiHost: String = Constants.DEFAULT_API_HOST
+    var endpoint: String = Constants.DEFAULT_ENDPOINT
 ) {
 
     private var writeChannel: Channel<BaseEvent>
@@ -141,7 +141,7 @@ open class EventPipeline(
 
                 var shouldCleanup = true
                 try {
-                    val connection = httpClient.upload(apiHost)
+                    val connection = httpClient.upload(endpoint)
                     connection.outputStream?.let {
                         // Write the payloads into the OutputStream.
                         val fileInputStream = FileInputStream(file)

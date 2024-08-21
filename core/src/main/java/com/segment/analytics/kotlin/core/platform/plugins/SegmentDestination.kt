@@ -15,13 +15,13 @@ import sovran.kotlin.Subscriber
 @Serializable
 data class SegmentSettings(
     var apiKey: String,
-    var apiHost: String? = null
+    var endpoint: String? = null
 )
 
 /**
  * Segment Analytics plugin that is used to send events to Segment's tracking api, in the choice of region.
  * How it works
- * - Plugin receives `apiHost` settings
+ * - Plugin receives `endpoint` settings
  * - We store events into a file with the batch api format (@link {https://segment.com/docs/connections/sources/catalog/libraries/server/http-api/#batch})
  * - We upload events on a dedicated thread using the batch api
  */
@@ -83,7 +83,7 @@ class SegmentDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
                 key,
                 configuration.writeKey,
                 flushPolicies,
-                configuration.apiHost
+                configuration.endpoint
             )
 
             analyticsScope.launch(analyticsDispatcher) {
@@ -100,9 +100,9 @@ class SegmentDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
     override fun update(settings: Settings, type: Plugin.UpdateType) {
         super.update(settings, type)
         if (settings.hasIntegrationSettings(this)) {
-            // only populate the apiHost value if it exists
-            settings.destinationSettings<SegmentSettings>(key)?.apiHost?.let {
-                pipeline?.apiHost = it
+            // only populate the endpoint value if it exists
+            settings.destinationSettings<SegmentSettings>(key)?.endpoint?.let {
+                pipeline?.endpoint = it
             }
         }
     }

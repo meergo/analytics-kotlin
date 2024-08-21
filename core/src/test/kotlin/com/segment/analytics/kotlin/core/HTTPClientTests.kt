@@ -35,9 +35,9 @@ class HTTPClientTests {
     @Disabled
     @Test
     fun `upload connection has correct configuration`() {
-        httpClient.settings("cdn-settings.example.com/v1").connection.let {
+        httpClient.settings("test.example.com/api/v1").connection.let {
             assertEquals(
-                "https://cdn-settings.example.com/v1/projects/1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ/settings",
+                "https://test.example.com/api/v1/projects/1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ/settings",
                 it.url.toString()
             )
             assertEquals(
@@ -50,11 +50,11 @@ class HTTPClientTests {
     @Disabled
     @Test
     fun `settings connection has correct configuration`() {
-        httpClient.upload("api.example.io/v1").also {
+        httpClient.upload("test.example.com/api/v1").also {
             assertTrue(it.outputStream is GZIPOutputStream)
         }.connection.let {
             assertEquals(
-                "https://api.example.io/v1/b",
+                "https://test.example.com/api/v1/b",
                 it.url.toString()
             )
             assertEquals(
@@ -70,7 +70,7 @@ class HTTPClientTests {
 
     @Test
     fun `safeGetInputStream properly catches exception`() {
-        val connection = spyk(URL("https://api.example.io/v1/b").openConnection() as HttpURLConnection)
+        val connection = spyk(URL("https://test.example.com/api/v1/b").openConnection() as HttpURLConnection)
         every { connection.inputStream } throws IOException()
         val errorStream: InputStream? = safeGetInputStream(connection)
         assertEquals(connection.errorStream, errorStream)
@@ -79,7 +79,7 @@ class HTTPClientTests {
     @Disabled
     @Test
     fun `createPostConnection close`() {
-        val connection = spyk(httpClient.upload("api.example.io/v1"))
+        val connection = spyk(httpClient.upload("test.example.com/api/v1"))
         every { connection.connection.responseCode } returns 300
         every { connection.connection.inputStream } throws IOException()
         every { connection.connection.responseMessage } returns "test"
@@ -98,11 +98,11 @@ class HTTPClientTests {
     @Test
     fun `custom requestFactory takes effect`() {
         val httpClient = HTTPClient("123", object : RequestFactory() {
-            override fun settings(cdnHost: String, writeKey: String): HttpURLConnection {
+            override fun settings(endpoint: String, writeKey: String): HttpURLConnection {
                 return openConnection("https://cdn.test.com")
             }
 
-            override fun upload(apiHost: String): HttpURLConnection {
+            override fun upload(endpoint: String): HttpURLConnection {
                 return openConnection("https://api.test.com").apply { doOutput = true }
             }
 
@@ -130,14 +130,14 @@ class HTTPClientTests {
             }
         })
 
-        httpClient.settings("cdn-settings.example.com/v1").connection.let {
+        httpClient.settings("test.example.com/api/v1").connection.let {
             assertEquals(
                 "https://cdn.test.com",
                 it.url.toString()
             )
         }
 
-        httpClient.upload("api.example.io/v1").also {
+        httpClient.upload("test.example.com/api/v1").also {
             assertFalse(it.outputStream is GZIPOutputStream)
         }.connection.let {
             assertEquals(
@@ -151,8 +151,8 @@ class HTTPClientTests {
     @Test
     fun `custom requestFactory can remove gzip`() {
         val httpClient = HTTPClient("123", object : RequestFactory() {
-            override fun upload(apiHost: String): HttpURLConnection {
-                val connection: HttpURLConnection = openConnection("https://$apiHost/b")
+            override fun upload(endpoint: String): HttpURLConnection {
+                val connection: HttpURLConnection = openConnection("https://$endpoint/b")
                 connection.setRequestProperty("Content-Type", "text/plain")
                 connection.doOutput = true
                 connection.setChunkedStreamingMode(0)
@@ -160,6 +160,6 @@ class HTTPClientTests {
             }
         })
 
-        assertFalse(httpClient.upload("api.example.io/v1").outputStream is GZIPOutputStream)
+        assertFalse(httpClient.upload("test.example.com/api/v1").outputStream is GZIPOutputStream)
     }
 }

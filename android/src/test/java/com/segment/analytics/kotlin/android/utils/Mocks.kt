@@ -71,7 +71,7 @@ fun mockHTTPClient() {
     )
     val httpConnection: HttpURLConnection = mockk()
     val connection = object : Connection(httpConnection, settingsStream, null) {}
-    every { anyConstructed<HTTPClient>().settings("cdn-settings.example.com/v1") } returns connection
+    every { anyConstructed<HTTPClient>().settings("test.example.com/api/v1") } returns connection
 }
 
 class TestCoroutineConfiguration(

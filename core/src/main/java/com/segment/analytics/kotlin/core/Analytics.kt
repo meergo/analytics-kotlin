@@ -144,8 +144,7 @@ open class Analytics protected constructor(
 
         Telemetry.increment(Telemetry.INVOKE_METRIC) {
             it["message"] = "configured"
-            it["apihost"] = configuration.apiHost
-            it["cdnhost"] = configuration.cdnHost
+            it["endpoint"] = configuration.endpoint
             it["flush"] =
                 "at:${configuration.flushAt} int:${configuration.flushInterval} pol:${configuration.flushPolicies.count()}"
         }
