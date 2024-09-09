@@ -12,6 +12,7 @@ class MainApplication : Application() {
         super.onCreate()
 
         analytics = Analytics("", applicationContext) {
+            this.endpoint = ""
             this.collectDeviceId = true
             this.trackApplicationLifecycleEvents = true
             this.trackDeepLinks = true
