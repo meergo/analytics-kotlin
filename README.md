@@ -1,69 +1,51 @@
-# Analytics-Kotlin
-[![maven](https://img.shields.io/maven-central/v/com.segment.analytics.kotlin/android)](https://repo1.maven.org/maven2/com/segment/analytics/kotlin/)
-[![](https://github.com/segmentio/analytics-kotlin/actions/workflows/build.yml/badge.svg)](https://github.com/segmentio/analytics-kotlin/actions)
-[![codecov](https://codecov.io/gh/segmentio/analytics-kotlin/branch/main/graph/badge.svg?token=U5FDRBZOXO)](https://codecov.io/gh/segmentio/analytics-kotlin)
-[![Known Vulnerabilities](https://snyk.io/test/github/segmentio/analytics-kotlin/badge.svg)](https://snyk.io/test/github/segmentio/analytics-kotlin)
-[![](https://img.shields.io/github/license/segmentio/analytics-kotlin)](https://github.com/segmentio/analytics-kotlin/blob/main/LICENSE)
+# Meergo Kotlin SDK
 
-### 🎉 Flagship 🎉
-This library is one of Segment’s most popular Flagship libraries. It is actively maintained by Segment, benefitting from new feature releases and ongoing support.
+The Meergo Kotlin SDK lets you send customer event data from your Android applications to your specified destinations.
 
-The hassle-free way to add Segment analytics to your kotlin app (Android/JVM). Analytics helps you measure your users, product, and business. It unlocks insights into your app's funnel, core business metrics, and whether you have product-market fit.
+## SDK setup requirements
 
-## How to get started
-1. **Collect analytics data** from your app(s).
-  - The top 200 Segment companies collect data from 5+ source types (web, mobile, server, CRM, etc.).
-2. **Send the data to analytics tools** (for example, Google Analytics, Amplitude, Mixpanel).
-  - Over 250+ Segment companies send data to eight categories of destinations such as analytics tools, warehouses, email marketing and remarketing systems, session recording, and more.
-3. **Explore your data** by creating metrics (for example, new signups, retention cohorts, and revenue generation).
-  - The best Segment companies use retention cohorts to measure product market fit. Netflix has 70% paid retention after 12 months, 30% after 7 years.
+- Set up a Meergo account.
+- Set up an Android source in the dashboard.
+- Copy the write key and the endpoint.
 
-[Segment](https://segment.com) collects analytics data and allows you to send it to more than 250 apps (such as Google Analytics, Mixpanel, Optimizely, Facebook Ads, Slack, Sentry) just by flipping a switch. You only need one Segment code snippet, and you can turn integrations on and off at will, with no additional code. [Sign up with Segment today](https://app.segment.com/signup).
+## Installation
 
-### Why?
-1. **Power all your analytics apps with the same data**. Instead of writing code to integrate all of your tools individually, send data to Segment, once.
+To integrate the Android SDK inside your application, add the dependency to your `build.gradle`. Make sure to replace `<latest_version>` with the latest version of the SDK.
 
-2. **Install tracking for the last time**. We're the last integration you'll ever need to write. You only need to instrument Segment once. Reduce all of your tracking code and advertising tags into a single set of API calls.
+```kotlin
+repositories {
+  mavenCentral()
+}
+dependencies {
+  implementation 'com.meergo.analytics.kotlin:android:<latest_version>'
+}
+```
 
-3. **Send data from anywhere**. Send Segment data from any device, and we'll transform and send it on to any tool.
+Add the required permissions to `AndroidManifest.xml` (if they are not yet present).
+```xml
+<!-- Required for internet. -->
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+``` 
 
-4. **Query your data in SQL**. Slice, dice, and analyze your data in detail with Segment SQL. We'll transform and load your customer behavioral data directly from your apps into Amazon Redshift, Google BigQuery, or Postgres. Save weeks of engineering time by not having to invent your own data warehouse and ETL pipeline.
+## Using the SDK
 
-   For example, you can capture data on any app:
-    ```kotlin
-    @Serializable
-    data class TrackProperties(
-        var price: Double
-    )
+```kotlin
+import com.meergo.analytics.kotlin.android.Analytics
+import com.meergo.analytics.kotlin.core.*
 
-    // ...
+Analytics("YOUR_WRITE_KEY", applicationContext) {
+  endpoint = "YOUR_ENDPOINT"
+  trackApplicationLifecycleEvents = true
+  flushAt = 3
+  flushInterval = 10
+  // ...other config options
+}
+```
 
-    analytics.track('Order Completed', TrackProperties(price = 99.84))
-    ```
-   Then, query the resulting data in SQL:
-    ```sql
-    select * from app.order_completed
-    order by price desc
-    ```
+## Sending events
 
-## Documentation
-
-You can find usage documentation at [https://segment.com/docs/sources/mobile/kotlin-android/](https://segment.com/docs/sources/mobile/kotlin-android/).
-
-Explore more via the [example projects](samples) which showcase analytics instrumentation on different platforms/languages and usage of plugins. These projects contain sample [plugins](samples/kotlin-android-app/src/main/java/com/segment/analytics/next/plugins) and [destination plugins](samples/kotlin-android-app-destinations/src/main/java/com/segment/analytics/destinations/plugins) 
-
-## Supported Device Mode Destinations
-
-| Partner | Package |
-| --- | --- |
-| Amplitude | https://github.com/segment-integrations/analytics-kotlin-amplitude |
-| AppsFlyer | https://github.com/segment-integrations/analytics-kotlin-appsflyer |
-| Braze    | https://github.com/braze-inc/braze-segment-kotlin |
-| Firebase | https://github.com/segment-integrations/analytics-kotlin-firebase |
-| Mixpanel | https://github.com/segment-integrations/analytics-kotlin-mixpanel |
-| Intercom | https://github.com/segment-integrations/analytics-kotlin-intercom |
-| ComScore | https://github.com/segment-integrations/analytics-kotlin-comscore |
-
+Refer to the Meergo events documentation for more information on the supported event types.
 
 ## Compatibility
 
@@ -72,19 +54,6 @@ Explore more via the [example projects](samples) which showcase analytics instru
   * either using Android Gradle plugin 4.0.0 or higher
   * or requiring a minimum API level of 26.
   * or upgrade the SDK version to latest
-
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
-
-## Integrating with Segment
-
-Interested in integrating your service with us? Check out our [Partners page](https://segment.com/partners/) for more details.
-
-## Code of Conduct
-
-Before contributing, please also see our [code of conduct](CODE_OF_CONDUCT.md).
 
 ## License
 ```

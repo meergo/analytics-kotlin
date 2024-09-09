@@ -1,0 +1,137 @@
+package com.meergo.analytics.kotlin.android
+
+import android.content.Context
+import android.content.SharedPreferences
+import com.meergo.analytics.kotlin.android.utilities.AndroidKVS
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.Storage.Companion.MAX_PAYLOAD_SIZE
+import com.meergo.analytics.kotlin.core.StorageProvider
+import com.meergo.analytics.kotlin.core.System
+import com.meergo.analytics.kotlin.core.UserInfo
+import com.meergo.analytics.kotlin.core.SessionInfo
+import com.meergo.analytics.kotlin.core.utilities.EventsFileManager
+import kotlinx.coroutines.CoroutineDispatcher
+import sovran.kotlin.Store
+import sovran.kotlin.Subscriber
+import java.io.File
+
+// Android specific
+class AndroidStorage(
+    context: Context,
+    private val store: Store,
+    writeKey: String,
+    private val ioDispatcher: CoroutineDispatcher,
+    directory: String? = null,
+    subject: String? = null
+) : Subscriber, Storage {
+
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("analytics-android-$writeKey", Context.MODE_PRIVATE)
+    override val storageDirectory: File = context.getDir(directory ?: "meergo-disk-queue", Context.MODE_PRIVATE)
+    internal val eventsFile =
+        EventsFileManager(storageDirectory, writeKey, AndroidKVS(sharedPreferences), subject)
+
+    override suspend fun subscribeToStore() {
+        store.subscribe(
+            this,
+            UserInfo::class,
+            initialState = true,
+            handler = ::userInfoUpdate,
+            queue = ioDispatcher
+        )
+        store.subscribe(
+            this,
+            SessionInfo::class,
+            initialState = true,
+            handler = ::sessionInfoUpdate,
+            queue = ioDispatcher
+        )
+        store.subscribe(
+            this,
+            System::class,
+            initialState = true,
+            handler = ::systemUpdate,
+            queue = ioDispatcher
+        )
+    }
+
+    override suspend fun write(key: Storage.Constants, value: String) {
+        when (key) {
+            Storage.Constants.Events -> {
+                if (value.length < MAX_PAYLOAD_SIZE) {
+                    // write to disk
+                    eventsFile.storeEvent(value)
+                } else {
+                    throw Exception("enqueued payload is too large")
+                }
+            }
+            else -> {
+                sharedPreferences.edit().putString(key.rawVal, value).apply()
+            }
+        }
+    }
+
+    /**
+     * @returns the String value for the associated key
+     * for Constants.Events it will return a file url that can be used to read the contents of the events
+     */
+    override fun read(key: Storage.Constants): String? {
+        return when (key) {
+            Storage.Constants.Events -> {
+                eventsFile.read().joinToString()
+            }
+            Storage.Constants.LegacyAppBuild -> {
+                // The legacy app build number was stored as an integer so we have to get it
+                // as an integer and convert it to a String.
+                val noBuild = -1
+                val build = sharedPreferences.getInt(key.rawVal, noBuild)
+                if (build != noBuild) {
+                    return build.toString()
+                } else {
+                    return null
+                }
+            }
+            else -> {
+                sharedPreferences.getString(key.rawVal, null)
+            }
+        }
+    }
+
+    override fun remove(key: Storage.Constants): Boolean {
+        return when (key) {
+            Storage.Constants.Events -> {
+                true
+            }
+            else -> {
+                sharedPreferences.edit().putString(key.rawVal, null).apply()
+                true
+            }
+        }
+    }
+
+    override fun removeFile(filePath: String): Boolean {
+        return eventsFile.remove(filePath)
+    }
+
+    override suspend fun rollover() {
+        eventsFile.rollover()
+    }
+}
+
+object AndroidStorageProvider : StorageProvider {
+    override fun getStorage(
+        analytics: Analytics,
+        store: Store,
+        writeKey: String,
+        ioDispatcher: CoroutineDispatcher,
+        application: Any
+    ): Storage {
+        return AndroidStorage(
+            store = store,
+            writeKey = writeKey,
+            ioDispatcher = ioDispatcher,
+            context = application as Context,
+        )
+    }
+}
