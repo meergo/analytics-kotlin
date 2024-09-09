@@ -29,7 +29,7 @@ Add the required permissions to `AndroidManifest.xml` (if they are not yet prese
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 ``` 
-
+  
 ## Using the SDK
 
 ```Java
