@@ -1,10 +1,10 @@
-package com.segment.analytics.next
+package com.meergo.analytics.next
 
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.utilities.toJsonElement
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.utilities.toJsonElement
 import kotlinx.serialization.json.buildJsonObject
 
 class MainActivity : AppCompatActivity() {

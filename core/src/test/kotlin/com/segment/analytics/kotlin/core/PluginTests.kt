@@ -1,8 +1,8 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.Timeline
-import com.segment.analytics.kotlin.core.utils.mockAnalytics
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.platform.Timeline
+import com.meergo.analytics.kotlin.core.utils.mockAnalytics
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

@@ -1,10 +1,10 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.Constants.LIBRARY_VERSION
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.utilities.putAll
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.Constants.LIBRARY_VERSION
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.utilities.putAll
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put

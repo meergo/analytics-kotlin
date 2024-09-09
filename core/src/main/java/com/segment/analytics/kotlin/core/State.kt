@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.utilities.putAll
+import com.meergo.analytics.kotlin.core.utilities.putAll
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
@@ -12,7 +12,7 @@ import java.util.*
 /**
  * Stores state related to the analytics system
  * - configuration used to initialize the client
- * - segment settings as a json map
+ * - meergo settings as a json map
  * - running state indicating the system has received settings
  */
 data class System(

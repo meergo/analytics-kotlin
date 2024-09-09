@@ -1,8 +1,8 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.core.utils.mockHTTPClient
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.core.utils.mockHTTPClient
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
@@ -35,7 +35,7 @@ class ErrorsTest {
         )
 
         analytics = testAnalytics(config, testScope, testDispatcher)
-        analytics.configuration.autoAddSegmentDestination = false
+        analytics.configuration.autoAddMeergoDestination = false
     }
 
     @Test

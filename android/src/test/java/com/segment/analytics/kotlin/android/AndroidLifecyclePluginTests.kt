@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.android
+package com.meergo.analytics.kotlin.android
 
 import android.app.Activity
 import android.content.Intent
@@ -7,13 +7,13 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.test.platform.app.InstrumentationRegistry
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.android.utils.TestRunPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.android.plugins.AndroidLifecycle
-import com.segment.analytics.kotlin.android.plugins.AndroidLifecyclePlugin
-import com.segment.analytics.kotlin.android.utils.mockHTTPClient
-import com.segment.analytics.kotlin.android.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.android.utils.TestRunPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.android.plugins.AndroidLifecycle
+import com.meergo.analytics.kotlin.android.plugins.AndroidLifecyclePlugin
+import com.meergo.analytics.kotlin.android.utils.mockHTTPClient
+import com.meergo.analytics.kotlin.android.utils.testAnalytics
 import io.mockk.*
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.TestScope

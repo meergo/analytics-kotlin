@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.segment.analytics.next"
+        applicationId "com.meergo.analytics.next"
         minSdkVersion 19
         targetSdkVersion 33
         versionCode 3

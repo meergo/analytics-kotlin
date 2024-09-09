@@ -1,11 +1,11 @@
-package com.segment.analytics.kotlin.core.platform
+package com.meergo.analytics.kotlin.core.platform
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.policies.CountBasedFlushPolicy
-import com.segment.analytics.kotlin.core.platform.policies.FrequencyFlushPolicy
-import com.segment.analytics.kotlin.core.utilities.ConcreteStorageProvider
-import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.core.utils.mockAnalytics
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.policies.CountBasedFlushPolicy
+import com.meergo.analytics.kotlin.core.platform.policies.FrequencyFlushPolicy
+import com.meergo.analytics.kotlin.core.utilities.ConcreteStorageProvider
+import com.meergo.analytics.kotlin.core.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.core.utils.mockAnalytics
 import io.mockk.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.TestScope

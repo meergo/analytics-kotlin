@@ -1,11 +1,11 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.System
-import com.segment.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.System
+import com.meergo.analytics.kotlin.core.platform.Plugin
 import kotlinx.coroutines.launch
-import com.segment.analytics.kotlin.core.platform.plugins.logger.*
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.*
 import sovran.kotlin.Subscriber
 import java.util.Queue
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -40,7 +40,7 @@ class StartupQueue : Plugin, Subscriber {
 
     override fun execute(event: BaseEvent): BaseEvent? {
         if (!started.get()) {
-            analytics.log("SegmentStartupQueue queueing event")
+            analytics.log("MeergoStartupQueue queueing event")
             // timeline hasn't started, so queue it up.
             if (queuedEvents.size >= maxSize) {
                 // if we've exceeded the max queue size start dropping events

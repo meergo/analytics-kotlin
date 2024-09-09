@@ -1,14 +1,14 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.Constants.DEFAULT_ENDPOINT
-import com.segment.analytics.kotlin.core.platform.policies.FlushPolicy
-import com.segment.analytics.kotlin.core.utilities.ConcreteStorageProvider
+import com.meergo.analytics.kotlin.core.Constants.DEFAULT_ENDPOINT
+import com.meergo.analytics.kotlin.core.platform.policies.FlushPolicy
+import com.meergo.analytics.kotlin.core.utilities.ConcreteStorageProvider
 import kotlinx.coroutines.*
 import sovran.kotlin.Store
 
 /**
  * Configuration that analytics can use
- * @property writeKey the Segment writeKey
+ * @property writeKey the Meergo writeKey
  * @property application defaults to `null`
  * @property storageProvider Provider for storage class, defaults to `ConcreteStorageProvider`
  * @property collectDeviceId collect deviceId, defaults to `false`
@@ -18,7 +18,7 @@ import sovran.kotlin.Store
  * @property flushAt count of events at which we flush events, defaults to `20`
  * @property flushInterval interval in seconds at which we flush events, defaults to `30 seconds`
  * @property defaultSettings Settings object that will be used as fallback in case of network failure, defaults to empty
- * @property autoAddMeergoDestination automatically add SegmentDestination plugin, defaults to `true`
+ * @property autoAddMeergoDestination automatically add MeergoDestination plugin, defaults to `true`
  * @property autoAddSegmentDestination same as autoAddMeergoDestination. defaults to `true`. This remains for compatibility with Segment SDK.
  * @property endpoint set the base endpoint used to construct the event dispatch and settings retrieval endpoints. Defaults to `test.example.com/api/v1`.
  * @property sessionAutoTrack automatically track session, defaults to `true`

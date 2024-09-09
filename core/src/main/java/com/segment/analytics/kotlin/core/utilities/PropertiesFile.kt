@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 import java.io.File
 import java.io.FileInputStream
@@ -7,7 +7,7 @@ import java.util.Properties
 
 /**
  * A key-value storage built on top of {@link java.util.Properties}
- * conforming to {@link com.segment.analytics.kotlin.core.utilities.KVS} interface.
+ * conforming to {@link com.meergo.analytics.kotlin.core.utilities.KVS} interface.
  * Ideal for use on JVM systems to store k-v pairs on a file.
  */
 class PropertiesFile(val directory: File, writeKey: String) : KVS {

@@ -1,9 +1,9 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import io.mockk.every
 import io.mockk.spyk
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -28,7 +28,7 @@ internal class StartupQueueTest {
         val config = Configuration(
             writeKey = "123",
             application = "Test",
-            autoAddSegmentDestination = false
+            autoAddMeergoDestination = false
         )
         analytics = testAnalytics(config, testScope, testDispatcher)
     }

@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 
 import org.junit.jupiter.api.Assertions.assertEquals

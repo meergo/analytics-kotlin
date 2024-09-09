@@ -1,17 +1,17 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.DestinationMetadata
-import com.segment.analytics.kotlin.core.Settings
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.utilities.safeJsonArray
-import com.segment.analytics.kotlin.core.utilities.safeJsonObject
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.DestinationMetadata
+import com.meergo.analytics.kotlin.core.Settings
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.utilities.safeJsonArray
+import com.meergo.analytics.kotlin.core.utilities.safeJsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
 /**
- * DestinationMetadataPlugin adds `_metadata` information to payloads that Segment uses to
+ * DestinationMetadataPlugin adds `_metadata` information to payloads that Meergo uses to
  * determine delivery of events to cloud/device-mode destinations
  */
 class DestinationMetadataPlugin : Plugin {
@@ -28,7 +28,7 @@ class DestinationMetadataPlugin : Plugin {
         // Using this over `findAll` for that teensy performance benefit
         val enabledDestinations = analytics.timeline.plugins[Plugin.Type.Destination]?.plugins
             ?.map { it as DestinationPlugin }
-            ?.filter { it.enabled && it !is SegmentDestination }
+            ?.filter { it.enabled && it !is MeergoDestination }
         val metadata = DestinationMetadata().apply {
             // Mark all loaded destinations as bundled
             val bundled = buildSet { enabledDestinations?.forEach { add(it.key) } }

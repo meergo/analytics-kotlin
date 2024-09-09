@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.platform.policies
+package com.meergo.analytics.kotlin.core.platform.policies
 
-import com.segment.analytics.kotlin.core.ScreenEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.ScreenEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance

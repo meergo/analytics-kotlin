@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.platform
+package com.meergo.analytics.kotlin.core.platform
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.utils.mockAnalytics
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.utils.mockAnalytics
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -1,15 +1,15 @@
-package com.segment.analytics.kotlin.core.compat
+package com.meergo.analytics.kotlin.core.compat
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.json.JsonObject
 import sovran.kotlin.Store
 import java.util.function.Consumer
 
 /**
- * This class is merely a wrapper of {@link Analytics com.segment.analytics.kotlin.core.Analytics}
+ * This class is merely a wrapper of {@link Analytics com.meergo.analytics.kotlin.core.Analytics}
  * for Java compatibility purpose.
  */
 class JavaAnalytics(val analytics: Analytics) {
@@ -21,7 +21,7 @@ class JavaAnalytics(val analytics: Analytics) {
     /**
      * A constructor that takes a configuration
      * @param configuration an instance of configuration that can be build
-     *          through {@link ConfigurationBuilder com.segment.analytics.kotlin.core.compat.ConfigurationBuilder}
+     *          through {@link ConfigurationBuilder com.meergo.analytics.kotlin.core.compat.ConfigurationBuilder}
      */
     constructor(configuration: Configuration): this(Analytics(configuration))
 
@@ -43,8 +43,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param name Name of the action
      * @param properties [Properties] to describe the action in JsonObject form. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/track/">Track Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     @JvmOverloads
     fun track(name: String, properties: JsonObject = emptyJsonObject) = analytics.track(name, properties)
@@ -55,8 +54,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * For example a 'Purchased a Shirt' event might have properties like revenue or size.
      *
      * @param name Name of the action
-     * @param serializable an object that implements {@link JsonSerializable com.segment.analytics.kotlin.core.compat.JsonSerializable}
-     * @see <a href="https://segment.com/docs/spec/track/">Track Documentation</a>
+     * @param serializable an object that implements {@link JsonSerializable com.meergo.analytics.kotlin.core.compat.JsonSerializable}
      */
     fun track(name: String, serializable: JsonSerializable) = analytics.track(name, serializable.serialize())
 
@@ -67,8 +65,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param name Name of the action
      * @param properties [Properties] to describe the action in Map<String, Any> form. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/track/">Track Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     fun track(name: String, properties: Map<String, Any>) = analytics.track(name, properties)
 
@@ -86,8 +83,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param userId Unique identifier which you recognize a user by in your own database
      * @param traits [Traits] about the user in JsonObject form. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     @JvmOverloads
     fun identify(userId: String, traits: JsonObject = emptyJsonObject) = analytics.identify(userId, traits)
@@ -106,8 +102,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param userId Unique identifier which you recognize a user by in your own database
      * @param traits [Traits] about the user in Map<String, Any> form. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     fun identify(userId: String, traits: Map<String, Any>) = analytics.identify(userId, traits)
 
@@ -124,8 +119,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * info.
      *
      * @param userId Unique identifier which you recognize a user by in your own database
-     * @param serializable an object that implements {@link JsonSerializable com.segment.analytics.kotlin.core.compat.JsonSerializable}
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
+     * @param serializable an object that implements {@link JsonSerializable com.meergo.analytics.kotlin.core.compat.JsonSerializable}
      */
     fun identify(userId: String, serializable: JsonSerializable) = analytics.identify(userId, serializable.serialize())
 
@@ -141,8 +135,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * info.
      *
      * @param traits [Traits] about the user in JsonObject form. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     @JvmOverloads
     fun identify(traits: JsonObject = emptyJsonObject) = analytics.identify(traits)
@@ -159,8 +152,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * info.
      *
      * @param traits [Traits] about the user in Map<String, Any> form. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     fun identify(traits: Map<String, Any>) = analytics.identify(traits)
 
@@ -175,8 +167,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * In the case when user logs out, make sure to call {@link #reset()} to clear user's identity
      * info.
      *
-     * @param serializable an object that implements {@link JsonSerializable com.segment.analytics.kotlin.core.compat.JsonSerializable}
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
+     * @param serializable an object that implements {@link JsonSerializable com.meergo.analytics.kotlin.core.compat.JsonSerializable}
      */
     fun identify(serializable: JsonSerializable) = analytics.identify(serializable.serialize())
 
@@ -189,8 +180,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * @param title A name for the screen.
      * @param category A category to describe the screen.
      * @param properties [Properties] to add extra information to this call. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/screen/">Screen Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     @JvmOverloads
     fun screen(
@@ -207,8 +197,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * @param title A name for the screen.
      * @param category A category to describe the screen.
      * @param properties [Properties] to add extra information to this call. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/screen/">Screen Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     @JvmOverloads
     fun screen(
@@ -224,8 +213,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param title A name for the screen.
      * @param category A category to describe the screen.
-     * @param serializable an object that implements {@link JsonSerializable com.segment.analytics.kotlin.core.compat.JsonSerializable}
-     * @see <a href="https://segment.com/docs/spec/screen/">Screen Documentation</a>
+     * @param serializable an object that implements {@link JsonSerializable com.meergo.analytics.kotlin.core.compat.JsonSerializable}
      */
     fun screen(
         title: String,
@@ -242,8 +230,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param groupId Unique identifier which you recognize a group by in your own database
      * @param traits [Traits] about the group. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/group/">Group Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     @JvmOverloads
     fun group(groupId: String, traits: JsonObject = emptyJsonObject) = analytics.group(groupId, traits)
@@ -257,8 +244,7 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param groupId Unique identifier which you recognize a group by in your own database
      * @param traits [Traits] about the group. can be built by
-     *          {@link Builder com.segment.analytics.kotlin.core.compat.Builder}
-     * @see <a href="https://segment.com/docs/spec/group/">Group Documentation</a>
+     *          {@link Builder com.meergo.analytics.kotlin.core.compat.Builder}
      */
     fun group(groupId: String, traits: Map<String, Any>) = analytics.group(groupId, traits)
 
@@ -270,8 +256,7 @@ class JavaAnalytics(val analytics: Analytics) {
      * automatically remember the userId. If not, it will fall back to use the anonymousId instead.
      *
      * @param groupId Unique identifier which you recognize a group by in your own database
-     * @param serializable an object that implements {@link JsonSerializable com.segment.analytics.kotlin.core.compat.JsonSerializable}
-     * @see <a href="https://segment.com/docs/spec/group/">Group Documentation</a>
+     * @param serializable an object that implements {@link JsonSerializable com.meergo.analytics.kotlin.core.compat.JsonSerializable}
      */
     fun group(groupId: String, serializable: JsonSerializable) = analytics.group(groupId, serializable.serialize())
 
@@ -282,7 +267,6 @@ class JavaAnalytics(val analytics: Analytics) {
      *
      * @param newId The new ID you want to alias the existing ID to. The existing ID will be either
      *     the previousId if you have called identify, or the anonymous ID.
-     * @see <a href="https://segment.com/docs/tracking-api/alias/">Alias Documentation</a>
      */
     fun alias(newId: String) = analytics.alias(newId)
 

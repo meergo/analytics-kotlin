@@ -1,8 +1,8 @@
-package com.segment.analytics.next
+package com.meergo.analytics.next
 
 import android.app.Application
-import com.segment.analytics.kotlin.android.Analytics
-import com.segment.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.android.Analytics
+import com.meergo.analytics.kotlin.core.*
 
 class MainApplication : Application() {
 

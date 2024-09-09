@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
 @RequiresOptIn(
     level = RequiresOptIn.Level.WARNING,

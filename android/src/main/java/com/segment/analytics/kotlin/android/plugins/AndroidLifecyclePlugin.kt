@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.android.plugins
+package com.meergo.analytics.kotlin.android.plugins
 
 import android.app.Activity
 import android.app.Application
@@ -14,11 +14,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.segment.analytics.kotlin.android.utilities.DeepLinkUtils
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Storage
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.reportInternalError
+import com.meergo.analytics.kotlin.android.utilities.DeepLinkUtils
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.reportInternalError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.buildJsonObject

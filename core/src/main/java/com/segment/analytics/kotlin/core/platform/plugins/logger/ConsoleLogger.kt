@@ -1,8 +1,8 @@
-package com.segment.analytics.kotlin.core.platform.plugins.logger
+package com.meergo.analytics.kotlin.core.platform.plugins.logger
 
 class ConsoleLogger: Logger {
     override fun parseLog(log: LogMessage) {
-        println("[Segment ${log.kind.toString()} ${log.message}")
+        println("[Meergo ${log.kind.toString()} ${log.message}")
     }
 
 }

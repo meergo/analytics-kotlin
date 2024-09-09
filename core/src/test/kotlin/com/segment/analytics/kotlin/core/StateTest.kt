@@ -1,8 +1,8 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.core.utils.mockHTTPClient
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.core.utils.mockHTTPClient
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -34,7 +34,7 @@ internal class StateTest {
         )
         analytics = testAnalytics(config, testScope, testDispatcher)
 
-        analytics.configuration.autoAddSegmentDestination = false
+        analytics.configuration.autoAddMeergoDestination = false
     }
 
     @Nested

@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.Constants.LIBRARY_VERSION
+import com.meergo.analytics.kotlin.core.Constants.LIBRARY_VERSION
 import io.mockk.clearConstructorMockk
 import io.mockk.every
 import io.mockk.mockk

@@ -1,10 +1,10 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.Timeline
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.Timeline
 
-import com.segment.analytics.kotlin.core.platform.plugins.logger.*
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.*
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import io.mockk.*
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -27,7 +27,7 @@ class UserInfoPluginTests {
     val config = Configuration(
         writeKey = "123",
         application = "Test",
-        autoAddSegmentDestination = false
+        autoAddMeergoDestination = false
     )
 
     private val testAnalytics = testAnalytics(config, testScope, testDispatcher)

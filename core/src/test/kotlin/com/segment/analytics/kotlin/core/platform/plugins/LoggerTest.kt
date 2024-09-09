@@ -1,10 +1,10 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.platform.plugins.logger.*
-import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.*
+import com.meergo.analytics.kotlin.core.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import org.junit.jupiter.api.Assertions.*
@@ -26,7 +26,7 @@ internal class LoggerTest {
         val config = Configuration(
             writeKey = "123",
             application = "Tetst",
-            autoAddSegmentDestination = false
+            autoAddMeergoDestination = false
         )
         analytics = testAnalytics(config, testScope, testDispatcher)
     }

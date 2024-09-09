@@ -1,16 +1,16 @@
-package com.segment.analytics.kotlin.android
+package com.meergo.analytics.kotlin.android
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.segment.analytics.kotlin.android.utilities.AndroidKVS
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Storage
-import com.segment.analytics.kotlin.core.Storage.Companion.MAX_PAYLOAD_SIZE
-import com.segment.analytics.kotlin.core.StorageProvider
-import com.segment.analytics.kotlin.core.System
-import com.segment.analytics.kotlin.core.UserInfo
-import com.segment.analytics.kotlin.core.SessionInfo
-import com.segment.analytics.kotlin.core.utilities.EventsFileManager
+import com.meergo.analytics.kotlin.android.utilities.AndroidKVS
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.Storage.Companion.MAX_PAYLOAD_SIZE
+import com.meergo.analytics.kotlin.core.StorageProvider
+import com.meergo.analytics.kotlin.core.System
+import com.meergo.analytics.kotlin.core.UserInfo
+import com.meergo.analytics.kotlin.core.SessionInfo
+import com.meergo.analytics.kotlin.core.utilities.EventsFileManager
 import kotlinx.coroutines.CoroutineDispatcher
 import sovran.kotlin.Store
 import sovran.kotlin.Subscriber
@@ -28,7 +28,7 @@ class AndroidStorage(
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("analytics-android-$writeKey", Context.MODE_PRIVATE)
-    override val storageDirectory: File = context.getDir(directory ?: "segment-disk-queue", Context.MODE_PRIVATE)
+    override val storageDirectory: File = context.getDir(directory ?: "meergo-disk-queue", Context.MODE_PRIVATE)
     internal val eventsFile =
         EventsFileManager(storageDirectory, writeKey, AndroidKVS(sharedPreferences), subject)
 

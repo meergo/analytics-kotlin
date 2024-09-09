@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.android.utils
+package com.meergo.analytics.kotlin.android.utils
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.*
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.*
 
 class TestRunPlugin(var closure: (BaseEvent?) -> Unit): EventPlugin {
     override val type: Plugin.Type = Plugin.Type.Before

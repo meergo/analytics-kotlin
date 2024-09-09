@@ -1,5 +1,5 @@
 @file:JvmName("FileUtils")
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 import java.io.File
 import java.io.IOException

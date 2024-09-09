@@ -1,4 +1,4 @@
-import com.segment.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.BaseEvent
 import kotlinx.serialization.json.buildJsonObject
 
 fun withoutSessionInfo(event: BaseEvent): BaseEvent {

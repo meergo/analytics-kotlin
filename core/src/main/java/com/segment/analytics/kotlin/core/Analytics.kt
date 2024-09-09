@@ -1,17 +1,17 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.EnrichmentClosure
-import com.segment.analytics.kotlin.core.platform.EventPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.Timeline
-import com.segment.analytics.kotlin.core.platform.plugins.ContextPlugin
-import com.segment.analytics.kotlin.core.platform.plugins.SegmentDestination
-import com.segment.analytics.kotlin.core.platform.plugins.StartupQueue
-import com.segment.analytics.kotlin.core.platform.plugins.UserInfoPlugin
-import com.segment.analytics.kotlin.core.platform.plugins.logger.*
-import com.segment.analytics.kotlin.core.utilities.JsonAnySerializer
-import com.segment.analytics.kotlin.core.utilities.toJsonElement
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.EnrichmentClosure
+import com.meergo.analytics.kotlin.core.platform.EventPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.platform.Timeline
+import com.meergo.analytics.kotlin.core.platform.plugins.ContextPlugin
+import com.meergo.analytics.kotlin.core.platform.plugins.MeergoDestination
+import com.meergo.analytics.kotlin.core.platform.plugins.StartupQueue
+import com.meergo.analytics.kotlin.core.platform.plugins.UserInfoPlugin
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.*
+import com.meergo.analytics.kotlin.core.utilities.JsonAnySerializer
+import com.meergo.analytics.kotlin.core.utilities.toJsonElement
 import kotlinx.coroutines.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
@@ -166,8 +166,8 @@ open class Analytics protected constructor(
                 Telemetry.subscribe(store)
             }
 
-            if (configuration.autoAddMeergoDestination && configuration.autoAddSegmentDestination) {
-                add(SegmentDestination())
+            if (configuration.autoAddMeergoDestination && configuration.autoAddMeergoDestination) {
+                add(MeergoDestination())
             }
 
             val settings = async {
@@ -196,7 +196,6 @@ open class Analytics protected constructor(
      * @param name Name of the action
      * @param properties [Properties] to describe the action.
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/track/">Track Documentation</a>
      */
     @JvmOverloads
     fun track(name: String, properties: JsonObject = emptyJsonObject, enrichment: EnrichmentClosure? = null) {
@@ -213,7 +212,6 @@ open class Analytics protected constructor(
      * @param properties to describe the action. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param serializationStrategy strategy to serialize [properties]
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/track/">Track Documentation</a>
      */
     fun <T> track(
         name: String,
@@ -232,7 +230,6 @@ open class Analytics protected constructor(
      * @param name Name of the action
      * @param properties to describe the action. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/track/">Track Documentation</a>
      */
     inline fun <reified T> track(
         name: String,
@@ -257,7 +254,6 @@ open class Analytics protected constructor(
      * @param userId Unique identifier which you recognize a user by in your own database
      * @param traits [Traits] about the user.
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
      */
     @JvmOverloads
     fun identify(userId: String, traits: JsonObject = emptyJsonObject, enrichment: EnrichmentClosure? = null) {
@@ -304,7 +300,6 @@ open class Analytics protected constructor(
      * @param traits [Traits] about the user. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param serializationStrategy strategy to serialize [traits]
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
      */
     fun <T> identify(
         userId: String,
@@ -329,7 +324,6 @@ open class Analytics protected constructor(
      *
      * @param traits [Traits] about the user. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
      */
     inline fun <reified T> identify(
         traits: T,
@@ -351,7 +345,6 @@ open class Analytics protected constructor(
      *
      * @param traits [Traits] about the user.
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
      */
     @JvmOverloads
     fun identify(traits: JsonObject = emptyJsonObject, enrichment: EnrichmentClosure? = null) {
@@ -380,7 +373,6 @@ open class Analytics protected constructor(
      * @param traits [Traits] about the user. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param serializationStrategy strategy to serialize [traits]
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
      */
     fun <T> identify(
         traits: T,
@@ -405,7 +397,6 @@ open class Analytics protected constructor(
      * @param userId Unique identifier which you recognize a user by in your own database
      * @param traits [Traits] about the user. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/identify/">Identify Documentation</a>
      */
     inline fun <reified T> identify(
         userId: String,
@@ -424,7 +415,6 @@ open class Analytics protected constructor(
      * @param category A category to describe the screen.
      * @param properties [Properties] to add extra information to this call.
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/screen/">Screen Documentation</a>
      */
     @JvmOverloads
     fun screen(
@@ -447,7 +437,6 @@ open class Analytics protected constructor(
      * @param properties [Properties] to add extra information to this call. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param serializationStrategy strategy to serialize [properties]
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/screen/">Screen Documentation</a>
      */
     fun <T> screen(
         title: String,
@@ -473,7 +462,6 @@ open class Analytics protected constructor(
      * @param category A category to describe the screen.
      * @param properties [Properties] to add extra information to this call. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/screen/">Screen Documentation</a>
      */
     inline fun <reified T> screen(
         title: String,
@@ -494,7 +482,6 @@ open class Analytics protected constructor(
      * @param groupId Unique identifier which you recognize a group by in your own database
      * @param traits [Traits] about the group
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/group/">Group Documentation</a>
      */
     @JvmOverloads
     fun group(groupId: String, traits: JsonObject = emptyJsonObject, enrichment: EnrichmentClosure? = null) {
@@ -513,7 +500,6 @@ open class Analytics protected constructor(
      * @param traits [Traits] about the group. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param serializationStrategy strategy to serialize [traits]
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/group/">Group Documentation</a>
      */
     fun <T> group(
         groupId: String,
@@ -534,7 +520,6 @@ open class Analytics protected constructor(
      * @param groupId Unique identifier which you recognize a group by in your own database
      * @param traits [Traits] about the group. Needs to be [serializable](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md)
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/spec/group/">Group Documentation</a>
      */
     inline fun <reified T> group(
         groupId: String,
@@ -552,7 +537,6 @@ open class Analytics protected constructor(
      * @param newId The new ID you want to alias the existing ID to. The existing ID will be either
      *     the previousId if you have called identify, or the anonymous ID.
      * @param enrichment a closure that enables enrichment on the generated event
-     * @see <a href="https://segment.com/docs/tracking-api/alias/">Alias Documentation</a>
      */
     fun alias(newId: String, enrichment: EnrichmentClosure? = null) {
         analyticsScope.launch(analyticsDispatcher) {
@@ -964,7 +948,7 @@ fun Analytics(writeKey: String, configs: Configuration.() -> Unit): Analytics {
 
 internal fun isAndroid(): Boolean {
     return try {
-        Class.forName("com.segment.analytics.kotlin.android.AndroidStorage")
+        Class.forName("com.meergo.analytics.kotlin.android.AndroidStorage")
         true
     } catch (ignored: ClassNotFoundException) {
         false

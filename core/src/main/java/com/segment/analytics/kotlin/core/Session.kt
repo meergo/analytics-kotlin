@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
 fun newSession(id: Long?, timeout: Long): SessionInfo {
     var sessionId = id

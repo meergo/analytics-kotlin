@@ -1,9 +1,9 @@
 @file:JvmName("EventTransformer")
 
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.*
 import kotlinx.serialization.serializer

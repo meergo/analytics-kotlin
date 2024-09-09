@@ -1,13 +1,13 @@
-package com.segment.analytics.kotlin.android
+package com.meergo.analytics.kotlin.android
 
-import com.segment.analytics.kotlin.android.utilities.AndroidKVS
-import com.segment.analytics.kotlin.android.utils.MemorySharedPreferences
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
-import com.segment.analytics.kotlin.core.utilities.EncodeDefaultsJson
-import com.segment.analytics.kotlin.core.utilities.EventsFileManager
-import com.segment.analytics.kotlin.core.utilities.SegmentInstant
-import com.segment.analytics.kotlin.core.Telemetry
+import com.meergo.analytics.kotlin.android.utilities.AndroidKVS
+import com.meergo.analytics.kotlin.android.utils.MemorySharedPreferences
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.utilities.EncodeDefaultsJson
+import com.meergo.analytics.kotlin.core.utilities.EventsFileManager
+import com.meergo.analytics.kotlin.core.utilities.MeergoInstant
+import com.meergo.analytics.kotlin.core.Telemetry
 import io.mockk.every
 import io.mockk.mockkObject
 import kotlinx.coroutines.test.runTest
@@ -34,8 +34,8 @@ class EventsFileTests {
 
     init {
         Telemetry.enable = false
-        mockkObject(SegmentInstant)
-        every { SegmentInstant.now() } returns Date(0).toInstant().toString()
+        mockkObject(MeergoInstant)
+        every { MeergoInstant.now() } returns Date(0).toInstant().toString()
     }
 
     @BeforeEach

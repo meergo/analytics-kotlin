@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.SerialDescriptor

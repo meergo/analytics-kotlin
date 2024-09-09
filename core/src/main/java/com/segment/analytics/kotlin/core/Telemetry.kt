@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.utilities.SegmentInstant
+import com.meergo.analytics.kotlin.core.utilities.MeergoInstant
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlinx.coroutines.*
@@ -63,7 +63,7 @@ object Telemetry: Subscriber {
             }
         }
     var endpoint: String = Constants.DEFAULT_ENDPOINT
-    // 1.0 is 100%, will get set by Segment setting before start()
+    // 1.0 is 100%, will get set by Meergo setting before start()
     var sampleRate: Double = 0.0
     var flushTimer: Int = 30 * 1000 // 30s
     var httpClient: HTTPClient = HTTPClient("", MetricsRequestFactory())
@@ -283,7 +283,7 @@ object Telemetry: Subscriber {
             type = METRIC_TYPE,
             metric = metric,
             value = value,
-            log = log?.let { mapOf("timestamp" to SegmentInstant.now(), "trace" to it) },
+            log = log?.let { mapOf("timestamp" to MeergoInstant.now(), "trace" to it) },
             tags = tags + additionalTags
         )
         val newMetricSize = newMetric.toString().toByteArray().size
@@ -298,13 +298,13 @@ object Telemetry: Subscriber {
     internal suspend fun subscribe(store: Store) {
         store.subscribe(
             this,
-            com.segment.analytics.kotlin.core.System::class,
+            com.meergo.analytics.kotlin.core.System::class,
             initialState = true,
             handler = ::systemUpdate,
             queue = telemetryDispatcher
         )
     }
-    private suspend fun systemUpdate(system: com.segment.analytics.kotlin.core.System) {
+    private suspend fun systemUpdate(system: com.meergo.analytics.kotlin.core.System) {
         system.settings?.let { settings ->
             settings.metrics["sampleRate"]?.jsonPrimitive?.double?.let {
                 sampleRate = it

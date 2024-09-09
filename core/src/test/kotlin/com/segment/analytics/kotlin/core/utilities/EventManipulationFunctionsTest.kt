@@ -1,8 +1,8 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Assertions.assertEquals

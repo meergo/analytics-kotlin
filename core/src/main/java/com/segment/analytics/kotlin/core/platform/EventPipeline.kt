@@ -1,11 +1,11 @@
-package com.segment.analytics.kotlin.core.platform
+package com.meergo.analytics.kotlin.core.platform
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.plugins.logger.LogKind
-import com.segment.analytics.kotlin.core.platform.plugins.logger.log
-import com.segment.analytics.kotlin.core.platform.plugins.logger.segmentLog
-import com.segment.analytics.kotlin.core.platform.policies.FlushPolicy
-import com.segment.analytics.kotlin.core.utilities.EncodeDefaultsJson
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.LogKind
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.log
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.meergoLog
+import com.meergo.analytics.kotlin.core.platform.policies.FlushPolicy
+import com.meergo.analytics.kotlin.core.utilities.EncodeDefaultsJson
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.consumeEach
@@ -115,7 +115,7 @@ open class EventPipeline(
             }
             catch (e : Exception) {
                 analytics.reportInternalError(e)
-                Analytics.segmentLog("Error adding payload: $event", kind = LogKind.ERROR)
+                Analytics.meergoLog("Error adding payload: $event", kind = LogKind.ERROR)
             }
 
             // if flush condition met, generate paths
@@ -182,20 +182,20 @@ open class EventPipeline(
             analytics.log("$logTag exception while uploading, ${e.message}")
             if (e.is4xx() && e.responseCode != 429) {
                 // Simply log and proceed to remove the rejected payloads from the queue.
-                Analytics.segmentLog(
+                Analytics.meergoLog(
                     message = "Payloads were rejected by server. Marked for removal.",
                     kind = LogKind.ERROR
                 )
                 shouldCleanup = true
             } else {
-                Analytics.segmentLog(
+                Analytics.meergoLog(
                     message = "Error while uploading payloads",
                     kind = LogKind.ERROR
                 )
             }
         }
         else {
-            Analytics.segmentLog(
+            Analytics.meergoLog(
                 """
                     | Error uploading events from batch file
                     | fileUrl="${file.path}"

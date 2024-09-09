@@ -1,20 +1,20 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.Connection
-import com.segment.analytics.kotlin.core.HTTPClient
-import com.segment.analytics.kotlin.core.HTTPException
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
-import com.segment.analytics.kotlin.core.platform.plugins.logger.LogKind
-import com.segment.analytics.kotlin.core.platform.plugins.logger.LogMessage
-import com.segment.analytics.kotlin.core.platform.plugins.logger.Logger
-import com.segment.analytics.kotlin.core.utilities.ConcreteStorageProvider
-import com.segment.analytics.kotlin.core.utilities.EncodeDefaultsJson
-import com.segment.analytics.kotlin.core.utilities.StorageImpl
-import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.Connection
+import com.meergo.analytics.kotlin.core.HTTPClient
+import com.meergo.analytics.kotlin.core.HTTPException
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.LogKind
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.LogMessage
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.Logger
+import com.meergo.analytics.kotlin.core.utilities.ConcreteStorageProvider
+import com.meergo.analytics.kotlin.core.utilities.EncodeDefaultsJson
+import com.meergo.analytics.kotlin.core.utilities.StorageImpl
+import com.meergo.analytics.kotlin.core.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import io.mockk.*
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -42,10 +42,10 @@ import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SegmentDestinationTests {
+class MeergoDestinationTests {
     private lateinit var analytics: Analytics
 
-    private lateinit var segmentDestination: SegmentDestination
+    private lateinit var meergoDestination: MeergoDestination
 
     private val epochTimestamp = Date(0).toInstant().toString()
 
@@ -65,7 +65,7 @@ class SegmentDestinationTests {
     @BeforeEach
     fun setup() {
         clearPersistentStorage()
-        segmentDestination = SegmentDestination()
+        meergoDestination = MeergoDestination()
 
         val config = Configuration(
             writeKey = "123",
@@ -75,7 +75,7 @@ class SegmentDestinationTests {
             flushInterval = 0
         )
         analytics = testAnalytics(config, testScope, testDispatcher)
-        segmentDestination.setup(analytics)
+        meergoDestination.setup(analytics)
     }
 
     @Test
@@ -91,7 +91,7 @@ class SegmentDestinationTests {
                 timestamp = epochTimestamp
             }
 
-        assertEquals(trackEvent, segmentDestination.track(trackEvent))
+        assertEquals(trackEvent, meergoDestination.track(trackEvent))
 
         val expectedEvent = EncodeDefaultsJson.encodeToJsonElement(trackEvent).jsonObject.filterNot { (k, v) ->
             // filter out empty userId and traits values
@@ -139,7 +139,7 @@ class SegmentDestinationTests {
         }
 
         Analytics.logger = testLogger
-        val destSpy = spyk(segmentDestination)
+        val destSpy = spyk(meergoDestination)
         assertEquals(trackEvent, destSpy.track(trackEvent))
         verify { errorAddingPayload.set(true) }
     }
@@ -156,7 +156,7 @@ class SegmentDestinationTests {
                 context = emptyJsonObject
                 timestamp = epochTimestamp
             }
-        val destSpy = spyk(segmentDestination)
+        val destSpy = spyk(meergoDestination)
 
         val httpConnection: HttpURLConnection = mockk()
         var outputBytes: ByteArray = byteArrayOf()
@@ -208,7 +208,7 @@ class SegmentDestinationTests {
             }
         }
         Analytics.logger = testLogger
-        val destSpy = spyk(segmentDestination)
+        val destSpy = spyk(meergoDestination)
 
         val httpConnection: HttpURLConnection = mockk()
         val connection = object : Connection(httpConnection, null, ByteArrayOutputStream()) {
@@ -253,9 +253,9 @@ class SegmentDestinationTests {
         }
         every { anyConstructed<HTTPClient>().upload(any()) } returns connection
 
-        assertEquals(trackEvent, segmentDestination.track(trackEvent))
+        assertEquals(trackEvent, meergoDestination.track(trackEvent))
         assertDoesNotThrow {
-            segmentDestination.flush()
+            meergoDestination.flush()
         }
         verify { errorUploading.set(true) }
         (analytics.storage as StorageImpl).run {
@@ -296,9 +296,9 @@ class SegmentDestinationTests {
         }
         every { anyConstructed<HTTPClient>().upload(any()) } returns connection
 
-        assertEquals(trackEvent, segmentDestination.track(trackEvent))
+        assertEquals(trackEvent, meergoDestination.track(trackEvent))
         assertDoesNotThrow {
-            segmentDestination.flush()
+            meergoDestination.flush()
         }
         verify { errorUploading.set(true) }
         (analytics.storage as StorageImpl).run {
@@ -333,9 +333,9 @@ class SegmentDestinationTests {
         Analytics.logger = testLogger
 
         every { anyConstructed<HTTPClient>().upload(any()) } throws Exception("test")
-        assertEquals(trackEvent, segmentDestination.track(trackEvent))
+        assertEquals(trackEvent, meergoDestination.track(trackEvent))
         assertDoesNotThrow {
-            segmentDestination.flush()
+            meergoDestination.flush()
         }
         verify { exceptionUploading.set(true) }
     }

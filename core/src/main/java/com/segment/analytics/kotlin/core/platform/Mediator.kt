@@ -1,12 +1,12 @@
-package com.segment.analytics.kotlin.core.platform
+package com.meergo.analytics.kotlin.core.platform
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.Telemetry
-import com.segment.analytics.kotlin.core.platform.plugins.logger.LogKind
-import com.segment.analytics.kotlin.core.platform.plugins.logger.segmentLog
-import com.segment.analytics.kotlin.core.reportErrorWithMetrics
-import com.segment.analytics.kotlin.core.reportInternalError
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.Telemetry
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.LogKind
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.meergoLog
+import com.meergo.analytics.kotlin.core.reportErrorWithMetrics
+import com.meergo.analytics.kotlin.core.reportInternalError
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.reflect.KClass
 
@@ -48,7 +48,7 @@ internal class Mediator(internal var plugins: CopyOnWriteArrayList<Plugin> = Cop
                         }
                     }
                 } catch (t: Throwable) {
-                    Analytics.segmentLog("Skipping plugin due to Exception: $plugin", kind = LogKind.WARNING)
+                    Analytics.meergoLog("Skipping plugin due to Exception: $plugin", kind = LogKind.WARNING)
                     reportErrorWithMetrics(null, t,"Caught Exception in plugin",
                         Telemetry.INTEGRATION_ERROR_METRIC, t.stackTraceToString()) {
                         it["error"] = t.toString()

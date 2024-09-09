@@ -1,14 +1,14 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.Settings
-import com.segment.analytics.kotlin.core.Storage
-import com.segment.analytics.kotlin.core.System
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.UserInfo
-import com.segment.analytics.kotlin.core.emptyJsonObject
-import com.segment.analytics.kotlin.core.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.core.utils.spyStore
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.Settings
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.System
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.UserInfo
+import com.meergo.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.core.utils.spyStore
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest

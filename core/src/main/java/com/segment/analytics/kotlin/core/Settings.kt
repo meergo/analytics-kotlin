@@ -1,10 +1,10 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.plugins.logger.log
-import com.segment.analytics.kotlin.core.utilities.LenientJson
-import com.segment.analytics.kotlin.core.utilities.safeJsonObject
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.log
+import com.meergo.analytics.kotlin.core.utilities.LenientJson
+import com.meergo.analytics.kotlin.core.utilities.safeJsonObject
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.DeserializationStrategy
@@ -61,7 +61,7 @@ internal suspend fun Analytics.update(settings: Settings) {
 }
 
 /**
- * Manually enable a destination plugin.  This is useful when a given DestinationPlugin doesn't have any Segment tie-ins at all.
+ * Manually enable a destination plugin.  This is useful when a given DestinationPlugin doesn't have any Meergo tie-ins at all.
  * This will allow the destination to be processed in the same way within this library.
  */
 fun Analytics.manuallyEnableDestination(plugin: DestinationPlugin) {
@@ -78,7 +78,7 @@ fun Analytics.manuallyEnableDestination(plugin: DestinationPlugin) {
 
 
 /**
- * Make analytics client call into Segment's settings API, to refresh certain configurations.
+ * Make analytics client call into Meergo's settings API, to refresh certain configurations.
  */
 suspend fun Analytics.checkSettings(): Settings? {
     val writeKey = configuration.writeKey

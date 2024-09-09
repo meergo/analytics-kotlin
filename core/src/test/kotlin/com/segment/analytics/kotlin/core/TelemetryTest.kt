@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
 import io.mockk.*
 import org.junit.jupiter.api.Assertions.*

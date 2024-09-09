@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.compat
+package com.meergo.analytics.kotlin.core.compat
 
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.RequestFactory
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.RequestFactory
 
 /**
  * This class serves as a helper class for Java compatibility, which makes the

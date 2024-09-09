@@ -1,31 +1,31 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.EventPipeline
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.VersionedPlugin
-import com.segment.analytics.kotlin.core.platform.policies.CountBasedFlushPolicy
-import com.segment.analytics.kotlin.core.platform.policies.FlushPolicy
-import com.segment.analytics.kotlin.core.platform.policies.FrequencyFlushPolicy
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.EventPipeline
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.platform.VersionedPlugin
+import com.meergo.analytics.kotlin.core.platform.policies.CountBasedFlushPolicy
+import com.meergo.analytics.kotlin.core.platform.policies.FlushPolicy
+import com.meergo.analytics.kotlin.core.platform.policies.FrequencyFlushPolicy
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import sovran.kotlin.Subscriber
 
 @Serializable
-data class SegmentSettings(
+data class MeergoSettings(
     var apiKey: String,
     var endpoint: String? = null
 )
 
 /**
- * Segment Analytics plugin that is used to send events to Segment's tracking api, in the choice of region.
+ * Meergo Analytics plugin that is used to send events to Meergo's tracking api, in the choice of region.
  * How it works
  * - Plugin receives `endpoint` settings
- * - We store events into a file with the batch api format (@link {https://segment.com/docs/connections/sources/catalog/libraries/server/http-api/#batch})
+ * - We store events into a file with the batch api format
  * - We upload events on a dedicated thread using the batch api
  */
-class SegmentDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
+class MeergoDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
 
     private var pipeline: EventPipeline? = null
     var flushPolicies: List<FlushPolicy> = emptyList()
@@ -88,10 +88,10 @@ class SegmentDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
 
             analyticsScope.launch(analyticsDispatcher) {
                 store.subscribe(
-                    subscriber = this@SegmentDestination,
+                    subscriber = this@MeergoDestination,
                     stateClazz = System::class,
                     initialState = true,
-                    handler = this@SegmentDestination::onEnableToggled
+                    handler = this@MeergoDestination::onEnableToggled
                 )
             }
         }
@@ -101,7 +101,7 @@ class SegmentDestination: DestinationPlugin(), VersionedPlugin, Subscriber {
         super.update(settings, type)
         if (settings.hasIntegrationSettings(this)) {
             // only populate the endpoint value if it exists
-            settings.destinationSettings<SegmentSettings>(key)?.endpoint?.let {
+            settings.destinationSettings<MeergoSettings>(key)?.endpoint?.let {
                 pipeline?.endpoint = it
             }
         }

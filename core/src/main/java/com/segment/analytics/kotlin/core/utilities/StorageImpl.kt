@@ -1,19 +1,19 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Storage
-import com.segment.analytics.kotlin.core.Storage.Companion.MAX_PAYLOAD_SIZE
-import com.segment.analytics.kotlin.core.StorageProvider
-import com.segment.analytics.kotlin.core.System
-import com.segment.analytics.kotlin.core.UserInfo
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.Storage.Companion.MAX_PAYLOAD_SIZE
+import com.meergo.analytics.kotlin.core.StorageProvider
+import com.meergo.analytics.kotlin.core.System
+import com.meergo.analytics.kotlin.core.UserInfo
 import kotlinx.coroutines.CoroutineDispatcher
 import sovran.kotlin.Store
 import sovran.kotlin.Subscriber
 import java.io.File
 
 /**
- * Storage implementation for JVM platform, uses {@link com.segment.analytics.kotlin.core.utilities.PropertiesFile}
- * for key-value storage and {@link com.segment.analytics.kotlin.core.utilities.EventsFileManager}
+ * Storage implementation for JVM platform, uses {@link com.meergo.analytics.kotlin.core.utilities.PropertiesFile}
+ * for key-value storage and {@link com.meergo.analytics.kotlin.core.utilities.EventsFileManager}
  * for events storage
  */
 class StorageImpl(

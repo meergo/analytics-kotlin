@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.compat
+package com.meergo.analytics.kotlin.core.compat
 
 import kotlinx.serialization.json.JsonObject
 

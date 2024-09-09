@@ -1,13 +1,13 @@
 @file:JvmName("JsonUtils")
 
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
-import com.segment.analytics.kotlin.core.AliasEvent
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.GroupEvent
-import com.segment.analytics.kotlin.core.IdentifyEvent
-import com.segment.analytics.kotlin.core.ScreenEvent
-import com.segment.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.AliasEvent
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.GroupEvent
+import com.meergo.analytics.kotlin.core.IdentifyEvent
+import com.meergo.analytics.kotlin.core.ScreenEvent
+import com.meergo.analytics.kotlin.core.TrackEvent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.BooleanArraySerializer

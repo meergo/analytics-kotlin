@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.android.utilities
+package com.meergo.analytics.kotlin.android.utilities
 
-import com.segment.analytics.kotlin.core.utilities.toContent
+import com.meergo.analytics.kotlin.core.utilities.toContent
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject

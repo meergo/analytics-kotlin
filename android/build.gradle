@@ -20,8 +20,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField("int", "SEGMENT_VERSION_CODE", "${versionCode}")
-        buildConfigField("String", "SEGMENT_VERSION_NAME", "\"${versionName}\"")
+        buildConfigField("int", "MEERGO_VERSION_CODE", "${versionCode}")
+        buildConfigField("String", "MEERGO_VERSION_NAME", "\"${versionName}\"")
     }
 
     buildTypes {

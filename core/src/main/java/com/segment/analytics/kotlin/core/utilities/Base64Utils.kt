@@ -1,5 +1,5 @@
 @file:JvmName("Base64Utils")
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 // Encode string to base64
 fun encodeToBase64(str: String) = encodeToBase64(str.toByteArray())

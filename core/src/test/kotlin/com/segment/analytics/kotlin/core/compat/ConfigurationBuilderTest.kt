@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core.compat
+package com.meergo.analytics.kotlin.core.compat
 
-import com.segment.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.Configuration
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 

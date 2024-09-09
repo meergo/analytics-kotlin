@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core.platform.plugins.logger
+package com.meergo.analytics.kotlin.core.platform.plugins.logger
 
-import com.segment.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Analytics
 import java.util.*
 
 /**
@@ -13,7 +13,7 @@ interface Logger {
     /**
      * Implement this method to process logging messages. This is where the logic for the target will be
      * added. Feel free to add your own data queueing and offline storage.
-     * - important: Use the Segment Network stack for Segment library compatibility and simplicity.
+     * - important: Use the Meergo Network stack for Meergo library compatibility and simplicity.
      */
     fun parseLog(log: LogMessage)
 }
@@ -45,7 +45,7 @@ data class LogMessage(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * The public logging method for capturing all general types of log messages related to Segment.
+ * The public logging method for capturing all general types of log messages related to Meergo.
  *
  * @property message The main message of the log to be captured.
  * @property kind Usually .error, .warning or .debug, in order of severity. This helps filter logs based on
@@ -55,5 +55,5 @@ data class LogMessage(
  */
 @JvmOverloads
 fun Analytics.log(message: String, kind: LogKind = LogKind.DEBUG) {
-    Analytics.segmentLog(message, kind)
+    Analytics.meergoLog(message, kind)
 }

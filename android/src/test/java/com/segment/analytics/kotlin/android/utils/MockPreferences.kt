@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.android.utils
+package com.meergo.analytics.kotlin.android.utils
 
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener

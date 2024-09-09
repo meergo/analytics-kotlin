@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.android.utilities
+package com.meergo.analytics.kotlin.android.utilities
 
 import android.content.SharedPreferences
-import com.segment.analytics.kotlin.core.utilities.KVS
+import com.meergo.analytics.kotlin.core.utilities.KVS
 
 /**
  * A key-value store wrapper for sharedPreferences on Android

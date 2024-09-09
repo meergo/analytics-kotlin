@@ -1,15 +1,15 @@
-package com.segment.analytics.kotlin.core.compat
+package com.meergo.analytics.kotlin.core.compat
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.plugins.ContextPlugin
-import com.segment.analytics.kotlin.core.platform.plugins.SegmentDestination
-import com.segment.analytics.kotlin.core.utilities.SegmentInstant
-import com.segment.analytics.kotlin.core.utils.StubPlugin
-import com.segment.analytics.kotlin.core.utils.TestRunPlugin
-import com.segment.analytics.kotlin.core.utils.mockHTTPClient
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.platform.plugins.ContextPlugin
+import com.meergo.analytics.kotlin.core.platform.plugins.MeergoDestination
+import com.meergo.analytics.kotlin.core.utilities.MeergoInstant
+import com.meergo.analytics.kotlin.core.utils.StubPlugin
+import com.meergo.analytics.kotlin.core.utils.TestRunPlugin
+import com.meergo.analytics.kotlin.core.utils.mockHTTPClient
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import io.mockk.*
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -43,8 +43,8 @@ internal class JavaAnalyticsTest {
     private val testScope = TestScope(testDispatcher)
 
     init {
-        mockkObject(SegmentInstant)
-        every { SegmentInstant.now() } returns Date(0).toInstant().toString()
+        mockkObject(MeergoInstant)
+        every { MeergoInstant.now() } returns Date(0).toInstant().toString()
         mockkStatic(UUID::class)
         every { UUID.randomUUID().toString() } returns "qwerty-qwerty-123"
         mockHTTPClient()
@@ -54,7 +54,7 @@ internal class JavaAnalyticsTest {
     fun setup() {
         val config = ConfigurationBuilder("java-123")
             .setApplication("Test")
-            .setAutoAddSegmentDestination(false)
+            .setAutoAddMeergoDestination(false)
             .build()
 
         analytics = JavaAnalytics(
@@ -594,27 +594,27 @@ internal class JavaAnalyticsTest {
 
     @Test
     fun `disable analytics prevents event being processed`() {
-        val segmentDestination = spyk(SegmentDestination())
-        analytics.add(segmentDestination)
+        val meergoDestination = spyk(MeergoDestination())
+        analytics.add(meergoDestination)
         val state = mutableListOf<System>()
 
         analytics.enabled = false
         analytics.track("test")
 
         verify(exactly = 0) {
-            segmentDestination.track(any())
-            segmentDestination.execute(any())
+            meergoDestination.track(any())
+            meergoDestination.execute(any())
         }
-        verify { segmentDestination.onEnableToggled(capture(state)) }
+        verify { meergoDestination.onEnableToggled(capture(state)) }
         assertEquals(false, state.last().enabled)
 
         analytics.enabled = true
         analytics.track("test")
         verify(exactly = 1) {
-            segmentDestination.track(any())
-            segmentDestination.execute(any())
+            meergoDestination.track(any())
+            meergoDestination.execute(any())
         }
-        verify { segmentDestination.onEnableToggled(capture(state)) }
+        verify { meergoDestination.onEnableToggled(capture(state)) }
         assertEquals(true, state.last().enabled)
     }
 

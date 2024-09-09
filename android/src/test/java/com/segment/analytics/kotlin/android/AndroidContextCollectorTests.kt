@@ -1,13 +1,13 @@
-package com.segment.analytics.kotlin.android
+package com.meergo.analytics.kotlin.android
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.platform.app.InstrumentationRegistry
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.android.plugins.AndroidContextPlugin
-import com.segment.analytics.kotlin.android.plugins.getUniqueID
-import com.segment.analytics.kotlin.android.utils.MemorySharedPreferences
-import com.segment.analytics.kotlin.android.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.android.plugins.AndroidContextPlugin
+import com.meergo.analytics.kotlin.android.plugins.getUniqueID
+import com.meergo.analytics.kotlin.android.utils.MemorySharedPreferences
+import com.meergo.analytics.kotlin.android.utils.testAnalytics
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.spyk
@@ -42,7 +42,7 @@ class AndroidContextCollectorTests {
         appContext = spyk(InstrumentationRegistry.getInstrumentation().targetContext)
         val sharedPreferences: SharedPreferences = MemorySharedPreferences()
         every { appContext.getSharedPreferences(any(), any()) } returns sharedPreferences
-        mockkStatic("com.segment.analytics.kotlin.android.plugins.AndroidContextPluginKt")
+        mockkStatic("com.meergo.analytics.kotlin.android.plugins.AndroidContextPluginKt")
         every { getUniqueID() } returns "unknown"
 
         analytics  = testAnalytics(
@@ -75,9 +75,9 @@ class AndroidContextCollectorTests {
         with(event.context) {
             assertTrue(this.containsKey("app"))
             this["app"]?.jsonObject?.let {
-                assertEquals("com.segment.analytics.test", it["name"].asString())
+                assertEquals("com.meergo.analytics.test", it["name"].asString())
                 assertEquals("undefined", it["version"].asString())
-                assertEquals("com.segment.analytics.test", it["namespace"].asString())
+                assertEquals("com.meergo.analytics.test", it["namespace"].asString())
                 assertEquals("0", it["build"].asString())
             }
             assertTrue(this.containsKey("device"))

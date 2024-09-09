@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.platform.policies
+package com.meergo.analytics.kotlin.core.platform.policies
 
 /**
  * Flush policy that dictates flushing events at app startup.

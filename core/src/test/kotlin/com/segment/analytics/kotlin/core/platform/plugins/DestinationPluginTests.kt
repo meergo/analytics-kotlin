@@ -1,14 +1,14 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.platform.Timeline
-import com.segment.analytics.kotlin.core.utilities.putInContext
-import com.segment.analytics.kotlin.core.utils.mockAnalytics
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.platform.Timeline
+import com.meergo.analytics.kotlin.core.utilities.putInContext
+import com.meergo.analytics.kotlin.core.utils.mockAnalytics
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

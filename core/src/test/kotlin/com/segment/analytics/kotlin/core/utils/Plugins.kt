@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.utils
+package com.meergo.analytics.kotlin.core.utils
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.*
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.*
 
 /**
  * An analytics plugin that can be used to test features

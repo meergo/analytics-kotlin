@@ -1,9 +1,9 @@
-package com.segment.analytics.kotlin.android.utils
+package com.meergo.analytics.kotlin.android.utils
 
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import com.segment.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkConstructor

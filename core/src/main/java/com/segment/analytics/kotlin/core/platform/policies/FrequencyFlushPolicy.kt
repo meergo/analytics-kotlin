@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core.platform.policies
+package com.meergo.analytics.kotlin.core.platform.policies
 
-import com.segment.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Analytics
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive

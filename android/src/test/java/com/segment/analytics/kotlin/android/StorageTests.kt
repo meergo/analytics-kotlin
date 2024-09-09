@@ -1,18 +1,18 @@
-package com.segment.analytics.kotlin.android
+package com.meergo.analytics.kotlin.android
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.segment.analytics.kotlin.android.utils.MemorySharedPreferences
-import com.segment.analytics.kotlin.android.utils.clearPersistentStorage
-import com.segment.analytics.kotlin.android.utils.mockContext
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.Settings
-import com.segment.analytics.kotlin.core.Storage
-import com.segment.analytics.kotlin.core.System
-import com.segment.analytics.kotlin.core.Telemetry
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.UserInfo
-import com.segment.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.android.utils.MemorySharedPreferences
+import com.meergo.analytics.kotlin.android.utils.clearPersistentStorage
+import com.meergo.analytics.kotlin.android.utils.mockContext
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.Settings
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.System
+import com.meergo.analytics.kotlin.core.Telemetry
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.UserInfo
+import com.meergo.analytics.kotlin.core.emptyJsonObject
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
@@ -176,19 +176,19 @@ class StorageTests {
             @Test
             fun `write updates sharedPreferences`() = runTest {
                 androidStorage.write(Storage.Constants.AppVersion, "100")
-                assertEquals("100", map["segment.app.version"])
+                assertEquals("100", map["meergo.app.version"])
             }
 
             @Test
             fun `read fetches from sharedPreferences`() {
-                map["segment.app.version"] = "100"
+                map["meergo.app.version"] = "100"
                 assertEquals("100", androidStorage.read(Storage.Constants.AppVersion))
             }
 
             @Test
             fun `remove sets value to null`() {
                 androidStorage.remove(Storage.Constants.AppVersion)
-                assertEquals(null, map["segment.app.version"])
+                assertEquals(null, map["meergo.app.version"])
             }
         }
 

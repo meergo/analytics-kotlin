@@ -1,14 +1,14 @@
-package com.segment.analytics.kotlin.android
+package com.meergo.analytics.kotlin.android
 
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.segment.analytics.kotlin.android.plugins.AndroidContextPlugin
-import com.segment.analytics.kotlin.android.plugins.AndroidLifecyclePlugin
-import com.segment.analytics.kotlin.android.utilities.DeepLinkUtils
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.Configuration
-import com.segment.analytics.kotlin.core.platform.plugins.logger.*
+import com.meergo.analytics.kotlin.android.plugins.AndroidContextPlugin
+import com.meergo.analytics.kotlin.android.plugins.AndroidLifecyclePlugin
+import com.meergo.analytics.kotlin.android.utilities.DeepLinkUtils
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Configuration
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.*
 
 // A set of functions tailored to the Android implementation of analytics
 

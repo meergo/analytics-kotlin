@@ -1,8 +1,8 @@
-package com.segment.analytics
+package com.meergo.analytics
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.segment.analytics.kotlin.core.Telemetry
+import com.meergo.analytics.kotlin.core.Telemetry
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,6 +24,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.segment.analytics.test", appContext.packageName)
+        assertEquals("com.meergo.analytics.test", appContext.packageName)
     }
 }

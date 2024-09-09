@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core.utils
+package com.meergo.analytics.kotlin.core.utils
 
-import com.segment.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.*
 import io.mockk.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

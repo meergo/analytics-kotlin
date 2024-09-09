@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
-import com.segment.analytics.kotlin.core.TrackEvent
-import com.segment.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.TrackEvent
+import com.meergo.analytics.kotlin.core.emptyJsonObject
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -25,8 +25,8 @@ internal class EventsFileManagerTest{
     private val kvStore = PropertiesFile(directory.parentFile, "123")
 
     init {
-        mockkObject(SegmentInstant)
-        every { SegmentInstant.now() } returns Date(0).toInstant().toString()
+        mockkObject(MeergoInstant)
+        every { MeergoInstant.now() } returns Date(0).toInstant().toString()
     }
 
     @BeforeEach
@@ -74,7 +74,7 @@ internal class EventsFileManagerTest{
         file.storeEvent(eventString)
         file.rollover()
 
-        assertEquals(1, kvStore.getInt("segment.events.file.index.123.test", -1))
+        assertEquals(1, kvStore.getInt("meergo.events.file.index.123.test", -1))
     }
 
     @Test

@@ -1,9 +1,9 @@
-package com.segment.analytics.kotlin.core.platform.plugins.logger
+package com.meergo.analytics.kotlin.core.platform.plugins.logger
 
-import com.segment.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.Analytics
 
 // Internal log usage
-fun Analytics.Companion.segmentLog(message: String, kind: LogKind = LogKind.ERROR) {
+fun Analytics.Companion.meergoLog(message: String, kind: LogKind = LogKind.ERROR) {
    val logger = logger
    val logMessage = LogMessage(kind, message=message)
    when (kind){

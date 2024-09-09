@@ -1,16 +1,16 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.platform.plugins.logger.*
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.*
 import org.junit.jupiter.api.Assertions.*
 
 import org.junit.jupiter.api.Test
 import java.util.concurrent.atomic.AtomicBoolean
 
-internal class SegmentLogTest {
+internal class MeergoLogTest {
 
     @Test
-    fun `can call segmentLog() `() {
+    fun `can call meergoLog() `() {
         val parseLogCalled = AtomicBoolean(false)
         val testLogger = object : Logger {
             override fun parseLog(log: LogMessage) {
@@ -21,13 +21,13 @@ internal class SegmentLogTest {
         }
         Analytics.logger = testLogger
 
-        Analytics.segmentLog("test")
+        Analytics.meergoLog("test")
 
         assertTrue(parseLogCalled.get())
     }
 
     @Test
-    fun `can call segmentLog() with different log filter kind`() {
+    fun `can call meergoLog() with different log filter kind`() {
         val parseLogErrorCalled = AtomicBoolean(false)
         val parseLogWarnCalled = AtomicBoolean(false)
         val parseLogDebugCalled = AtomicBoolean(false)
@@ -54,9 +54,9 @@ internal class SegmentLogTest {
         Analytics.logger = testLogger
         Analytics.debugLogsEnabled = true
 
-        Analytics.segmentLog("test") // Default LogFilterKind is ERROR
-        Analytics.segmentLog("test", kind = LogKind.WARNING)
-        Analytics.segmentLog("test", kind = LogKind.DEBUG)
+        Analytics.meergoLog("test") // Default LogFilterKind is ERROR
+        Analytics.meergoLog("test", kind = LogKind.WARNING)
+        Analytics.meergoLog("test", kind = LogKind.DEBUG)
 
         assertTrue(parseLogErrorCalled.get())
         assertTrue(parseLogWarnCalled.get())
@@ -78,7 +78,7 @@ internal class SegmentLogTest {
 
         // Turn ON debug logs
         Analytics.debugLogsEnabled = true
-        Analytics.segmentLog("test", kind = LogKind.DEBUG)
+        Analytics.meergoLog("test", kind = LogKind.DEBUG)
 
         assertTrue(logSent.get())
 
@@ -86,7 +86,7 @@ internal class SegmentLogTest {
         Analytics.debugLogsEnabled = false
         logSent.set(false)
 
-        Analytics.segmentLog("test", kind = LogKind.DEBUG)
+        Analytics.meergoLog("test", kind = LogKind.DEBUG)
         assertFalse(logSent.get())
     }
 }

@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 import io.mockk.every
 import io.mockk.mockkConstructor
@@ -13,7 +13,7 @@ class DateTimeUtilsTest {
 
     @Test
     fun `dateTimeNowString() produces a string in the correct ISO8601 format`() {
-        val dateTimeNowString = SegmentInstant.now()
+        val dateTimeNowString = MeergoInstant.now()
         val date = ISO_DATE_TIME.parse(dateTimeNowString)
         assertNotNull(date)
     }
@@ -21,7 +21,7 @@ class DateTimeUtilsTest {
     @Test
     fun `dateTimeNowString() returns three digit seconds`() {
         val date = Date(1700617928023L)
-        val dateTimeNowString = SegmentInstant.from(date)
+        val dateTimeNowString = MeergoInstant.from(date)
         assertEquals("2023-11-22T01:52:08.023Z", dateTimeNowString)
     }
 }

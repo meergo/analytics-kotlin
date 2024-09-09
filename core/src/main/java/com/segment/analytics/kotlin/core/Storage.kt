@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.serialization.Serializable
@@ -11,12 +11,12 @@ import java.io.File
 /**
  * Storage interface that abstracts storage of
  * - user data
- * - segment settings
- * - segment events
+ * - meergo settings
+ * - meergo events
  * - other configs
  *
  * Constraints:
- * - Segment Events must be stored on a file, following the batch format
+ * - Meergo Events must be stored on a file, following the batch format
  * - all storage is in terms of String (to make API simple)
  * - storage is restricted to keys declared in `Storage.Constants`
  */
@@ -33,19 +33,19 @@ interface Storage {
     }
 
     enum class Constants(val rawVal: String) {
-        UserId("segment.userId"),
-        Traits("segment.traits"),
-        AnonymousId("segment.anonymousId"),
-        Settings("segment.settings"),
-        Events("segment.events"),
-        AppVersion("segment.app.version"),
-        AppBuild("segment.app.build"),
+        UserId("meergo.userId"),
+        Traits("meergo.traits"),
+        AnonymousId("meergo.anonymousId"),
+        Settings("meergo.settings"),
+        Events("meergo.events"),
+        AppVersion("meergo.app.version"),
+        AppBuild("meergo.app.build"),
         LegacyAppBuild("build"),
-        DeviceId("segment.device.id"),
-        SessionId("segment.sessionId"),
-        SessionExpiration("segment.sessionExpiration"),
-        SessionStart("segment.sessionStart"),
-        Suspended("segment.suspended"),
+        DeviceId("meergo.device.id"),
+        SessionId("meergo.sessionId"),
+        SessionExpiration("meergo.sessionExpiration"),
+        SessionStart("meergo.sessionStart"),
+        Suspended("meergo.suspended"),
     }
 
     val storageDirectory: File

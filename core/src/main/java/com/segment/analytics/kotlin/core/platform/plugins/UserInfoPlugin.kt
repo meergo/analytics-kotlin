@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.platform.plugins
+package com.meergo.analytics.kotlin.core.platform.plugins
 
-import com.segment.analytics.kotlin.core.*
-import com.segment.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.*
+import com.meergo.analytics.kotlin.core.platform.Plugin
 
 /**
  * Analytics plugin used to populate events with basic UserInfo data.

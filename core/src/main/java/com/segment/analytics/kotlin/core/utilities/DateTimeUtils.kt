@@ -1,9 +1,9 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SegmentInstant {
+class MeergoInstant {
     companion object {
         private val formatters = object : ThreadLocal<SimpleDateFormat>() {
             override fun initialValue(): SimpleDateFormat {
@@ -31,7 +31,7 @@ class SegmentInstant {
     }
 }
 
-@Deprecated("Please use SegmentInstant.now() instead", ReplaceWith("SegmentInstant.now()"))
+@Deprecated("Please use MeergoInstant.now() instead", ReplaceWith("MeergoInstant.now()"))
 fun dateTimeNowString(): String {
-    return SegmentInstant.now()
+    return MeergoInstant.now()
 }

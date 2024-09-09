@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core.platform.policies
+package com.meergo.analytics.kotlin.core.platform.policies
 
-import com.segment.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.BaseEvent
 
 /**
  * A Count based Flush Policy that instructs the EventPipeline to flush at the

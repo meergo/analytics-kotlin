@@ -1,7 +1,7 @@
-package com.segment.analytics.kotlin.core.platform.policies
+package com.meergo.analytics.kotlin.core.platform.policies
 
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
 import kotlinx.coroutines.CoroutineScope
 
 interface FlushPolicy {

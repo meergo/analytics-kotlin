@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.android.plugins
+package com.meergo.analytics.kotlin.android.plugins
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
@@ -9,13 +9,13 @@ import android.net.NetworkCapabilities.TRANSPORT_BLUETOOTH
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 import android.os.Build
-import com.segment.analytics.kotlin.core.Analytics
-import com.segment.analytics.kotlin.core.BaseEvent
-import com.segment.analytics.kotlin.core.Storage
-import com.segment.analytics.kotlin.core.emptyJsonObject
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.utilities.putAll
-import com.segment.analytics.kotlin.core.utilities.putUndefinedIfNull
+import com.meergo.analytics.kotlin.core.Analytics
+import com.meergo.analytics.kotlin.core.BaseEvent
+import com.meergo.analytics.kotlin.core.Storage
+import com.meergo.analytics.kotlin.core.emptyJsonObject
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.utilities.putAll
+import com.meergo.analytics.kotlin.core.utilities.putUndefinedIfNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -24,7 +24,7 @@ import java.util.TimeZone
 import java.util.UUID
 import java.lang.System as JavaSystem
 import android.media.MediaDrm
-import com.segment.analytics.kotlin.core.utilities.*
+import com.meergo.analytics.kotlin.core.utilities.*
 import kotlinx.coroutines.*
 import java.lang.Exception
 import java.security.MessageDigest

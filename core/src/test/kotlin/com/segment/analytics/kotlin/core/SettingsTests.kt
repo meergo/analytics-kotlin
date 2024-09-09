@@ -1,10 +1,10 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.platform.DestinationPlugin
-import com.segment.analytics.kotlin.core.platform.Plugin
-import com.segment.analytics.kotlin.core.utils.StubPlugin
-import com.segment.analytics.kotlin.core.utils.mockHTTPClient
-import com.segment.analytics.kotlin.core.utils.testAnalytics
+import com.meergo.analytics.kotlin.core.platform.DestinationPlugin
+import com.meergo.analytics.kotlin.core.platform.Plugin
+import com.meergo.analytics.kotlin.core.utils.StubPlugin
+import com.meergo.analytics.kotlin.core.utils.mockHTTPClient
+import com.meergo.analytics.kotlin.core.utils.testAnalytics
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.test.TestScope
@@ -38,7 +38,7 @@ class SettingsTests {
             writeKey = "123",
             application = "Test"
         ), testScope, testDispatcher)
-        analytics.configuration.autoAddSegmentDestination = false
+        analytics.configuration.autoAddMeergoDestination = false
     }
 
     @Test @Disabled
@@ -82,7 +82,7 @@ class SettingsTests {
         analytics = testAnalytics(Configuration(
             writeKey = "123",
             application = "Test",
-            autoAddSegmentDestination = false
+            autoAddMeergoDestination = false
         ), testScope, testDispatcher)
         val mockPlugin = spyk<StubPlugin>()
 
@@ -116,7 +116,7 @@ class SettingsTests {
         analytics = testAnalytics(Configuration(
             writeKey = "123",
             application = "Test",
-            autoAddSegmentDestination = false
+            autoAddMeergoDestination = false
         ), testScope, testDispatcher)
         val mockPlugin = spyk<StubPlugin>()
 

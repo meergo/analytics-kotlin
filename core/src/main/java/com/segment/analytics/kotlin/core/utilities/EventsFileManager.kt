@@ -1,4 +1,4 @@
-package com.segment.analytics.kotlin.core.utilities
+package com.meergo.analytics.kotlin.core.utilities
 
 import kotlinx.coroutines.sync.Semaphore
 import java.io.File
@@ -15,7 +15,7 @@ import java.io.FileOutputStream
  *      "sentAt": "2021-04-30T22:06:11"
  * }
  * Each file stored is a batch of events. When uploading events the contents of the file can be
- * sent as-is to the Segment batch upload endpoint.
+ * sent as-is to the Meergo batch upload endpoint.
  *
  * Some terms:
  * - Current open file: the most recent temporary batch file that is being used to store events
@@ -43,7 +43,7 @@ class EventsFileManager(
         registerShutdownHook()
     }
 
-    private val fileIndexKey = if(subject == null) "segment.events.file.index.$writeKey" else "segment.events.file.index.$writeKey.$subject"
+    private val fileIndexKey = if(subject == null) "meergo.events.file.index.$writeKey" else "meergo.events.file.index.$writeKey.$subject"
 
     private var os: FileOutputStream? = null
 
@@ -136,7 +136,7 @@ class EventsFileManager(
         // close events array and batch object
 
 
-        val contents = """],"sentAt":"${SegmentInstant.now()}","writeKey":"$writeKey"}"""
+        val contents = """],"sentAt":"${MeergoInstant.now()}","writeKey":"$writeKey"}"""
         writeToFile(contents.toByteArray(), file)
         file.renameTo(File(directory, file.nameWithoutExtension))
         os?.close()

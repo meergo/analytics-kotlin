@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core
+package com.meergo.analytics.kotlin.core
 
-import com.segment.analytics.kotlin.core.platform.plugins.logger.segmentLog
+import com.meergo.analytics.kotlin.core.platform.plugins.logger.meergoLog
 
 /**
  * Reports an internal error to the user-defined error handler.
@@ -16,16 +16,16 @@ fun reportErrorWithMetrics(analytics: Analytics?, error: Throwable,
     analytics?.configuration?.errorHandler?.invoke(error)
     var fullMessage = message
     error.message?.let { fullMessage += ": $it"}
-    Analytics.segmentLog(fullMessage)
+    Analytics.meergoLog(fullMessage)
     Telemetry.error(metric, log, buildTags)
 }
 
 fun Analytics.Companion.reportInternalError(error: Throwable) {
     error.message?.let {
-        Analytics.segmentLog(it)
+        Analytics.meergoLog(it)
     }
 }
 
 fun Analytics.Companion.reportInternalError(error: String) {
-    Analytics.segmentLog(error)
+    Analytics.meergoLog(error)
 }

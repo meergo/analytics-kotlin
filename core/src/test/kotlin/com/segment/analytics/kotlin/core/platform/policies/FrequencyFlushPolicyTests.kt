@@ -1,6 +1,6 @@
-package com.segment.analytics.kotlin.core.platform.policies
+package com.meergo.analytics.kotlin.core.platform.policies
 
-import com.segment.analytics.kotlin.core.utils.mockAnalytics
+import com.meergo.analytics.kotlin.core.utils.mockAnalytics
 import io.mockk.coVerify
 import io.mockk.verify
 import kotlinx.coroutines.delay
