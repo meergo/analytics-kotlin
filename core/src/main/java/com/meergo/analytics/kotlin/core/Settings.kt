@@ -13,6 +13,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.serializer
 import java.io.BufferedReader
+import java.net.URL
 
 @Serializable
 data class Settings(
@@ -109,17 +110,21 @@ internal fun Analytics.fetchSettings(
     writeKey: String,
     endpoint: String
 ): Settings? = try {
-    val connection = HTTPClient(writeKey, this.configuration.requestFactory).settings(endpoint)
-    val settingsString =
-        connection.inputStream?.bufferedReader()?.use(BufferedReader::readText) ?: ""
-    log("Fetched Settings: $settingsString")
-    LenientJson.decodeFromString(settingsString)
-} catch (ex: Exception) {
-    reportErrorWithMetrics(this, AnalyticsError.SettingsFetchError(ex.message, ex), "Failed to fetch settings",
-        ex.stackTraceToString()) {
-        it["error"] = ex.toString()
-        it["writekey"] = writeKey
-        it["message"] = "Error retrieving settings"
+        val connection = HTTPClient(writeKey, this.configuration.requestFactory).settings(endpoint)
+        val settingsString =
+            connection.inputStream?.bufferedReader()?.use(BufferedReader::readText) ?: ""
+        log("Fetched Settings: $settingsString")
+        LenientJson.decodeFromString(settingsString)
+    } catch (ex: Exception) {
+        reportErrorWithMetrics(
+            this,
+            AnalyticsError.SettingsFail(AnalyticsError.NetworkUnknown(URL("https://$endpoint/settings/$writeKey"), ex)),
+            "Failed to fetch settings",
+            ex.stackTraceToString()
+        ) {
+            it["error"] = ex.toString()
+            it["writekey"] = writeKey
+            it["message"] = "Error retrieving settings"
+        }
+        null
     }
-    null
-}
