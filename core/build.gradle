@@ -29,7 +29,7 @@ dependencies {
 
     // TESTING
     repositories { mavenCentral() }
-    testImplementation 'io.mockk:mockk:1.10.6'
+    testImplementation 'io.mockk:mockk:1.13.10'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
 
     testImplementation platform("org.junit:junit-bom:5.7.2")
