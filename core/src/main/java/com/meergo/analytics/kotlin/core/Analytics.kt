@@ -261,8 +261,8 @@ open class Analytics protected constructor(
             var s = SessionInfo(sessionInfo.id, sessionInfo.expiration, sessionInfo.start)
             val u = UserInfo(userInfo.anonymousId, userId, traits)
             if (userId != userInfo.userId) {
-                if ((options.strategy.indexOf("-B")) > 0) {
-                    if (options.strategy == "AC-B") {
+                if (options.strategy == "Isolation" || options.strategy == "Preservation") {
+                    if (options.strategy == "Preservation") {
                         storage.suspend(s.id, s.expiration, s.start, userInfo.anonymousId, userInfo.traits)
                     } else {
                         storage.removeSuspended()
@@ -647,7 +647,7 @@ open class Analytics protected constructor(
     fun reset(all: Boolean = false) {
         var s = SessionInfo(sessionInfo.id, sessionInfo.expiration, sessionInfo.start)
         var u = UserInfo(userInfo.anonymousId, null, null)
-        if (!all && options.strategy == "AC-B") {
+        if (!all && options.strategy == "Preservation") {
             val restored = storage.restore()
             val sessionId = restored[0] as Long?
             val sessionExpiration = restored[1] as Long
@@ -661,7 +661,7 @@ open class Analytics protected constructor(
             u = UserInfo(anonymousId, null, userTraits)
         } else {
             storage.removeSuspended()
-            if (all || options.strategy.indexOf("-C") > 0) {
+            if (all || options.strategy == "Conversion" || options.strategy == "Isolation") {
                 if (s.id != null) {
                     s = newSession(null, configuration.sessionTimeout)
                 }

@@ -16,7 +16,7 @@ import java.io.BufferedReader
 
 @Serializable
 data class Settings(
-    var strategy: String = "A-B-C",
+    var strategy: String = "Isolation",
     var integrations: JsonObject = emptyJsonObject,
     var plan: JsonObject = emptyJsonObject,
     var edgeFunction: JsonObject = emptyJsonObject,

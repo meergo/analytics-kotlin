@@ -33,7 +33,7 @@ import kotlin.time.DurationUnit
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StrategyTests {
-    private val strategies = arrayOf("ABC", "AB-C", "A-B-C", "AC-B")
+    private val strategies = arrayOf("Fusion", "Conversion", "Isolation", "Preservation")
     private val autoTrack = arrayOf(true, false)
 
     private val testDispatcher = UnconfinedTestDispatcher()
@@ -60,7 +60,7 @@ class StrategyTests {
 
     @Test
     fun `startSession argument validation`() {
-        globalStrategy = "AB-C"
+        globalStrategy = "Conversion"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
@@ -87,7 +87,7 @@ class StrategyTests {
     @Test
     fun `sessions with auto tracking`() {
         globalTime = FakeTime()
-        globalStrategy = "AB-C"
+        globalStrategy = "Conversion"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
@@ -114,7 +114,7 @@ class StrategyTests {
     @Test
     fun `sessions without auto tracking`() {
         globalTime = FakeTime()
-        globalStrategy = "AB-C"
+        globalStrategy = "Conversion"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
@@ -188,7 +188,7 @@ class StrategyTests {
             assertEquals(analytics.getSessionId(), null)
         }
 
-        if (strategy.indexOf("-B") > -1) {
+        if (strategy == "Isolation" || strategy == "Preservation") {
             if (autoTrack) {
                 assertTrue(event.context["sessionId"]?.jsonPrimitive?.longOrNull != sessionId)
             }
@@ -217,13 +217,13 @@ class StrategyTests {
             assertEquals(analytics.getSessionId(), null)
         }
 
-        if (strategy == "AC-B") {
+        if (strategy == "Preservation") {
             if (autoTrack) {
                 assertEquals(analytics.getSessionId(), original["sessionId"]?.jsonPrimitive?.longOrNull)
             }
             assertEquals(analytics.anonymousId(), original["anonymousId"]?.jsonPrimitive?.contentOrNull)
             assertEquals(analytics.userInfo.traits, original["traits"])
-        } else if (strategy.indexOf("-C") > -1) {
+        } else if (strategy == "Conversion" || strategy == "Isolation") {
             if (autoTrack) {
                 assertTrue(analytics.getSessionId() != original["sessionId"]?.jsonPrimitive?.longOrNull)
                 assertTrue(analytics.getSessionId() != sessionId)
@@ -264,7 +264,7 @@ class StrategyTests {
 
     @Test
     fun `changing User ID resets traits and Anonymous ID`() {
-        globalStrategy = "AB-C"
+        globalStrategy = "Conversion"
         val config = Configuration(
             writeKey = "123",
             application = "Test",
