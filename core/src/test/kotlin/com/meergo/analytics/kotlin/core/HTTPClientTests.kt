@@ -37,7 +37,7 @@ class HTTPClientTests {
     fun `upload connection has correct configuration`() {
         httpClient.settings("test.example.com/api/v1").connection.let {
             assertEquals(
-                "https://test.example.com/api/v1/projects/1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ/settings",
+                "https://test.example.com/api/v1/settings/1vNgUqwJeCHmqgI9S1sOm9UHCyfYqbaQ",
                 it.url.toString()
             )
             assertEquals(
@@ -54,7 +54,7 @@ class HTTPClientTests {
             assertTrue(it.outputStream is GZIPOutputStream)
         }.connection.let {
             assertEquals(
-                "https://test.example.com/api/v1/b",
+                "https://test.example.com/api/v1",
                 it.url.toString()
             )
             assertEquals(
@@ -70,7 +70,7 @@ class HTTPClientTests {
 
     @Test
     fun `safeGetInputStream properly catches exception`() {
-        val connection = spyk(URL("https://test.example.com/api/v1/b").openConnection() as HttpURLConnection)
+        val connection = spyk(URL("https://test.example.com/api/v1").openConnection() as HttpURLConnection)
         every { connection.inputStream } throws IOException()
         val errorStream: InputStream? = safeGetInputStream(connection)
         assertEquals(connection.errorStream, errorStream)
@@ -152,7 +152,7 @@ class HTTPClientTests {
     fun `custom requestFactory can remove gzip`() {
         val httpClient = HTTPClient("123", object : RequestFactory() {
             override fun upload(endpoint: String): HttpURLConnection {
-                val connection: HttpURLConnection = openConnection("https://$endpoint/b")
+                val connection: HttpURLConnection = openConnection("https://$endpoint")
                 connection.setRequestProperty("Content-Type", "text/plain")
                 connection.doOutput = true
                 connection.setChunkedStreamingMode(0)
