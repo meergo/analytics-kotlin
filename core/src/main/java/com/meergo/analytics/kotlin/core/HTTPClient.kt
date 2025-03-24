@@ -140,7 +140,7 @@ internal class HTTPException(
 
 open class RequestFactory {
     open fun settings(endpoint: String, writeKey: String): HttpURLConnection {
-        val connection: HttpURLConnection = openConnection("https://$endpoint/projects/$writeKey/settings")
+        val connection: HttpURLConnection = openConnection("https://$endpoint/settings/$writeKey")
         connection.setRequestProperty("Content-Type", "application/json; charset=utf-8")
         val responseCode = connection.responseCode
         if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -151,7 +151,7 @@ open class RequestFactory {
     }
 
     open fun upload(endpoint: String): HttpURLConnection {
-        val connection: HttpURLConnection = openConnection("https://$endpoint/b")
+        val connection: HttpURLConnection = openConnection("https://$endpoint")
         connection.setRequestProperty("Content-Type", "text/plain")
         connection.setRequestProperty("Content-Encoding", "gzip")
         connection.doOutput = true
