@@ -34,7 +34,7 @@ Add the required permissions to `AndroidManifest.xml` (if they are not yet prese
 import com.meergo.analytics.kotlin.android.Analytics
 import com.meergo.analytics.kotlin.core.*
 
-Analytics("YOUR_WRITE_KEY", applicationContext) {
+val client = Analytics("YOUR_WRITE_KEY", applicationContext) {
   endpoint = "YOUR_ENDPOINT"
   trackApplicationLifecycleEvents = true
   flushAt = 3

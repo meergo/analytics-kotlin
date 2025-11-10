@@ -33,7 +33,7 @@ Add the required permissions to `AndroidManifest.xml` (if they are not yet prese
 ## Using the SDK
 
 ```Java
-AndroidAnalytics analytics = AndroidAnalyticsKt.Analytics(BuildConfig.YOUR_WRITE_KEY, getApplicationContext(), configuration -> {
+AndroidAnalytics client = AndroidAnalyticsKt.Analytics(BuildConfig.YOUR_WRITE_KEY, getApplicationContext(), configuration -> {
   configuration.setEndpoint(BuildConfig.YOUR_ENDPOINT);
   configuration.setFlushAt(1);
   configuration.setCollectDeviceId(true);
@@ -43,7 +43,7 @@ AndroidAnalytics analytics = AndroidAnalyticsKt.Analytics(BuildConfig.YOUR_WRITE
   return Unit.INSTANCE;
 });
 
-JavaAnalytics analyticsCompat = new JavaAnalytics(analytics);
+JavaAnalytics analyticsCompat = new JavaAnalytics(client);
 ```
 
 ## Sending events
