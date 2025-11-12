@@ -7,11 +7,10 @@ on:
         type: choice
         description: Log level to be used for testing
         required: true
-        default: debug
+        default: none
         options:
           - none
           - stacktrace
-          - debug
           - scan
 
 jobs:
