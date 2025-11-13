@@ -9,7 +9,6 @@ import com.meergo.analytics.kotlin.core.Configuration
 import com.meergo.analytics.kotlin.core.Settings
 import com.meergo.analytics.kotlin.core.Storage
 import com.meergo.analytics.kotlin.core.System
-import com.meergo.analytics.kotlin.core.Telemetry
 import com.meergo.analytics.kotlin.core.TrackEvent
 import com.meergo.analytics.kotlin.core.UserInfo
 import com.meergo.analytics.kotlin.core.emptyJsonObject
@@ -44,10 +43,6 @@ class StorageTests {
         private var store = Store()
         private lateinit var androidStorage: AndroidStorage
         private var mockContext: Context = mockContext()
-
-        init {
-            Telemetry.enable = false
-        }
 
         @BeforeEach
         fun setup() = runTest  {

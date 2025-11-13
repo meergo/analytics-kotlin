@@ -2,7 +2,6 @@ package com.meergo.analytics
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.meergo.analytics.kotlin.core.Telemetry
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,9 +15,6 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    init {
-        Telemetry.enable = false
-    }
 
     @Test
     fun useAppContext() {

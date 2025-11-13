@@ -41,7 +41,6 @@ class StrategyTests {
 
     init {
         clearAllMocks()
-        Telemetry.enable = false
     }
 
     @BeforeEach

@@ -116,7 +116,7 @@ internal fun Analytics.fetchSettings(
     LenientJson.decodeFromString(settingsString)
 } catch (ex: Exception) {
     reportErrorWithMetrics(this, ex, "Failed to fetch settings",
-        Telemetry.INVOKE_ERROR_METRIC, ex.stackTraceToString()) {
+        ex.stackTraceToString()) {
         it["error"] = ex.toString()
         it["writekey"] = writeKey
         it["message"] = "Error retrieving settings"

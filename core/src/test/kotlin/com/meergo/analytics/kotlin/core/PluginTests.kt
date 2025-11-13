@@ -24,7 +24,6 @@ class PluginTests {
     private val timeline: Timeline
 
     init {
-        Telemetry.enable = false
         timeline = Timeline().also { it.analytics = mockAnalytics }
     }
 

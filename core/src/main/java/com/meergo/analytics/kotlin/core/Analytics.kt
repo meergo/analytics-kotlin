@@ -120,7 +120,7 @@ open class Analytics protected constructor(
             override val store = Store()
             val exceptionHandler = CoroutineExceptionHandler { _, t ->
                 reportErrorWithMetrics(null, t,"Caught Exception in Analytics Scope",
-                    Telemetry.INVOKE_ERROR_METRIC, t.stackTraceToString()) {
+                    t.stackTraceToString()) {
                     it["error"] = t.toString()
                     it["message"] = "Exception in Analytics Scope"
                 }
@@ -142,13 +142,6 @@ open class Analytics protected constructor(
         add(ContextPlugin())
         add(UserInfoPlugin())
 
-        Telemetry.increment(Telemetry.INVOKE_METRIC) {
-            it["message"] = "configured"
-            it["endpoint"] = configuration.endpoint
-            it["flush"] =
-                "at:${configuration.flushAt} int:${configuration.flushInterval} pol:${configuration.flushPolicies.count()}"
-        }
-
         if (configuration.sessionAutoTrack) {
             sessionInfo = getFreshSession()
         }
@@ -163,7 +156,6 @@ open class Analytics protected constructor(
 
                 // subscribe to store after state is provided
                 storage.subscribeToStore()
-                Telemetry.subscribe(store)
             }
 
             if (configuration.autoAddMeergoDestination && configuration.autoAddMeergoDestination) {

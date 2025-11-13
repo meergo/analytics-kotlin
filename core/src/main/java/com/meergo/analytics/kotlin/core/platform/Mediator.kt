@@ -2,7 +2,6 @@ package com.meergo.analytics.kotlin.core.platform
 
 import com.meergo.analytics.kotlin.core.Analytics
 import com.meergo.analytics.kotlin.core.BaseEvent
-import com.meergo.analytics.kotlin.core.Telemetry
 import com.meergo.analytics.kotlin.core.platform.plugins.logger.LogKind
 import com.meergo.analytics.kotlin.core.platform.plugins.logger.meergoLog
 import com.meergo.analytics.kotlin.core.reportErrorWithMetrics
@@ -35,10 +34,6 @@ internal class Mediator(internal var plugins: CopyOnWriteArrayList<Plugin> = Cop
             result?.let {event ->
                 val copy = event.copy<BaseEvent>()
                 try {
-                    Telemetry.increment(Telemetry.INTEGRATION_METRIC) {
-                        it["message"] = "event-${event.type}"
-                        "plugin" to "${plugin.type}-${plugin.javaClass}"
-                    }
                     when (plugin) {
                         is DestinationPlugin -> {
                             plugin.execute(copy)
@@ -50,7 +45,7 @@ internal class Mediator(internal var plugins: CopyOnWriteArrayList<Plugin> = Cop
                 } catch (t: Throwable) {
                     Analytics.meergoLog("Skipping plugin due to Exception: $plugin", kind = LogKind.WARNING)
                     reportErrorWithMetrics(null, t,"Caught Exception in plugin",
-                        Telemetry.INTEGRATION_ERROR_METRIC, t.stackTraceToString()) {
+                        t.stackTraceToString()) {
                         it["error"] = t.toString()
                         it["plugin"] = "${plugin.type}-${plugin.javaClass}"
                         it["writekey"] = plugin.analytics.configuration.writeKey
@@ -70,7 +65,7 @@ internal class Mediator(internal var plugins: CopyOnWriteArrayList<Plugin> = Cop
             } catch (t: Throwable) {
                 reportErrorWithMetrics(null, t,
                     "Caught Exception applying closure to plugin: $plugin",
-                    Telemetry.INTEGRATION_ERROR_METRIC, t.stackTraceToString()) {
+                    t.stackTraceToString()) {
                     it["error"] = t.toString()
                     it["plugin"] = "${plugin.type}-${plugin.javaClass}"
                     it["writekey"] = plugin.analytics.configuration.writeKey

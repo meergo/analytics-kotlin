@@ -11,13 +11,11 @@ fun Analytics.reportInternalError(error: Throwable) {
 }
 
 fun reportErrorWithMetrics(analytics: Analytics?, error: Throwable,
-                           message: String, metric:String,
-                           log: String, buildTags: (MutableMap<String, String>) -> Unit) {
+                           message: String, log: String, buildTags: (MutableMap<String, String>) -> Unit) {
     analytics?.configuration?.errorHandler?.invoke(error)
     var fullMessage = message
     error.message?.let { fullMessage += ": $it"}
     Analytics.meergoLog(fullMessage)
-    Telemetry.error(metric, log, buildTags)
 }
 
 fun Analytics.Companion.reportInternalError(error: Throwable) {

@@ -7,7 +7,6 @@ import com.meergo.analytics.kotlin.core.emptyJsonObject
 import com.meergo.analytics.kotlin.core.utilities.EncodeDefaultsJson
 import com.meergo.analytics.kotlin.core.utilities.EventsFileManager
 import com.meergo.analytics.kotlin.core.utilities.MeergoInstant
-import com.meergo.analytics.kotlin.core.Telemetry
 import io.mockk.every
 import io.mockk.mockkObject
 import kotlinx.coroutines.test.runTest
@@ -33,7 +32,6 @@ class EventsFileTests {
     private val directory = File("/tmp/analytics-android-test/")
 
     init {
-        Telemetry.enable = false
         mockkObject(MeergoInstant)
         every { MeergoInstant.now() } returns Date(0).toInstant().toString()
     }

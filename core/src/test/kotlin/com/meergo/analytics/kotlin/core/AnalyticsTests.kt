@@ -55,7 +55,6 @@ class AnalyticsTests {
     private val testScope = TestScope(testDispatcher)
 
     init {
-        Telemetry.enable = false
         mockkObject(MeergoInstant)
         every { MeergoInstant.now() } returns Date(0).toInstant().toString()
         mockkStatic(UUID::class)

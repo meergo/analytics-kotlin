@@ -13,9 +13,6 @@ import java.util.Date
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class EventTests {
-    init {
-        Telemetry.enable = false
-    }
     private val epochTimestamp = Date(0).toInstant().toString()
     private val defaultContext = buildJsonObject {
         put("key1", "value")
