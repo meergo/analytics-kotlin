@@ -65,7 +65,7 @@ Refer to the Meergo events documentation for more information on the supported e
 ```
 MIT License
 
-Copyright (c) 2024 Open2b
+Copyright (c) 2026 Open2b
 Copyright (c) 2021 Segment
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
